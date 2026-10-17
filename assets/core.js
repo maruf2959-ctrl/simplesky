@@ -27,6 +27,7 @@
   // ------------------------------------------------------------ storage
   // Everything personal stays on this device. Storage can be blocked (private
   // mode), so every access is guarded and the app still works without it.
+  // The 'stargazer.' key prefix predates the SimpleSky name; keep it so saved kits survive.
   const store = {
     get(key, fallback) {
       try {

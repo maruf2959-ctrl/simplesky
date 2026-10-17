@@ -1,9 +1,9 @@
-# Camera Finder → all-round stargazing app: roadmap
+# SimpleSky: roadmap
 
 This file tracks the project from session to session. **Read it first when you pick the project up**,
 then update it as part of every piece of work: tick what's done, add decisions, and note what's next.
 
-> To continue in a new Claude session, say: *"Continue the Camera Finder project, check ROADMAP.md"*
+> To continue in a new Claude session, say: *"Continue the SimpleSky project, check ROADMAP.md"*
 
 ## Vision (owner's brief, 17 Oct 2026)
 
@@ -18,7 +18,7 @@ throughout. It has a **bottom tab bar** like a phone app.
 | **Sky map / Location** | Set your location. A live map showing where you are, light-pollution levels, and the variables a stargazer cares about (cloud, darkness, moon, dew, wind). |
 | **Events** | A calendar and news feed: moon phases, meteor showers, planet highlights, conjunctions, eclipses, ISS passes, and astronomy news worth looking out for. |
 | **My Kit** | Search for a telescope ("Celestron 127 SLT") and add it in one tap. Add a mount, eyepieces, Barlow, diagonal, camera and filters. A simple **telescope diagram** where you tap each part. A switch for **all-in-one** scopes (bought as a set) vs **modular** setups (swap parts in and out). |
-| **Shop** | Today's Camera Finder: best gear and live UK prices, but driven by *your* kit instead of being fixed to the 127 SLT. |
+| **Shop** | The original Camera Finder: best gear and live UK prices, but driven by *your* kit instead of being fixed to the 127 SLT. |
 
 ## Status
 
@@ -127,5 +127,6 @@ throughout. It has a **bottom tab bar** like a phone app.
 
 ## Changelog
 
+- **18 Oct 2026:** App renamed **SimpleSky** (was Stargazer / Camera Finder). The repository name and URL are unchanged for now.
 - **18 Oct 2026:** v2 built: tabbed phone app (Home, Tonight with ratings and GoTo helper, Events with news, My Kit with telescope search and diagram, Location map with light pollution, Shop), red mode, PWA. 11 tests passing.
 - **17 Oct 2026:** v1 launched (Camera Finder for the 127 SLT). Roadmap created, then rewritten around the owner's all-round stargazing-app brief.

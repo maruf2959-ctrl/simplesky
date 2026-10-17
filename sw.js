@@ -1,6 +1,6 @@
 // Offline support: app shell is cached; data and weather use the network first
 // and fall back to the last copy, so the app still opens at a dark site with no signal.
-const VERSION = 'stargazer-v2';
+const VERSION = 'simplesky-v3';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest',
   'assets/style.css', 'assets/astro.js', 'assets/core.js', 'assets/rating.js',
