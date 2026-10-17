@@ -1,0 +1,494 @@
+{
+ "mounts": [
+  {
+   "id": "slt",
+   "name": "Celestron NexStar SLT (alt-az GoTo)",
+   "type": "altaz-goto",
+   "track1000": 8,
+   "payload": 4,
+   "handset": "nexstar"
+  },
+  {
+   "id": "se",
+   "name": "Celestron NexStar SE single-arm (alt-az GoTo)",
+   "type": "altaz-goto",
+   "track1000": 8,
+   "payload": 5.5,
+   "handset": "nexstar"
+  },
+  {
+   "id": "azgti",
+   "name": "Sky-Watcher AZ-GTi (Wi-Fi alt-az GoTo)",
+   "type": "altaz-goto",
+   "track1000": 10,
+   "payload": 5,
+   "handset": "synscan"
+  },
+  {
+   "id": "az-goto",
+   "name": "Sky-Watcher SynScan AZ GoTo / Star Discovery",
+   "type": "altaz-goto",
+   "track1000": 6,
+   "payload": 5,
+   "handset": "synscan"
+  },
+  {
+   "id": "etx",
+   "name": "Meade ETX / AudioStar (alt-az GoTo)",
+   "type": "altaz-goto",
+   "track1000": 6,
+   "payload": 3,
+   "handset": "audiostar"
+  },
+  {
+   "id": "dob-goto",
+   "name": "GoTo Dobsonian (Flextube SynScan)",
+   "type": "altaz-goto",
+   "track1000": 5,
+   "payload": 15,
+   "handset": "synscan"
+  },
+  {
+   "id": "starsense-az",
+   "name": "Celestron StarSense Explorer (manual alt-az + app)",
+   "type": "altaz-manual",
+   "track1000": 0,
+   "payload": 4,
+   "handset": "starsense-app"
+  },
+  {
+   "id": "az-manual",
+   "name": "Manual alt-az (AZ Pronto, AZ5, AZ3…)",
+   "type": "altaz-manual",
+   "track1000": 0,
+   "payload": 5
+  },
+  {
+   "id": "dob",
+   "name": "Dobsonian base (manual)",
+   "type": "dob",
+   "track1000": 0,
+   "payload": 20
+  },
+  {
+   "id": "eq-manual",
+   "name": "Manual equatorial (EQ1–EQ3, CG-4)",
+   "type": "eq-manual",
+   "track1000": 0,
+   "payload": 5
+  },
+  {
+   "id": "eq3-goto",
+   "name": "EQ3-2 / EQ35 GoTo",
+   "type": "eq-goto",
+   "track1000": 20,
+   "payload": 5,
+   "handset": "synscan"
+  },
+  {
+   "id": "eq5-goto",
+   "name": "EQ5 Pro / Celestron AVX GoTo",
+   "type": "eq-goto",
+   "track1000": 30,
+   "payload": 9,
+   "handset": "synscan"
+  },
+  {
+   "id": "heq5",
+   "name": "Sky-Watcher HEQ5 Pro",
+   "type": "eq-goto",
+   "track1000": 60,
+   "payload": 11,
+   "handset": "synscan"
+  },
+  {
+   "id": "eq6r",
+   "name": "Sky-Watcher EQ6-R Pro",
+   "type": "eq-goto",
+   "track1000": 90,
+   "payload": 20,
+   "handset": "synscan"
+  },
+  {
+   "id": "sa-gti",
+   "name": "Sky-Watcher Star Adventurer GTi (tracker)",
+   "type": "tracker",
+   "track1000": 30,
+   "payload": 5,
+   "handset": "synscan"
+  },
+  {
+   "id": "sa2i",
+   "name": "Star Adventurer 2i / Move Shoot Move (tracker)",
+   "type": "tracker",
+   "track1000": 25,
+   "payload": 5
+  },
+  {
+   "id": "smart",
+   "name": "Built-in smart-scope mount",
+   "type": "smart",
+   "track1000": 0,
+   "payload": 0
+  },
+  {
+   "id": "tripod",
+   "name": "Camera tripod (no tracking)",
+   "type": "altaz-manual",
+   "track1000": 0,
+   "payload": 3
+  }
+ ],
+ "eyepieceTypes": [
+  {
+   "id": "plossl",
+   "name": "Plössl (≈50°)",
+   "afov": 50
+  },
+  {
+   "id": "kellner",
+   "name": "Kellner / basic (≈40°)",
+   "afov": 40
+  },
+  {
+   "id": "wide",
+   "name": "Wide-angle, e.g. BST Starguider (≈60°)",
+   "afov": 60
+  },
+  {
+   "id": "uwa",
+   "name": "Ultra-wide (≈68°)",
+   "afov": 68
+  },
+  {
+   "id": "xwa",
+   "name": "Extra-wide (≈82°)",
+   "afov": 82
+  },
+  {
+   "id": "zoom",
+   "name": "Zoom 8–24 mm (40–60°)",
+   "afov": 50
+  }
+ ],
+ "barlows": [
+  {
+   "id": "b15",
+   "name": "1.5× Barlow",
+   "factor": 1.5
+  },
+  {
+   "id": "b2",
+   "name": "2× Barlow",
+   "factor": 2
+  },
+  {
+   "id": "b25",
+   "name": "2.5× Powermate/Barlow",
+   "factor": 2.5
+  },
+  {
+   "id": "b3",
+   "name": "3× Barlow",
+   "factor": 3
+  }
+ ],
+ "reducers": [
+  {
+   "id": "r05",
+   "name": "0.5× 1.25″ reducer (small sensors)",
+   "factor": 0.6
+  },
+  {
+   "id": "r063",
+   "name": "f/6.3 SCT reducer (0.63×)",
+   "factor": 0.63
+  },
+  {
+   "id": "r07",
+   "name": "0.7× reducer",
+   "factor": 0.7
+  },
+  {
+   "id": "r085",
+   "name": "0.85× reducer-flattener",
+   "factor": 0.85
+  }
+ ],
+ "diagonals": [
+  {
+   "id": "none",
+   "name": "None / straight-through"
+  },
+  {
+   "id": "d125",
+   "name": "90° star diagonal (1.25″)"
+  },
+  {
+   "id": "d2",
+   "name": "90° dielectric diagonal (2″)"
+  },
+  {
+   "id": "erect45",
+   "name": "45° erect-image diagonal"
+  }
+ ],
+ "finders": [
+  {
+   "id": "reddot",
+   "name": "Red-dot finder"
+  },
+  {
+   "id": "telrad",
+   "name": "Telrad / reflex"
+  },
+  {
+   "id": "f630",
+   "name": "6×30 optical finder"
+  },
+  {
+   "id": "raci",
+   "name": "9×50 right-angle finder"
+  },
+  {
+   "id": "starsense",
+   "name": "StarSense phone dock"
+  },
+  {
+   "id": "none",
+   "name": "None"
+  }
+ ],
+ "filters": [
+  {
+   "id": "moon",
+   "name": "Moon (ND) filter"
+  },
+  {
+   "id": "uvir",
+   "name": "UV/IR-cut filter"
+  },
+  {
+   "id": "uhc",
+   "name": "UHC nebula filter"
+  },
+  {
+   "id": "oiii",
+   "name": "OIII filter"
+  },
+  {
+   "id": "lp",
+   "name": "Light-pollution (CLS/L-eNhance)"
+  },
+  {
+   "id": "solar",
+   "name": "White-light solar film (full aperture only!)"
+  },
+  {
+   "id": "colour",
+   "name": "Planetary colour filters"
+  }
+ ],
+ "cameras": [
+  {
+   "id": "asi585mc",
+   "name": "ZWO ASI585MC (uncooled)",
+   "kind": "astro",
+   "w": 11.14,
+   "h": 6.26,
+   "px": 2.9,
+   "rn": 0.8,
+   "cooled": false
+  },
+  {
+   "id": "asi662mc",
+   "name": "ZWO ASI662MC",
+   "kind": "astro",
+   "w": 5.57,
+   "h": 3.13,
+   "px": 2.9,
+   "rn": 0.7,
+   "cooled": false
+  },
+  {
+   "id": "canon-600d",
+   "name": "Canon EOS 600D / 650D / 700D (used)",
+   "kind": "dslr",
+   "w": 22.3,
+   "h": 14.9,
+   "px": 4.3,
+   "rn": 3.0,
+   "cooled": false
+  },
+  {
+   "id": "nikon-d5300",
+   "name": "Nikon D5300 (used)",
+   "kind": "dslr",
+   "w": 23.5,
+   "h": 15.6,
+   "px": 3.9,
+   "rn": 1.8,
+   "cooled": false
+  },
+  {
+   "id": "asi224mc",
+   "name": "ZWO ASI224MC (used)",
+   "kind": "astro",
+   "w": 4.9,
+   "h": 3.7,
+   "px": 3.75,
+   "rn": 0.8,
+   "cooled": false
+  },
+  {
+   "id": "asi678mc",
+   "name": "ZWO ASI678MC",
+   "kind": "astro",
+   "w": 7.7,
+   "h": 4.3,
+   "px": 2.0,
+   "rn": 0.6,
+   "cooled": false
+  },
+  {
+   "id": "canon-rp",
+   "name": "Canon EOS RP (used, full-frame mirrorless)",
+   "kind": "mirrorless",
+   "w": 35.9,
+   "h": 24.0,
+   "px": 5.7,
+   "rn": 2.5,
+   "cooled": false
+  },
+  {
+   "id": "asi533mc-pro",
+   "name": "ZWO ASI533MC Pro (cooled)",
+   "kind": "astro",
+   "w": 11.31,
+   "h": 11.31,
+   "px": 3.76,
+   "rn": 1.0,
+   "cooled": true
+  },
+  {
+   "id": "asi120mc",
+   "name": "ZWO ASI120MC-S",
+   "kind": "astro",
+   "w": 4.8,
+   "h": 3.6,
+   "px": 3.75,
+   "rn": 4.0,
+   "cooled": false
+  },
+  {
+   "id": "asi462mc",
+   "name": "ZWO ASI462MC",
+   "kind": "astro",
+   "w": 5.6,
+   "h": 3.2,
+   "px": 2.9,
+   "rn": 0.5,
+   "cooled": false
+  },
+  {
+   "id": "asi715mc",
+   "name": "ZWO ASI715MC",
+   "kind": "astro",
+   "w": 5.6,
+   "h": 3.1,
+   "px": 1.45,
+   "rn": 0.6,
+   "cooled": false
+  },
+  {
+   "id": "sv105",
+   "name": "SVBony SV105",
+   "kind": "astro",
+   "w": 5.6,
+   "h": 3.1,
+   "px": 2.9,
+   "rn": 2.0,
+   "cooled": false
+  },
+  {
+   "id": "canon-r6ii",
+   "name": "Canon EOS R6 Mark II",
+   "kind": "mirrorless",
+   "w": 35.9,
+   "h": 23.9,
+   "px": 6.0,
+   "rn": 1.5,
+   "cooled": false
+  },
+  {
+   "id": "canon-2000d",
+   "name": "Canon EOS 2000D / 4000D",
+   "kind": "dslr",
+   "w": 22.3,
+   "h": 14.9,
+   "px": 3.7,
+   "rn": 3.0,
+   "cooled": false
+  },
+  {
+   "id": "sony-a7iii",
+   "name": "Sony A7 III",
+   "kind": "mirrorless",
+   "w": 35.6,
+   "h": 23.8,
+   "px": 5.9,
+   "rn": 1.5,
+   "cooled": false
+  },
+  {
+   "id": "phone",
+   "name": "Smartphone (held to the eyepiece)",
+   "kind": "phone",
+   "w": 5.6,
+   "h": 4.2,
+   "px": 1.0,
+   "rn": 2.0,
+   "cooled": false
+  },
+  {
+   "id": "seestar-s50",
+   "name": "Seestar S50 built-in (IMX462)",
+   "kind": "smart",
+   "w": 5.6,
+   "h": 3.2,
+   "px": 2.9,
+   "rn": 0.5,
+   "cooled": false
+  },
+  {
+   "id": "seestar-s30",
+   "name": "Seestar S30 built-in (IMX662)",
+   "kind": "smart",
+   "w": 5.6,
+   "h": 3.1,
+   "px": 2.9,
+   "rn": 0.7,
+   "cooled": false
+  },
+  {
+   "id": "dwarf3",
+   "name": "DWARF 3 built-in (IMX678)",
+   "kind": "smart",
+   "w": 7.7,
+   "h": 4.3,
+   "px": 2.0,
+   "rn": 0.6,
+   "cooled": false
+  },
+  {
+   "id": "vespera2",
+   "name": "Vespera II built-in (IMX585)",
+   "kind": "smart",
+   "w": 11.1,
+   "h": 6.3,
+   "px": 2.9,
+   "rn": 0.8,
+   "cooled": false
+  }
+ ]
+}

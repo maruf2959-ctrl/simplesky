@@ -2,86 +2,53 @@
 <html lang="en-GB">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Camera Finder · 127 SLT</title>
-  <meta name="description" content="Live UK listings and an honest guide to affordable astrophotography cameras for the Celestron NexStar 127 SLT Maksutov.">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Stargazer · Camera Finder</title>
+  <meta name="description" content="An all-round stargazing companion: tonight's sky for your telescope, weather, events, your kit and live UK gear prices.">
+  <meta name="theme-color" content="#03050d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Stargazer">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
   <link rel="stylesheet" href="assets/style.css">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%230b1026'/%3E%3Cpath d='M16 6l2.4 6.6L25 15l-6.6 2.4L16 24l-2.4-6.6L7 15l6.6-2.4z' fill='%23ffd479'/%3E%3C/svg%3E">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 </head>
 <body>
   <canvas id="sky" aria-hidden="true"></canvas>
+  <div id="redFilter" aria-hidden="true"></div>
 
-  <header class="topbar">
-    <a class="brand" href="#top">✦ Camera Finder <span>127 SLT</span></a>
-    <nav>
-      <a href="#tonight">Tonight</a>
-      <a href="#listings">Live listings</a>
-      <a href="#ranking">Rankings</a>
-      <a href="#framing">Framing</a>
-      <a href="#limits">Limits</a>
-      <a href="#kit">Kit list</a>
-      <a href="#alternatives">Alternatives</a>
-    </nav>
+  <header class="appbar">
+    <h1 id="viewTitle">Stargazer</h1>
+    <div class="appbar-actions">
+      <a href="#map" class="loc-pill" id="locPill" aria-label="Location and sky map">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.3-7-11.5a7 7 0 0 1 14 0C19 14.7 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        <span id="locName">Worthing</span>
+      </a>
+      <button id="redToggle" class="icon-btn" aria-pressed="false" aria-label="Red night mode" title="Red night mode">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
   </header>
 
-  <main id="top">
-    <!-- HERO -->
-    <section class="hero">
-      <p class="eyebrow">Celestron NexStar 127 SLT · 127 mm · 1,500 mm · f/12 · alt-az GoTo · Worthing</p>
-      <h1>Which camera will actually work on <em>your</em> telescope?</h1>
-      <p class="lede">These are live UK second-hand and retail prices, refreshed every day, alongside an honest guide to what a 1,500&nbsp;mm f/12 Maksutov on an SLT mount can and can't do.</p>
-
-      <div class="verdicts">
-        <article class="verdict gold">
-          <h3>Best value overall</h3>
-          <p class="pick">ZWO ASI585MC</p>
-          <p>£399 new. Its pixels suit f/12 almost exactly for planets, and low read noise makes short stacked deep-sky subs work. Live stacking also removes field rotation.</p>
-        </article>
-        <article class="verdict">
-          <h3>Nebulae &amp; galaxies</h3>
-          <p class="pick">Used Canon 600D / 700D</p>
-          <p>About £110–£180. It's the only budget sensor big enough to frame M42's bright core and most of the nebula at 1,500&nbsp;mm, and it carries straight over to a camera lens for M31.</p>
-        </article>
-        <article class="verdict">
-          <h3>Planets</h3>
-          <p class="pick">ZWO ASI662MC</p>
-          <p>£199. It matches the 585 pixel for pixel on Jupiter and Saturn for half the price. Use it at native f/12, and add the 2× Barlow only on excellent nights.</p>
-        </article>
-        <article class="verdict challenge">
-          <h3>The honest twist</h3>
-          <p class="pick">The mount and focal length matter more than the camera</p>
-          <p>For all of M42 and any of M31, a used DSLR and lens on a £435 Star Adventurer GTi beats any camera on the 127 SLT. <a href="#alternatives">Here's why.</a></p>
-        </article>
-      </div>
-    </section>
-
-    <!-- TONIGHT -->
-    <section id="tonight" class="panel">
-      <div class="section-head">
-        <h2>Tonight over Worthing</h2>
-        <p class="sub" id="clock"></p>
-      </div>
-      <div class="sky-strip">
-        <div class="stat"><span class="k">Astronomical dark</span><span class="v" id="darkWindow">–</span></div>
-        <div class="stat"><span class="k">Moon</span><span class="v" id="moon">–</span></div>
-        <div class="stat"><span class="k">Cloud tonight (Open-Meteo)</span><span class="v" id="cloud">loading…</span></div>
-        <div class="stat"><span class="k">Field-rotation calc for</span>
-          <select id="rotCamera" aria-label="Camera for field-rotation calculation"></select>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <table class="targets">
-          <thead><tr><th>Target</th><th>Altitude now</th><th>Best tonight</th><th>Fits frame?</th><th title="Longest sub before field rotation smears a corner star by 1 pixel">Rotation-limited sub (now / at best)</th></tr></thead>
-          <tbody id="targetRows"></tbody>
-        </table>
-      </div>
-      <p class="note">Rotation limits assume the SLT tracks perfectly. In practice its gear error usually caps you at <strong>≈2–8&nbsp;s</strong> at 1,500&nbsp;mm, whichever limit comes first. Targets low in the east or west rotate slowly. Avoid anything near the zenith, where rotation becomes huge.</p>
-    </section>
-
-    <!-- LISTINGS -->
+  <main>
+    <section id="view-home" class="view" data-title="Stargazer"></section>
+    <section id="view-tonight" class="view" data-title="Tonight"></section>
+    <section id="view-events" class="view" data-title="Events"></section>
+    <section id="view-kit" class="view" data-title="My Kit"></section>
+    <section id="view-map" class="view" data-title="Location &amp; sky"></section>
+    <section id="view-shop" class="view" data-title="Shop">
+      <nav class="segmented" id="shopSeg" aria-label="Shop sections">
+        <button data-seg="listings" class="on">Listings</button>
+        <button data-seg="rankings">Rankings</button>
+        <button data-seg="framing">Framing</button>
+        <button data-seg="guide">Guide</button>
+      </nav>
+      <div data-seg-panel="listings">
     <section id="listings" class="panel">
       <div class="section-head">
         <h2>Live UK listings</h2>
@@ -121,8 +88,8 @@
         <div id="manualLinks" class="chips"></div>
       </div>
     </section>
-
-    <!-- RANKING -->
+      </div>
+      <div data-seg-panel="rankings" hidden>
     <section id="ranking" class="panel">
       <div class="section-head">
         <h2>Ranked for the 127 SLT</h2>
@@ -144,8 +111,8 @@
         <div><h4>£500–£800</h4><p>Don't buy a cooled camera. Get the <strong>ASI662MC for planets (£199)</strong> plus a <strong>used 600D on a Star Adventurer GTi (£435)</strong> with a cheap lens, for about £780. That covers every target on your list properly.</p></div>
       </div>
     </section>
-
-    <!-- FRAMING -->
+      </div>
+      <div data-seg-panel="framing" hidden>
     <section id="framing" class="panel">
       <div class="section-head">
         <h2>Framing simulator</h2>
@@ -171,8 +138,36 @@
         <svg id="frSvg" viewBox="0 0 600 400" role="img" aria-label="Sensor field of view compared with target size"></svg>
       </div>
     </section>
+      </div>
+      <div data-seg-panel="guide" hidden>
+    <section class="hero guide-hero">
+      <p class="eyebrow">Celestron NexStar 127 SLT · 127 mm · 1,500 mm · f/12 · alt-az GoTo · Worthing</p>
+      <h1>Which camera will actually work on <em>your</em> telescope?</h1>
+      <p class="lede">These are live UK second-hand and retail prices, refreshed every day, alongside an honest guide to what a 1,500&nbsp;mm f/12 Maksutov on an SLT mount can and can't do.</p>
 
-    <!-- LIMITS -->
+      <div class="verdicts">
+        <article class="verdict gold">
+          <h3>Best value overall</h3>
+          <p class="pick">ZWO ASI585MC</p>
+          <p>£399 new. Its pixels suit f/12 almost exactly for planets, and low read noise makes short stacked deep-sky subs work. Live stacking also removes field rotation.</p>
+        </article>
+        <article class="verdict">
+          <h3>Nebulae &amp; galaxies</h3>
+          <p class="pick">Used Canon 600D / 700D</p>
+          <p>About £110–£180. It's the only budget sensor big enough to frame M42's bright core and most of the nebula at 1,500&nbsp;mm, and it carries straight over to a camera lens for M31.</p>
+        </article>
+        <article class="verdict">
+          <h3>Planets</h3>
+          <p class="pick">ZWO ASI662MC</p>
+          <p>£199. It matches the 585 pixel for pixel on Jupiter and Saturn for half the price. Use it at native f/12, and add the 2× Barlow only on excellent nights.</p>
+        </article>
+        <article class="verdict challenge">
+          <h3>The honest twist</h3>
+          <p class="pick">The mount and focal length matter more than the camera</p>
+          <p>For all of M42 and any of M31, a used DSLR and lens on a £435 Star Adventurer GTi beats any camera on the 127 SLT. <a href="#alternatives">Here's why.</a></p>
+        </article>
+      </div>
+    </section>
     <section id="limits" class="panel prose">
       <h2>What your telescope and mount really allow</h2>
 
@@ -220,8 +215,6 @@
       </ul>
       <p>Whatever the camera, the 127 mm aperture sets the resolution limit at about 0.9″. Seeing, collimation and <strong>cooling the Mak for 45–60 minutes</strong> matter more than anything you buy. Shoot 60–90&nbsp;s video clips for Jupiter (it rotates fast) and up to 3&nbsp;min for Saturn, then stack the best 10–25% in AutoStakkert, as you already do.</p>
     </section>
-
-    <!-- DSLR VS ASTRO -->
     <section class="panel prose">
       <h2>DSLR vs dedicated astro camera</h2>
       <div class="vs">
@@ -238,9 +231,7 @@
       </div>
       <p><strong>Can one camera do both?</strong> Yes, the ASI585MC is that camera for this telescope. Two specialised cameras (an ASI662MC plus a used 600D, about £330) cost less than you'd think and cover M42's full field. <strong>Is a cooled camera worth it?</strong> Not on this mount. Cooling reduces dark current, which only matters on subs of a minute or more. On 2–8&nbsp;s subs the uncooled 585 performs essentially identically to the £619 585 Pro.</p>
     </section>
-
-    <!-- KIT -->
-    <section id="kit" class="panel prose">
+    <section id="shop-kit" class="panel prose">
       <h2>Exact adapters &amp; total cost</h2>
       <p class="note"><strong>Compatibility note:</strong> the 127 SLT's rear port takes the visual back and diagonal. The universally safe imaging path is to <strong>remove the star diagonal and push a 1.25″ camera nosepiece into the visual back</strong>. This is what 127 SLT owners on <a href="https://stargazerslounge.com/topic/85038-celestron-nexstar-127-slt" target="_blank" rel="noopener">Stargazers Lounge</a> use, and the Mak focuses by moving its mirror, so there is plenty of focus travel. Thread-on adapters (Celestron's 4SE/C90 T-adapter, Mak-to-SCT rings) are made for other Maksutovs and are <em>not confirmed</em> to fit the 127 SLT, so don't buy them without checking your rear thread. The Celestron f/6.3 reducer needs SCT threads and isn't compatible.</p>
       <div id="kitTables" class="kits"></div>
@@ -252,8 +243,6 @@
         <li><strong>Software (all free unless noted):</strong> SharpCap (free; Pro is ≈£15/yr for live-stack extras), ASIStudio, N.I.N.A., DeepSkyStacker, Siril, AutoStakkert, RegiStax. BackyardEOS is paid but optional.</li>
       </ul>
     </section>
-
-    <!-- ALTERNATIVES -->
     <section id="alternatives" class="panel prose">
       <h2>Challenging the assumptions</h2>
       <h3>"I want M42's colours and M31": use a camera lens, not the Mak</h3>
@@ -273,8 +262,6 @@
         <li>M42 and M31 really are the priority: <strong>used 600D (£150) + Star Adventurer GTi (£435) + used lens (£80)</strong>, then add a 662 for planets.</li>
       </ol>
     </section>
-
-    <!-- EXAMPLES -->
     <section class="panel prose">
       <h2>Real examples: achieved vs theoretical</h2>
       <div class="table-wrap">
@@ -294,7 +281,6 @@
       </div>
       <p class="note">I couldn't find a published 127 SLT + ASI585MC deep-sky image with full data. The 585 figures above are extrapolated from its read noise and the 120MC/224MC results, so treat them as estimates.</p>
     </section>
-
     <section class="panel prose">
       <h2>Sources</h2>
       <ul class="sources">
@@ -307,11 +293,28 @@
       </ul>
       <p class="note">Weather from <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a>. Positions are computed in your browser with low-precision formulae (±0.5°).</p>
     </section>
+      </div>
+    </section>
   </main>
 
-  <footer>Built for a 127 SLT in Worthing · listings refresh daily via GitHub Actions · <a href="https://github.com/maruf2959-ctrl/Camera-finder-">source</a></footer>
+  <nav class="tabbar" aria-label="Main">
+      <a href="#home" data-tab="home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></a>
+      <a href="#tonight" data-tab="tonight"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg><span>Tonight</span></a>
+      <a href="#events" data-tab="events"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v3M17 2v3M3.5 9h17M5 4.5h14a1.5 1.5 0 0 1 1.5 1.5v13a1.5 1.5 0 0 1-1.5 1.5H5A1.5 1.5 0 0 1 3.5 19V6A1.5 1.5 0 0 1 5 4.5z"/></svg><span>Events</span></a>
+      <a href="#kit" data-tab="kit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 15l11-6 2 3.5-11 6zM15 9l3-1.6 2 3.5-3 1.6M9 17.6L7 22M11 16.5L13 22"/></svg><span>My Kit</span></a>
+      <a href="#shop" data-tab="shop"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14l-1.2 12.2a1.5 1.5 0 0 1-1.5 1.3H7.7a1.5 1.5 0 0 1-1.5-1.3zM9 7a3 3 0 0 1 6 0"/></svg><span>Shop</span></a>
+  </nav>
 
   <script src="assets/astro.js"></script>
-  <script src="assets/app.js"></script>
+  <script src="assets/core.js"></script>
+  <script src="assets/rating.js"></script>
+  <script src="assets/views/home.js"></script>
+  <script src="assets/views/tonight.js"></script>
+  <script src="assets/views/events.js"></script>
+  <script src="assets/views/kit.js"></script>
+  <script src="assets/views/map.js"></script>
+  <script src="assets/views/shop.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+  <script>App.start();</script>
 </body>
 </html>

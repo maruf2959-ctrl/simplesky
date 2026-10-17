@@ -42,41 +42,6 @@
 
   const state = { cameras: [], accessories: [], listings: null, history: { days: {} } };
 
-  // ------------------------------------------------------------- starfield
-  function starfield() {
-    const c = $('#sky');
-    const ctx = c.getContext('2d');
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let stars = [];
-    function resize() {
-      c.width = innerWidth * devicePixelRatio;
-      c.height = innerHeight * devicePixelRatio;
-      const n = Math.round((innerWidth * innerHeight) / 2600);
-      stars = Array.from({ length: n }, () => ({
-        x: Math.random() * c.width,
-        y: Math.random() * c.height,
-        r: (Math.random() ** 3 * 1.6 + 0.3) * devicePixelRatio,
-        p: Math.random() * Math.PI * 2,
-        s: 0.4 + Math.random() * 1.2,
-        hue: Math.random() < 0.15 ? 'rgba(255,214,150,' : Math.random() < 0.2 ? 'rgba(170,200,255,' : 'rgba(255,255,255,'
-      }));
-    }
-    function draw(t) {
-      ctx.clearRect(0, 0, c.width, c.height);
-      for (const s of stars) {
-        const a = reduce ? 0.7 : 0.45 + 0.4 * Math.sin(s.p + (t / 1000) * s.s);
-        ctx.fillStyle = s.hue + a.toFixed(2) + ')';
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fill();
-      }
-      if (!reduce) requestAnimationFrame(draw);
-    }
-    addEventListener('resize', resize);
-    resize();
-    requestAnimationFrame(draw);
-  }
-
   // ----------------------------------------------------------------- data
   async function loadJson(url, fallback) {
     try {
@@ -101,95 +66,6 @@
     if (!t.planet) return t;
     const p = Astro.planetRaDec(t.planet, date);
     return { ...t, ra: p.ra, dec: p.dec, w: p.diameterArcsec / 60, h: p.diameterArcsec / 60, diam: p.diameterArcsec };
-  }
-
-  function darkWindow(now) {
-    let start = null, end = null;
-    for (let m = 0; m <= 24 * 60; m += 5) {
-      const d = new Date(now.getTime() + m * 60000);
-      const s = Astro.sunRaDec(d);
-      const alt = Astro.altAz(s.ra, s.dec, d, SITE.lat, SITE.lon).alt;
-      if (alt < -18 && !start) start = d;
-      if (start && alt >= -18) { end = d; break; }
-    }
-    return { start, end };
-  }
-
-  function rotationLimit(cam, alt, az) {
-    if (alt <= 0) return null;
-    const w = Astro.fieldRotationRate(alt, az, SITE.lat);
-    return 1 / (cornerPx(cam) * w);
-  }
-
-  const fmtSecs = (s) => (s == null ? '–' : s > 120 ? '>2 min' : s >= 10 ? Math.round(s) + ' s' : s.toFixed(1) + ' s');
-
-  function fits(t, f) {
-    const big = Math.max(t.w, t.h), small = Math.min(t.w, t.h);
-    const fb = Math.max(f.w, f.h), fs = Math.min(f.w, f.h);
-    if (big <= fb * 0.9 && small <= fs * 0.9) return ['Yes', 'ok'];
-    if (big <= fb * 1.6) return ['Mostly', 'meh'];
-    return ['Core only', 'bad'];
-  }
-
-  function renderTonight() {
-    const now = new Date();
-    $('#clock').textContent = now.toLocaleString('en-GB', { timeZone: SITE.tz, weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' }) + ' (UK time)';
-    const dark = darkWindow(now);
-    const sunNow = Astro.sunRaDec(now);
-    const isDarkNow = Astro.altAz(sunNow.ra, sunNow.dec, now, SITE.lat, SITE.lon).alt < -18;
-    $('#darkWindow').textContent = dark.start ? `${isDarkNow ? 'now' : fmtTime(dark.start)} → ${dark.end ? fmtTime(dark.end) : '…'}` : 'No full darkness';
-    const mp = Astro.moonPhase(now);
-    const phaseName = mp.age < 1.8 ? 'New' : mp.age < 6 ? 'Waxing crescent' : mp.age < 9 ? 'First quarter' : mp.age < 13.8 ? 'Waxing gibbous' : mp.age < 15.8 ? 'Full' : mp.age < 20.5 ? 'Waning gibbous' : mp.age < 23.5 ? 'Last quarter' : mp.age < 27.8 ? 'Waning crescent' : 'New';
-    $('#moon').textContent = `${phaseName}, ${Math.round(mp.illum * 100)}% lit${mp.illum > 0.6 ? ', so favour planets and clusters' : mp.illum < 0.3 ? ', good for nebulae' : ''}`;
-    state.dark = dark;
-
-    const cam = state.cameras.find((c) => c.id === $('#rotCamera').value) || state.cameras[0];
-    const f = fov(cam);
-    const tb = $('#targetRows');
-    tb.replaceChildren();
-    const winStart = dark.start || now, winEnd = dark.end || new Date(now.getTime() + 12 * 3600000);
-    for (const t0 of TARGETS) {
-      const t = targetRaDec(t0, now);
-      const cur = Astro.altAz(t.ra, t.dec, now, SITE.lat, SITE.lon);
-      let best = { alt: -90 };
-      for (let ms = winStart.getTime(); ms <= winEnd.getTime(); ms += 10 * 60000) {
-        const d = new Date(ms);
-        const p = Astro.altAz(t.ra, t.dec, d, SITE.lat, SITE.lon);
-        if (p.alt > best.alt) best = { ...p, at: d };
-      }
-      const [fitTxt, fitCls] = fits(t, f);
-      const up = cur.alt > 10;
-      const bestTxt = best.alt > 15 ? `${Math.round(best.alt)}° at ${fmtTime(best.at)}` : 'Too low tonight';
-      const extra = t.diam ? ` · ${t.diam.toFixed(1)}″` : '';
-      tb.append(
-        el('tr', { class: up ? '' : 'dim' },
-          el('td', {}, el('strong', {}, t.name), el('span', { class: 'muted' }, extra)),
-          el('td', {}, cur.alt > 0 ? `${Math.round(cur.alt)}° ${compass(cur.az)}` : 'below horizon'),
-          el('td', {}, bestTxt),
-          el('td', {}, el('span', { class: 'pill ' + fitCls }, t.kind === 'planet' ? 'Yes' : fitTxt)),
-          el('td', {}, t.kind === 'planet' ? 'Video: n/a' : `${up ? fmtSecs(rotationLimit(cam, cur.alt, cur.az)) : '–'} / ${best.alt > 15 ? fmtSecs(rotationLimit(cam, best.alt, best.az)) : '–'}`)
-        )
-      );
-    }
-  }
-
-  const compass = (az) => ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'][Math.round(az / 45) % 8];
-
-  async function loadCloud() {
-    try {
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${SITE.lat}&longitude=${SITE.lon}&hourly=cloud_cover&timezone=UTC&forecast_days=2`;
-      const json = await (await fetch(url)).json();
-      const times = json.hourly.time.map((t) => new Date(t + 'Z'));
-      const start = state.dark?.start || new Date();
-      const end = state.dark?.end || new Date(start.getTime() + 10 * 3600000);
-      const hrs = times.map((t, i) => ({ t, c: json.hourly.cloud_cover[i] })).filter((h) => h.t >= new Date(start.getTime() - 3600000) && h.t <= end);
-      if (!hrs.length) throw new Error('no hours');
-      const avg = Math.round(hrs.reduce((a, h) => a + h.c, 0) / hrs.length);
-      const best = hrs.reduce((a, h) => (h.c < a.c ? h : a));
-      $('#cloud').textContent = `${avg}% average; clearest ${fmtTime(best.t)} (${best.c}%)`;
-    } catch {
-      $('#cloud').textContent = 'unavailable';
-    }
   }
 
   // --------------------------------------------------------------- listings
@@ -442,23 +318,22 @@
   }
 
   // ------------------------------------------------------------------- init
-  async function init() {
-    starfield();
+  async function render(section) {
     const [cat, listings, history] = await Promise.all([
-      loadJson('data/cameras.json', null),
+      App.data('cameras'),
       loadJson('data/listings.json', null),
-      loadJson('data/history.json', { days: {} })
+      App.data('history').then((h) => h || { days: {} })
     ]);
     if (!cat) {
-      document.querySelector('main').prepend(el('p', { class: 'empty' }, 'Could not load data/cameras.json. Open the site through a web server (see the README), not as a file.'));
+      section.prepend(el('p', { class: 'empty' }, 'Could not load the camera catalogue.'));
       return;
     }
-    state.cameras = cat.cameras.sort((a, b) => a.rank - b.rank);
+    state.cameras = [...cat.cameras].sort((a, b) => a.rank - b.rank);
     state.accessories = cat.accessories || [];
     state.listings = listings;
     state.history = history;
 
-    for (const sel of ['#rotCamera', '#frCamera', '#fCamera']) {
+    for (const sel of ['#frCamera', '#fCamera']) {
       for (const c of state.cameras) $(sel).append(el('option', { value: c.id }, c.name));
     }
     $('#frCamera').value = 'canon-600d';
@@ -466,8 +341,6 @@
     const sources = [...new Set((listings?.listings || []).map((l) => l.source))].sort();
     for (const s of sources) $('#fSource').append(el('option', { value: s }, s));
 
-    renderTonight();
-    loadCloud();
     renderSources();
     renderListings();
     manualLinks();
@@ -475,11 +348,28 @@
     renderFraming();
     renderKits();
 
-    $('#rotCamera').addEventListener('change', renderTonight);
     for (const id of ['#fCamera', '#fBudget', '#fSource', '#fSort', '#fAccessories']) $(id).addEventListener('change', renderListings);
     for (const id of ['#frCamera', '#frOptics', '#frTarget']) $(id).addEventListener('change', renderFraming);
-    setInterval(renderTonight, 5 * 60000);
+
+    // Segmented sub-navigation (Listings / Rankings / Framing / Guide).
+    const seg = $('#shopSeg');
+    seg.addEventListener('click', (e) => {
+      const b = e.target.closest('button[data-seg]');
+      if (!b) return;
+      for (const x of seg.querySelectorAll('button')) x.classList.toggle('on', x === b);
+      for (const p of section.querySelectorAll('[data-seg-panel]')) p.hidden = p.dataset.segPanel !== b.dataset.seg;
+      window.scrollTo(0, 0);
+    });
+    // In-page links inside the guide (e.g. "#alternatives") scroll without leaving the tab.
+    section.addEventListener('click', (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      const target = a && document.getElementById(a.getAttribute('href').slice(1));
+      if (target && section.contains(target)) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   }
 
-  init();
+  App.register('shop', { render });
 })();

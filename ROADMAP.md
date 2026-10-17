@@ -25,9 +25,9 @@ throughout. It has a **bottom tab bar** like a phone app.
 | | |
 |---|---|
 | Live site | https://maruf2959-ctrl.github.io/Camera-finder-/ |
-| Current version | v1: 127 SLT single page (merged in PR #1, 17 Oct 2026) |
-| Now working on | Planning v2 (tabbed app). Waiting for the owner to confirm the build order |
-| Last updated | 17 Oct 2026 |
+| Current version | v2: tabbed phone app, built 18 Oct 2026 on branch `claude/astrophotography-camera-research-i0qhy2` (merge to go live) |
+| Now working on | Owner review of v2, then the "Next up" list below |
+| Last updated | 18 Oct 2026 |
 
 ## Decisions
 
@@ -45,14 +45,33 @@ throughout. It has a **bottom tab bar** like a phone app.
 - **GoTo helper:** uses the NexStar hand-controller catalogues (Messier, NGC, Caldwell, Named Star, Solar System), e.g. *"Menu → List → Messier → 42"*. It suggests alignment stars that are well placed right now for SkyAlign or two-star align.
 - **Working style:** small steps, each tested, committed, pushed and merged, so the live site never breaks.
 
+## Layout (decided 18 Oct 2026)
+
+- **Bottom tab bar (5):** Home · Tonight · Events · My Kit · Shop
+- **Top bar:** 📍 location pill (opens Location & sky with the map) and a 👁 red night-mode toggle
+- Phone-first; desktop gets a centred floating tab bar. Desktop polish comes later.
+
+## Code map (for future sessions)
+
+| File | Purpose |
+|---|---|
+| `index.html` | App shell: top bar, `<section class="view">` per tab, bottom tab bar. The Shop markup lives here. |
+| `assets/core.js` | `App`: helpers, `App.store` (localStorage), location, Open-Meteo weather, `App.night()` darkness window, hash router, red mode, shared UI (`scoreRing`, `sheet`). |
+| `assets/astro.js` | `Astro`: Sun, Moon and planet positions, alt/az, separation, field rotation, Moon phase. |
+| `assets/rating.js` | `Kit` model (setups saved on the device) and `Rating` engine: `derive`, `visual`, `imaging`, `plan`, `alignStars`. |
+| `assets/views/*.js` | One file per tab; each calls `App.register(name, { render })`. |
+| `data/targets.json` | Moon, planets, 47 deep-sky and double-star targets (with NexStar hand-control paths), 34 alignment stars. |
+| `data/telescopes.json`, `data/gear.json` | Telescope database (49) and mounts, eyepiece types, Barlows, reducers, diagonals, finders, filters, cameras. |
+| `data/cameras.json`, `listings.json`, `history.json`, `news.json` | Shop catalogue plus files refreshed daily by the GitHub Action. |
+| `sw.js`, `manifest.webmanifest` | Installable PWA and offline cache. |
+| `test/*.test.mjs` | `npm test`: listing filters, RSS parsing, rating sanity checks. |
+
 ## Open questions for the owner
 
-- [ ] Confirm the build order below.
-- [ ] Tab names and order: Home · Tonight · Map · Events · My Kit · Shop (6 tabs; phones usually fit 5). Merge Map into Tonight, or put Shop under My Kit?
-- [ ] Look and feel: keep the current deep-space look, and add a **red night mode** for use at the telescope?
 - [ ] ISS and satellite passes: worth adding later? (They need orbital data and a bit more maths.)
+- [ ] Review the rating scores against real nights out. Anything that feels too generous or harsh?
 
-## Build plan (draft order)
+## Build plan
 
 ### Phase 0: Housekeeping
 - [x] v1 site live on GitHub Pages
@@ -61,37 +80,40 @@ throughout. It has a **bottom tab bar** like a phone app.
 - [ ] Add eBay API keys (owner action, see README)
 - [ ] Hide CeX from the status bar while it's blocked
 
-### Phase 1: App shell and Home
-- [ ] Restructure into a tabbed app with a bottom tab bar (mobile-first, desktop friendly)
-- [ ] Move the current page content into the **Shop** tab, with nothing lost
-- [ ] **Home**: tonight-at-a-glance card, a "Did you know?" fact carousel, a beginner "start here" section
-- [ ] PWA: manifest, icon, offline cache, Add to Home Screen
-- [ ] Red night-mode toggle
+### Phase 1: App shell and Home ✅
+- [x] Restructure into a tabbed app with a bottom tab bar (mobile-first, desktop friendly)
+- [x] Move the current page content into the **Shop** tab (Listings · Rankings · Framing · Guide), with nothing lost
+- [x] **Home**: tonight-at-a-glance card, top picks for your kit, coming-up events, "Did you know?" facts, beginner "start here"
+- [x] PWA: manifest, icons, offline cache (`sw.js`), Add to Home Screen
+- [x] Red night-mode toggle
 
-### Phase 2: My Kit
-- [ ] `data/telescopes.json` with about 50 popular scopes (Celestron NexStar/SE/AstroMaster/StarSense, Sky-Watcher Skymax/Heritage/Skyliner/Evostar/Star Discovery, Seestar/Dwarf smart scopes…), plus mounts, eyepieces, Barlows, diagonals, cameras and filters
-- [ ] Search box with one-tap add; custom entry for anything missing
-- [ ] All-in-one vs modular switch
-- [ ] Interactive SVG telescope diagram: tap a part to set or change it (OTA, mount, finder, diagonal, eyepiece, Barlow, camera)
-- [ ] Derived numbers: magnification per eyepiece, max useful magnification, field of view, focal ratio, limiting magnitude
-- [ ] Several saved setups (e.g. "Visual" and "Imaging"), stored on the device
+### Phase 2: My Kit ✅
+- [x] `data/telescopes.json` (49 scopes) and `data/gear.json` (18 mounts, eyepiece types, Barlows, reducers, diagonals, finders, filters, 20 cameras incl. smart-scope sensors)
+- [x] Search box with one-tap add; custom entry for anything missing
+- [x] All-in-one vs modular switch
+- [x] Interactive SVG telescope diagram (shape changes with scope type): tap a part to change it
+- [x] Derived numbers: magnification, true field, exit pupil per eyepiece (with and without Barlow), max useful power, limiting magnitude, resolution, camera field and scale
+- [x] Several saved setups, stored on the device
+- [ ] Next: a nicer, more realistic diagram per scope type; eyepiece brand presets; import/export kit
 
-### Phase 3: Location and Map
-- [ ] Set location by GPS, postcode/town search, or tapping the map
-- [ ] Leaflet map with a light-pollution (night-lights) layer and an estimated Bortle number
-- [ ] Panel of stargazer variables: darkness window, moon, cloud, dew risk, wind, temperature
+### Phase 3: Location and Map ✅
+- [x] Set location by GPS, postcode/town search (postcodes.io, Open-Meteo geocoding) or tapping the map
+- [x] Leaflet map (Esri dark-grey base) with a NASA Black Marble night-lights layer and an automatic Bortle estimate read from it (manual override)
+- [x] Panel of stargazer variables: sunset/sunrise, darkness window, Moon, cloud by layer, temperature and dew point, dew risk, wind, humidity
+- [ ] Next: "find darker skies near me" (scan the night-lights layer for nearby dark spots)
 
-### Phase 4: Tonight
-- [ ] Hour-by-hour cloud and conditions timeline, with a "go out / don't bother" score
-- [ ] Best targets tonight for *your* kit and location (visual first; astrophotography notes when a camera is in the kit), with altitude, best time, and how each one looks in your eyepieces
-- [ ] Moon, all planets, a bright double-star and cluster list, and Messier highlights
-- [ ] **GoTo helper (NexStar SLT)**: alignment stars to use now, then each target's hand-controller path, refreshed automatically
+### Phase 4: Tonight ✅
+- [x] Hour-by-hour cloud timeline with a "go out / don't bother" verdict and score
+- [x] **Rating engine** (`assets/rating.js`): every target scored 0–100 for the active kit, in **Viewing** and **Photography** modes, with reasons, eyepiece suggestion, sub length and total integration
+- [x] Moon, all 7 planets, 47 deep-sky objects and doubles; filters (Up now, Planets, Nebulae, Galaxies, Clusters, Doubles)
+- [x] **GoTo helper**: three well-spread alignment stars for right now, plus each target's hand-control path
+- [ ] Next: 7Timer seeing/transparency (needs a server-side fetch, as there's no CORS); altitude-over-time chart per target; more targets (Caldwell list)
 
-### Phase 5: Events and news
-- [ ] Calendar: moon phases, meteor showers (with peak dates and ZHR), planet oppositions and conjunctions, eclipses, equinoxes and solstices
-- [ ] "This week's sky" highlights for the location
-- [ ] News feed from public astronomy RSS sources, refreshed daily by the Action
-- [ ] (Later) ISS and bright satellite passes
+### Phase 5: Events and news ✅
+- [x] Calculated 12-month calendar: Moon phases, meteor-shower peaks (with Moon interference), oppositions, Mercury/Venus elongations, Moon–planet and planet–planet conjunctions, equinoxes and solstices, UK clock changes, plus the Aug 2027 eclipse
+- [x] "This week" highlights
+- [x] News feed (NASA and ESA RSS) via `scripts/update-news.mjs` in the daily Action
+- [ ] Next: more eclipse data; event reminders; ISS and bright satellite passes
 
 ### Phase 6: Shop, driven by My Kit
 - [ ] Rankings, framing simulator, exposure limits and adapter lists use the saved kit instead of fixed 127 SLT numbers
@@ -105,4 +127,5 @@ throughout. It has a **bottom tab bar** like a phone app.
 
 ## Changelog
 
+- **18 Oct 2026:** v2 built: tabbed phone app (Home, Tonight with ratings and GoTo helper, Events with news, My Kit with telescope search and diagram, Location map with light pollution, Shop), red mode, PWA. 11 tests passing.
 - **17 Oct 2026:** v1 launched (Camera Finder for the 127 SLT). Roadmap created, then rewritten around the owner's all-round stargazing-app brief.
