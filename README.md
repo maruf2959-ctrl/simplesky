@@ -1,7 +1,7 @@
-# Stargazer · Camera Finder
+# SimpleSky
 
 An all-round **stargazing app for your phone**: what *your* telescope can see tonight, the weather,
-a sky calendar, your kit, and live UK gear prices. It started as a camera finder for a
+a sky calendar, your kit, and live UK gear prices. It started as "Camera Finder", a camera guide for a
 **Celestron NexStar 127 SLT** and now works with any telescope. It's installable (Add to Home Screen),
 works offline at a dark site, and has a red night mode.
 

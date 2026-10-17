@@ -1,6 +1,6 @@
 {
-  "name": "Stargazer · Camera Finder",
-  "short_name": "Stargazer",
+  "name": "SimpleSky",
+  "short_name": "SimpleSky",
   "description": "Tonight's sky for your telescope, weather, events, your kit and live UK gear prices.",
   "start_url": "./#home",
   "scope": "./",
