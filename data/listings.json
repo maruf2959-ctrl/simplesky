@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-10-17T22:46:32.160Z",
+  "generatedAt": "2026-10-17T22:55:18.603Z",
   "sources": {
     "eBay": {
       "ok": false,
       "count": 0,
-      "checkedAt": "2026-10-17T22:46:32.160Z",
+      "checkedAt": "2026-10-17T22:55:18.603Z",
       "lastSuccess": null,
       "error": "EBAY_CLIENT_ID / EBAY_CLIENT_SECRET not set — add them as repository secrets"
     },
     "CeX": {
       "ok": false,
       "count": 0,
-      "checkedAt": "2026-10-17T22:46:32.160Z",
+      "checkedAt": "2026-10-17T22:55:18.603Z",
       "lastSuccess": null,
       "error": "CeX HTTP 403"
     },
     "Retail": {
       "ok": true,
       "count": 11,
-      "checkedAt": "2026-10-17T22:46:32.160Z",
+      "checkedAt": "2026-10-17T22:55:18.603Z",
       "warnings": []
     }
   },
@@ -39,7 +39,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     },
     {
       "id": "retail:https://www.firstlightoptics.com/adapters/astro-essentials-t-rings-m42-camera-adapter.html",
@@ -57,7 +57,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     },
     {
       "id": "retail:https://www.firstlightoptics.com/reducersflatteners/astro-essentials-05x-1-25-focal-reducer.html",
@@ -75,7 +75,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     },
     {
       "id": "retail:https://www.firstlightoptics.com/adapters/astro-essentials-canon-ef-lens-to-t2-adapter-for-cmosccd-cameras.html",
@@ -93,7 +93,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     },
     {
       "id": "retail:https://www.firstlightoptics.com/reducersflatteners/celestron-f63-focal-reducer.html",
@@ -111,7 +111,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     },
     {
       "id": "retail:https://www.firstlightoptics.com/zwo-cameras/zwo-asi-662mc-usb-3-camera.html",
@@ -129,7 +129,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     },
     {
       "id": "retail:https://www.firstlightoptics.com/zwo-cameras/zwo-asi-678mc-usb-3-camera.html",
@@ -147,7 +147,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     },
     {
       "id": "retail:https://www.firstlightoptics.com/zwo-cameras/zwo-asi-585mc-usb-3-camera.html",
@@ -165,7 +165,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     },
     {
       "id": "retail:https://www.firstlightoptics.com/skywatcher-star-adventurer/sky-watcher-star-adventurer-gti.html",
@@ -183,7 +183,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     },
     {
       "id": "retail:https://www.firstlightoptics.com/zwo-telescopes/zwo-seestar-s50-all-in-one-smart-apo-telescope-tripod.html",
@@ -201,7 +201,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     },
     {
       "id": "retail:https://www.firstlightoptics.com/zwo-cameras/zwo-asi-533mc-pro-usb-30-cooled-colour-camera.html",
@@ -219,7 +219,7 @@
       "seller": "First Light Optics",
       "location": "UK",
       "firstSeen": "2026-10-17T22:36:35.739Z",
-      "lastSeen": "2026-10-17T22:46:32.160Z"
+      "lastSeen": "2026-10-17T22:55:18.603Z"
     }
   ]
 }
