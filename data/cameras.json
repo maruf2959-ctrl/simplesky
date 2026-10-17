@@ -1,0 +1,571 @@
+{
+  "telescope": {
+    "name": "Celestron NexStar 127 SLT (Maksutov-Cassegrain)",
+    "apertureMm": 127,
+    "focalLengthMm": 1500,
+    "focalRatio": 11.8,
+    "mount": "NexStar SLT computerised alt-azimuth (single fork arm)"
+  },
+  "site": {
+    "name": "Worthing, West Sussex",
+    "lat": 50.8179,
+    "lon": -0.3728
+  },
+  "cameras": [
+    {
+      "id": "asi585mc",
+      "rank": 1,
+      "name": "ZWO ASI585MC (uncooled)",
+      "type": "astro",
+      "tier": "300-500",
+      "badge": "Best all-rounder",
+      "sensor": {
+        "model": "Sony IMX585 (STARVIS 2)",
+        "widthMm": 11.14,
+        "heightMm": 6.26,
+        "pixelUm": 2.9,
+        "resolution": "3840 × 2160",
+        "readNoiseE": 0.8,
+        "cooled": false
+      },
+      "priceRef": {
+        "new": 399,
+        "newSource": "First Light Optics, 17 Oct 2026",
+        "usedLow": 250,
+        "usedHigh": 330,
+        "usedNote": "typical used asking prices — the live listings below are the real figure"
+      },
+      "planetary": 5,
+      "deepSky": 4,
+      "fitScore": 5,
+      "strengths": [
+        "2.9 µm pixels are almost perfectly matched to f/12 for planets — no Barlow needed in average UK seeing",
+        "Very low read noise (≈0.8 e⁻ at high gain) makes 2–10 s stacked sub-exposures far more efficient than with a DSLR",
+        "Larger 4K chip than the 662: frames M81, M51, M57, M27, M13 and the core of M42",
+        "Live stacking in SharpCap/ASIStudio aligns and de-rotates frames, which suits an alt-az mount"
+      ],
+      "weaknesses": [
+        "Needs a laptop and USB 3 cable at the scope",
+        "At 1,500 mm the field (≈26′ × 14′) only shows the core of M42",
+        "Has a clear AR window, so you need a UV/IR-cut filter for natural colour"
+      ],
+      "adapters": "Comes with a 1.25″ nosepiece. Remove the star diagonal and push it straight into the 127 SLT visual back. Screw a 1.25″ UV/IR-cut filter into the nosepiece. Optional 0.5× 1.25″ reducer for deep sky.",
+      "match": {
+        "all": [
+          "585"
+        ],
+        "any": [
+          "asi",
+          "zwo"
+        ],
+        "none": [
+          "585mm",
+          "585 mm",
+          "pro",
+          "air",
+          "mono",
+          "mcpro",
+          "585mcpro"
+        ]
+      },
+      "ebayQuery": "zwo asi585mc",
+      "cexQuery": "zwo asi585mc",
+      "priceRange": [
+        120,
+        700
+      ],
+      "retail": [
+        {
+          "store": "First Light Optics",
+          "url": "https://www.firstlightoptics.com/zwo-cameras/zwo-asi-585mc-usb-3-camera.html"
+        }
+      ]
+    },
+    {
+      "id": "asi662mc",
+      "rank": 2,
+      "name": "ZWO ASI662MC",
+      "type": "astro",
+      "tier": "150-300",
+      "badge": "Best value for planets",
+      "sensor": {
+        "model": "Sony IMX662 (STARVIS 2)",
+        "widthMm": 5.57,
+        "heightMm": 3.13,
+        "pixelUm": 2.9,
+        "resolution": "1920 × 1080",
+        "readNoiseE": 0.7,
+        "cooled": false
+      },
+      "priceRef": {
+        "new": 199,
+        "newSource": "First Light Optics, 17 Oct 2026",
+        "usedLow": 120,
+        "usedHigh": 170,
+        "usedNote": "typical used asking prices"
+      },
+      "planetary": 5,
+      "deepSky": 2,
+      "fitScore": 5,
+      "strengths": [
+        "Same pixel size and per-pixel performance as the 585 for half the price",
+        "Fast frame rates (100+ fps at small ROI) freeze UK seeing for Jupiter and Saturn",
+        "No amp glow and very low read noise"
+      ],
+      "weaknesses": [
+        "Tiny 12.8′ × 7.3′ field at 1,500 mm: only small deep-sky targets fit (M57, the M27 core, the M13 core)",
+        "Needs a UV/IR-cut filter"
+      ],
+      "adapters": "Supplied 1.25″ nosepiece goes into the visual back, with the diagonal removed. Add a 1.25″ UV/IR-cut filter.",
+      "match": {
+        "all": [
+          "662"
+        ],
+        "any": [
+          "asi",
+          "zwo"
+        ],
+        "none": [
+          "mono",
+          "662mm"
+        ]
+      },
+      "ebayQuery": "zwo asi662mc",
+      "cexQuery": "zwo asi662mc",
+      "priceRange": [
+        60,
+        300
+      ],
+      "retail": [
+        {
+          "store": "First Light Optics",
+          "url": "https://www.firstlightoptics.com/zwo-cameras/zwo-asi-662mc-usb-3-camera.html"
+        }
+      ]
+    },
+    {
+      "id": "canon-600d",
+      "rank": 3,
+      "name": "Canon EOS 600D / 650D / 700D (used)",
+      "type": "dslr",
+      "tier": "under-150",
+      "badge": "Best budget pick — frames most of M42",
+      "sensor": {
+        "model": "Canon APS-C 18 MP",
+        "widthMm": 22.3,
+        "heightMm": 14.9,
+        "pixelUm": 4.3,
+        "resolution": "5184 × 3456",
+        "readNoiseE": 3.0,
+        "cooled": false
+      },
+      "priceRef": {
+        "new": null,
+        "newSource": null,
+        "usedLow": 108,
+        "usedHigh": 179,
+        "usedNote": "MPB UK 600D listings seen 17 Oct 2026 (£108–£179, with 12-month warranty)"
+      },
+      "planetary": 3,
+      "deepSky": 4,
+      "fitScore": 4,
+      "strengths": [
+        "APS-C field (≈51′ × 34′) shows the whole bright part of M42 at prime focus",
+        "The 600D's 640×480 movie-crop mode gives usable planetary video with a 2× Barlow",
+        "Fully supported by BackyardEOS, APT, N.I.N.A. and DeepSkyStacker; you can later move it to a camera lens or tracker for M31",
+        "Cheapest way to start, with no laptop needed (use an intervalometer)"
+      ],
+      "weaknesses": [
+        "Read noise ≈3 e⁻ hurts on 5 s subs, so you need more frames than with a ZWO camera",
+        "Stock IR filter cuts most H-alpha. M42 still looks great, but faint red nebulae suffer",
+        "Weight (≈550 g) on a 1.25″ nosepiece strains the SLT's fork arm. Balance it and go gently with the slews"
+      ],
+      "adapters": "Canon EF T-ring plus a 1.25″ T-mount nosepiece, pushed into the visual back with the diagonal removed. For planets, put the 2× Barlow in the visual back and the nosepiece into the Barlow.",
+      "match": {
+        "all": [],
+        "any": [
+          "600d",
+          "650d",
+          "700d",
+          "t3i",
+          "t4i",
+          "t5i"
+        ],
+        "none": []
+      },
+      "ebayQuery": "canon eos (600d,650d,700d)",
+      "cexQuery": "canon eos 600d",
+      "priceRange": [
+        50,
+        260
+      ],
+      "retail": [],
+      "searchLinks": [
+        {
+          "store": "MPB",
+          "url": "https://www.mpb.com/en-uk/search?q=canon%20eos%20600d"
+        },
+        {
+          "store": "MPB",
+          "url": "https://www.mpb.com/en-uk/search?q=canon%20eos%20700d"
+        }
+      ],
+      "ebayCategory": "31388"
+    },
+    {
+      "id": "nikon-d5300",
+      "rank": 4,
+      "name": "Nikon D5300 (used)",
+      "type": "dslr",
+      "tier": "150-300",
+      "badge": "Cleaner sensor than the Canons",
+      "sensor": {
+        "model": "Sony-made APS-C 24 MP, no AA filter",
+        "widthMm": 23.5,
+        "heightMm": 15.6,
+        "pixelUm": 3.9,
+        "resolution": "6000 × 4000",
+        "readNoiseE": 1.8,
+        "cooled": false
+      },
+      "priceRef": {
+        "new": null,
+        "newSource": null,
+        "usedLow": 170,
+        "usedHigh": 260,
+        "usedNote": "typical used range (unverified). Check the live listings"
+      },
+      "planetary": 2,
+      "deepSky": 4,
+      "fitScore": 3,
+      "strengths": [
+        "Lower read noise and better dynamic range than the 600D, a popular astro body on Stargazers Lounge",
+        "Same APS-C framing advantage for M42",
+        "Has an articulating screen, which helps at the back of a Mak pointed high"
+      ],
+      "weaknesses": [
+        "Weaker astro software support than Canon (tethering and bulb control are more fiddly)",
+        "No planetary crop mode, so it is poor for Jupiter and Saturn video",
+        "Has no intervalometer port of the Canon type: you need a Nikon remote or an app"
+      ],
+      "adapters": "Nikon F T-ring plus a 1.25″ T-mount nosepiece into the visual back.",
+      "match": {
+        "all": [
+          "d5300"
+        ],
+        "any": [],
+        "none": []
+      },
+      "ebayQuery": "nikon d5300",
+      "cexQuery": "nikon d5300",
+      "priceRange": [
+        80,
+        350
+      ],
+      "retail": [],
+      "searchLinks": [
+        {
+          "store": "MPB",
+          "url": "https://www.mpb.com/en-uk/search?q=nikon%20d5300"
+        }
+      ],
+      "ebayCategory": "31388"
+    },
+    {
+      "id": "asi224mc",
+      "rank": 5,
+      "name": "ZWO ASI224MC (used)",
+      "type": "astro",
+      "tier": "under-150",
+      "badge": "Under-£150 planetary classic",
+      "sensor": {
+        "model": "Sony IMX224",
+        "widthMm": 4.9,
+        "heightMm": 3.7,
+        "pixelUm": 3.75,
+        "resolution": "1304 × 976",
+        "readNoiseE": 0.8,
+        "cooled": false
+      },
+      "priceRef": {
+        "new": null,
+        "newSource": null,
+        "usedLow": 90,
+        "usedHigh": 150,
+        "usedNote": "typical used range — largely superseded by the 662"
+      },
+      "planetary": 4,
+      "deepSky": 1,
+      "fitScore": 3,
+      "strengths": [
+        "Proven planetary camera. A Mak 127 with a 2× Barlow lands near its ideal ≈f/19–20",
+        "Low read noise and high frame rate",
+        "Cheap second-hand and a good guide camera later"
+      ],
+      "weaknesses": [
+        "Very small 1.2 MP chip that is of little use for deep sky at 1,500 mm",
+        "Older sensor with some amp glow. A new 662 is better for about £60 more"
+      ],
+      "adapters": "1.25″ nosepiece (usually included) into the visual back, or into the 2× Barlow.",
+      "match": {
+        "all": [
+          "224"
+        ],
+        "any": [
+          "asi",
+          "zwo"
+        ],
+        "none": []
+      },
+      "ebayQuery": "zwo asi224mc",
+      "cexQuery": "zwo asi224mc",
+      "priceRange": [
+        40,
+        220
+      ],
+      "retail": []
+    },
+    {
+      "id": "asi678mc",
+      "rank": 6,
+      "name": "ZWO ASI678MC",
+      "type": "astro",
+      "tier": "150-300",
+      "badge": "Lunar detail, but small pixels",
+      "sensor": {
+        "model": "Sony IMX678 (STARVIS 2)",
+        "widthMm": 7.7,
+        "heightMm": 4.3,
+        "pixelUm": 2.0,
+        "resolution": "3840 × 2160",
+        "readNoiseE": 0.6,
+        "cooled": false
+      },
+      "priceRef": {
+        "new": 299,
+        "newSource": "First Light Optics, 17 Oct 2026",
+        "usedLow": 190,
+        "usedHigh": 250,
+        "usedNote": "typical used range"
+      },
+      "planetary": 4,
+      "deepSky": 2,
+      "fitScore": 3,
+      "strengths": [
+        "8 MP gives lovely lunar mosaics and closely framed planets",
+        "Lowest read noise of the group"
+      ],
+      "weaknesses": [
+        "2 µm pixels are already oversampled at f/12 (ideal ≈f/10), so the Barlow is never needed",
+        "For deep sky, 0.28″/px is wasted at 1,500 mm and you must bin 2×2. The 585 is the better buy"
+      ],
+      "adapters": "Supplied 1.25″ nosepiece into the visual back, plus a UV/IR-cut filter.",
+      "match": {
+        "all": [
+          "678"
+        ],
+        "any": [
+          "asi",
+          "zwo"
+        ],
+        "none": [
+          "mono",
+          "678mm"
+        ]
+      },
+      "ebayQuery": "zwo asi678mc",
+      "cexQuery": "zwo asi678mc",
+      "priceRange": [
+        90,
+        400
+      ],
+      "retail": [
+        {
+          "store": "First Light Optics",
+          "url": "https://www.firstlightoptics.com/zwo-cameras/zwo-asi-678mc-usb-3-camera.html"
+        }
+      ]
+    },
+    {
+      "id": "canon-rp",
+      "rank": 7,
+      "name": "Canon EOS RP (used, full-frame mirrorless)",
+      "type": "mirrorless",
+      "tier": "500-800",
+      "badge": "Only if you also want a daytime camera",
+      "sensor": {
+        "model": "Canon full-frame 26 MP",
+        "widthMm": 35.9,
+        "heightMm": 24.0,
+        "pixelUm": 5.7,
+        "resolution": "6240 × 4160",
+        "readNoiseE": 2.5,
+        "cooled": false
+      },
+      "priceRef": {
+        "new": null,
+        "newSource": null,
+        "usedLow": 450,
+        "usedHigh": 600,
+        "usedNote": "typical used range (unverified). Check the live listings"
+      },
+      "planetary": 2,
+      "deepSky": 3,
+      "fitScore": 2,
+      "strengths": [
+        "Closest thing to the R6 Mark II you borrowed: full-frame, a great live view for focusing, and RF-mount T-rings available",
+        "A superb general and wide-field astro camera with lenses"
+      ],
+      "weaknesses": [
+        "The Mak's baffle tube vignettes a full-frame sensor heavily at prime focus",
+        "Costs 3–4× more than a 600D for little gain on this telescope",
+        "Big 5.7 µm pixels need ≈f/28 for planets"
+      ],
+      "adapters": "Canon RF T-ring (or EF T-ring plus Canon EF-RF adapter) plus a 1.25″ nosepiece. A 2″ path is not available on the 127 SLT.",
+      "match": {
+        "all": [],
+        "any": [
+          "eos rp"
+        ],
+        "none": [
+          "lens only"
+        ]
+      },
+      "ebayQuery": "canon eos rp",
+      "cexQuery": "canon eos rp",
+      "priceRange": [
+        250,
+        800
+      ],
+      "retail": [],
+      "searchLinks": [
+        {
+          "store": "MPB",
+          "url": "https://www.mpb.com/en-uk/search?q=canon%20eos%20rp"
+        }
+      ],
+      "ebayCategory": "31388"
+    },
+    {
+      "id": "asi533mc-pro",
+      "rank": 8,
+      "name": "ZWO ASI533MC Pro (cooled)",
+      "type": "astro",
+      "tier": "500-800",
+      "badge": "Not worth it on the SLT mount",
+      "sensor": {
+        "model": "Sony IMX533 (cooled)",
+        "widthMm": 11.31,
+        "heightMm": 11.31,
+        "pixelUm": 3.76,
+        "resolution": "3008 × 3008",
+        "readNoiseE": 1.0,
+        "cooled": true
+      },
+      "priceRef": {
+        "new": 859,
+        "newSource": "First Light Optics, 17 Oct 2026",
+        "usedLow": 550,
+        "usedHigh": 700,
+        "usedNote": "typical used range"
+      },
+      "planetary": 1,
+      "deepSky": 5,
+      "fitScore": 1,
+      "strengths": [
+        "Superb deep-sky camera on an equatorial mount with 60–300 s guided subs",
+        "Square chip, no amp glow, set-point cooling for matching darks"
+      ],
+      "weaknesses": [
+        "Cooling only pays off on long exposures. With 2–8 s subs on an alt-az mount, dark current is already negligible",
+        "Too slow and the wrong pixel size for planets",
+        "Costs more than a Star Adventurer GTi, which would help you far more"
+      ],
+      "adapters": "M42 front thread plus a 1.25″ nosepiece. It also needs a 12 V supply for the cooler.",
+      "match": {
+        "all": [
+          "533"
+        ],
+        "any": [
+          "asi",
+          "zwo"
+        ],
+        "none": [
+          "mm",
+          "mono"
+        ]
+      },
+      "ebayQuery": "zwo asi533mc pro",
+      "cexQuery": "zwo asi533",
+      "priceRange": [
+        250,
+        1000
+      ],
+      "retail": [
+        {
+          "store": "First Light Optics",
+          "url": "https://www.firstlightoptics.com/zwo-cameras/zwo-asi-533mc-pro-usb-30-cooled-colour-camera.html"
+        }
+      ]
+    }
+  ],
+  "accessories": [
+    {
+      "id": "t-ring",
+      "name": "Astro Essentials T-ring (Canon EF / Nikon F etc.)",
+      "for": "DSLR / mirrorless",
+      "price": 15,
+      "url": "https://www.firstlightoptics.com/adapters/astro-essentials-t-rings-m42-camera-adapter.html"
+    },
+    {
+      "id": "nosepiece",
+      "name": "Astro Essentials 1.25″ T-mount camera nosepiece",
+      "for": "DSLR / mirrorless",
+      "price": 12,
+      "url": "https://www.firstlightoptics.com/adapters/astro-essentials-1-25-inch-t-mount-camera-nosepiece-adapter.html"
+    },
+    {
+      "id": "reducer",
+      "name": "Astro Essentials 0.5× 1.25″ focal reducer",
+      "for": "ZWO 585 / 662 deep sky (small sensors only)",
+      "price": 19,
+      "url": "https://www.firstlightoptics.com/reducersflatteners/astro-essentials-05x-1-25-focal-reducer.html"
+    },
+    {
+      "id": "uvir",
+      "name": "1.25″ UV/IR-cut filter",
+      "for": "ZWO 585 / 662 / 678 colour cameras",
+      "price": 25,
+      "url": "https://www.firstlightoptics.com/all-filters.html",
+      "approx": true
+    },
+    {
+      "id": "ef-adapter",
+      "name": "Astro Essentials Canon EF lens to T2 adapter",
+      "for": "Using Canon lenses on a ZWO camera",
+      "price": 59,
+      "url": "https://www.firstlightoptics.com/adapters/astro-essentials-canon-ef-lens-to-t2-adapter-for-cmosccd-cameras.html"
+    },
+    {
+      "id": "gti",
+      "name": "Sky-Watcher Star Adventurer GTi",
+      "for": "Camera-lens deep sky (M42 whole, M31)",
+      "price": 435,
+      "url": "https://www.firstlightoptics.com/skywatcher-star-adventurer/sky-watcher-star-adventurer-gti.html"
+    },
+    {
+      "id": "seestar",
+      "name": "ZWO Seestar S50 smart telescope",
+      "for": "Alternative: wide-field M42/M31 the easy way",
+      "price": 539,
+      "url": "https://www.firstlightoptics.com/zwo-telescopes/zwo-seestar-s50-all-in-one-smart-apo-telescope-tripod.html"
+    },
+    {
+      "id": "sct-reducer",
+      "name": "Celestron f/6.3 reducer (NOT recommended)",
+      "for": "Needs SCT rear threads, which the 127 SLT doesn't have",
+      "price": 165,
+      "url": "https://www.firstlightoptics.com/reducersflatteners/celestron-f63-focal-reducer.html"
+    }
+  ]
+}
