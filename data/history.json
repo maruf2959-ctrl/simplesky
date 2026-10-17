@@ -1,0 +1,54 @@
+{
+  "days": {
+    "2026-10-17": {
+      "asi585mc": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "retail": 399
+      },
+      "asi662mc": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "retail": 199
+      },
+      "canon-600d": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "retail": null
+      },
+      "nikon-d5300": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "retail": null
+      },
+      "asi224mc": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "retail": null
+      },
+      "asi678mc": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "retail": 299
+      },
+      "canon-rp": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "retail": null
+      },
+      "asi533mc-pro": {
+        "count": 0,
+        "min": null,
+        "median": null,
+        "retail": 859
+      }
+    }
+  }
+}

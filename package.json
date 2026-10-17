@@ -1,0 +1,12 @@
+{
+  "name": "camera-finder",
+  "private": true,
+  "type": "module",
+  "description": "Live UK listings and an honest astrophotography camera guide for the Celestron NexStar 127 SLT.",
+  "scripts": {
+    "update": "node scripts/update-listings.mjs",
+    "test": "node --test",
+    "serve": "python3 -m http.server 8080"
+  },
+  "engines": { "node": ">=20" }
+}
