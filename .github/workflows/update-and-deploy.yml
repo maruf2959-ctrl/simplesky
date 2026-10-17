@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths-ignore: ['data/listings.json', 'data/history.json']
+    paths-ignore: ['data/listings.json', 'data/history.json', 'data/news.json']
 
 permissions:
   contents: write
@@ -30,17 +30,19 @@ jobs:
           EBAY_CLIENT_ID: ${{ secrets.EBAY_CLIENT_ID }}
           EBAY_CLIENT_SECRET: ${{ secrets.EBAY_CLIENT_SECRET }}
         run: node scripts/update-listings.mjs
+      - name: Fetch astronomy news
+        run: node scripts/update-news.mjs
       - name: Run tests
         run: node --test
       - name: Commit data if it changed
         run: |
           git config user.name "camera-finder-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/listings.json data/history.json
+          git add data/listings.json data/history.json data/news.json
           if git diff --cached --quiet; then
             echo "No changes"
           else
-            git commit -m "Update listings $(date -u +%F)"
+            git commit -m "Update listings and news $(date -u +%F)"
             git pull --rebase origin "${GITHUB_REF_NAME}"
             git push
           fi

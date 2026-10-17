@@ -1,0 +1,808 @@
+{
+ "note": "Curated list; specs from manufacturer listings. Add more freely.",
+ "telescopes": [
+  {
+   "id": "nexstar-127slt",
+   "brand": "Celestron",
+   "name": "NexStar 127SLT",
+   "type": "mak",
+   "aperture": 127,
+   "focal": 1500,
+   "mount": "slt",
+   "eyepieces": [
+    25,
+    9
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "nexstar-90slt",
+   "brand": "Celestron",
+   "name": "NexStar 90SLT",
+   "type": "mak",
+   "aperture": 90,
+   "focal": 1250,
+   "mount": "slt",
+   "eyepieces": [
+    25,
+    9
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "nexstar-102slt",
+   "brand": "Celestron",
+   "name": "NexStar 102SLT",
+   "type": "refractor",
+   "aperture": 102,
+   "focal": 660,
+   "mount": "slt",
+   "eyepieces": [
+    25,
+    9
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "nexstar-130slt",
+   "brand": "Celestron",
+   "name": "NexStar 130SLT",
+   "type": "newtonian",
+   "aperture": 130,
+   "focal": 650,
+   "mount": "slt",
+   "eyepieces": [
+    25,
+    9
+   ],
+   "diagonal": "none",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "nexstar-4se",
+   "brand": "Celestron",
+   "name": "NexStar 4SE",
+   "type": "mak",
+   "aperture": 102,
+   "focal": 1325,
+   "mount": "se",
+   "eyepieces": [
+    25
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "nexstar-5se",
+   "brand": "Celestron",
+   "name": "NexStar 5SE",
+   "type": "sct",
+   "aperture": 125,
+   "focal": 1250,
+   "mount": "se",
+   "eyepieces": [
+    25
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "nexstar-6se",
+   "brand": "Celestron",
+   "name": "NexStar 6SE",
+   "type": "sct",
+   "aperture": 150,
+   "focal": 1500,
+   "mount": "se",
+   "eyepieces": [
+    25
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "nexstar-8se",
+   "brand": "Celestron",
+   "name": "NexStar 8SE",
+   "type": "sct",
+   "aperture": 203,
+   "focal": 2032,
+   "mount": "se",
+   "eyepieces": [
+    25
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "c8-avx",
+   "brand": "Celestron",
+   "name": "C8 on Advanced VX",
+   "type": "sct",
+   "aperture": 203,
+   "focal": 2032,
+   "mount": "eq5-goto",
+   "eyepieces": [
+    25
+   ],
+   "diagonal": "d125",
+   "finder": "f630",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "astromaster-70az",
+   "brand": "Celestron",
+   "name": "AstroMaster 70AZ",
+   "type": "refractor",
+   "aperture": 70,
+   "focal": 900,
+   "mount": "az-manual",
+   "eyepieces": [
+    20,
+    10
+   ],
+   "diagonal": "erect45",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "astromaster-114eq",
+   "brand": "Celestron",
+   "name": "AstroMaster 114EQ",
+   "type": "newtonian",
+   "aperture": 114,
+   "focal": 1000,
+   "mount": "eq-manual",
+   "eyepieces": [
+    20,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "astromaster-130eq",
+   "brand": "Celestron",
+   "name": "AstroMaster 130EQ",
+   "type": "newtonian",
+   "aperture": 130,
+   "focal": 650,
+   "mount": "eq-manual",
+   "eyepieces": [
+    20,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "powerseeker-127eq",
+   "brand": "Celestron",
+   "name": "PowerSeeker 127EQ",
+   "type": "newtonian",
+   "aperture": 127,
+   "focal": 1000,
+   "mount": "eq-manual",
+   "eyepieces": [
+    20,
+    4
+   ],
+   "diagonal": "none",
+   "finder": "f630",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "starsense-lt80",
+   "brand": "Celestron",
+   "name": "StarSense Explorer LT 80AZ",
+   "type": "refractor",
+   "aperture": 80,
+   "focal": 900,
+   "mount": "starsense-az",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "d125",
+   "finder": "starsense",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "starsense-dx102",
+   "brand": "Celestron",
+   "name": "StarSense Explorer DX 102AZ",
+   "type": "refractor",
+   "aperture": 102,
+   "focal": 660,
+   "mount": "starsense-az",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "d125",
+   "finder": "starsense",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "starsense-dx130",
+   "brand": "Celestron",
+   "name": "StarSense Explorer DX 130AZ",
+   "type": "newtonian",
+   "aperture": 130,
+   "focal": 650,
+   "mount": "starsense-az",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "starsense",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "starsense-dob8",
+   "brand": "Celestron",
+   "name": "StarSense Explorer 8″ Dobsonian",
+   "type": "dob",
+   "aperture": 203,
+   "focal": 1200,
+   "mount": "dob",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "starsense",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "inspire-100",
+   "brand": "Celestron",
+   "name": "Inspire 100AZ",
+   "type": "refractor",
+   "aperture": 100,
+   "focal": 660,
+   "mount": "az-manual",
+   "eyepieces": [
+    20,
+    10
+   ],
+   "diagonal": "erect45",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "travelscope-70",
+   "brand": "Celestron",
+   "name": "Travel Scope 70",
+   "type": "refractor",
+   "aperture": 70,
+   "focal": 400,
+   "mount": "tripod",
+   "eyepieces": [
+    20,
+    10
+   ],
+   "diagonal": "erect45",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "firstscope",
+   "brand": "Celestron",
+   "name": "FirstScope 76",
+   "type": "dob",
+   "aperture": 76,
+   "focal": 300,
+   "mount": "dob",
+   "eyepieces": [
+    20,
+    4
+   ],
+   "diagonal": "none",
+   "finder": "none",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "skymax-127-azgti",
+   "brand": "Sky-Watcher",
+   "name": "Skymax 127 AZ-GTi",
+   "type": "mak",
+   "aperture": 127,
+   "focal": 1500,
+   "mount": "azgti",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "skymax-102-azgti",
+   "brand": "Sky-Watcher",
+   "name": "Skymax 102 AZ-GTi",
+   "type": "mak",
+   "aperture": 102,
+   "focal": 1300,
+   "mount": "azgti",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "skymax-90",
+   "brand": "Sky-Watcher",
+   "name": "Skymax 90",
+   "type": "mak",
+   "aperture": 90,
+   "focal": 1250,
+   "mount": "az-manual",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "skymax-150-pro",
+   "brand": "Sky-Watcher",
+   "name": "Skymax 150 PRO (tube)",
+   "type": "mak",
+   "aperture": 150,
+   "focal": 1800,
+   "mount": null,
+   "eyepieces": [
+    28
+   ],
+   "diagonal": "d125",
+   "finder": "f630",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "skymax-180-pro",
+   "brand": "Sky-Watcher",
+   "name": "Skymax 180 PRO (tube)",
+   "type": "mak",
+   "aperture": 180,
+   "focal": 2700,
+   "mount": null,
+   "eyepieces": [
+    28
+   ],
+   "diagonal": "d125",
+   "finder": "f630",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "heritage-130p",
+   "brand": "Sky-Watcher",
+   "name": "Heritage 130P tabletop Dob",
+   "type": "dob",
+   "aperture": 130,
+   "focal": 650,
+   "mount": "dob",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "heritage-150p",
+   "brand": "Sky-Watcher",
+   "name": "Heritage 150P tabletop Dob",
+   "type": "dob",
+   "aperture": 150,
+   "focal": 750,
+   "mount": "dob",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "skyliner-150p",
+   "brand": "Sky-Watcher",
+   "name": "Skyliner 150P Dobsonian",
+   "type": "dob",
+   "aperture": 150,
+   "focal": 1200,
+   "mount": "dob",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "f630",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "skyliner-200p",
+   "brand": "Sky-Watcher",
+   "name": "Skyliner 200P Dobsonian",
+   "type": "dob",
+   "aperture": 200,
+   "focal": 1200,
+   "mount": "dob",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "raci",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "skyliner-250px",
+   "brand": "Sky-Watcher",
+   "name": "Skyliner 250PX Flextube",
+   "type": "dob",
+   "aperture": 254,
+   "focal": 1200,
+   "mount": "dob",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "raci",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "flextube-200p-goto",
+   "brand": "Sky-Watcher",
+   "name": "Skyliner 200P Flextube SynScan GoTo",
+   "type": "dob",
+   "aperture": 200,
+   "focal": 1200,
+   "mount": "dob-goto",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "raci",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "star-discovery-130",
+   "brand": "Sky-Watcher",
+   "name": "Star Discovery P130i Wi-Fi",
+   "type": "newtonian",
+   "aperture": 130,
+   "focal": 650,
+   "mount": "az-goto",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "star-discovery-150",
+   "brand": "Sky-Watcher",
+   "name": "Star Discovery P150i Wi-Fi",
+   "type": "newtonian",
+   "aperture": 150,
+   "focal": 750,
+   "mount": "az-goto",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "explorer-130p",
+   "brand": "Sky-Watcher",
+   "name": "Explorer 130P EQ2",
+   "type": "newtonian",
+   "aperture": 130,
+   "focal": 900,
+   "mount": "eq-manual",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "explorer-150p",
+   "brand": "Sky-Watcher",
+   "name": "Explorer 150P EQ3-2",
+   "type": "newtonian",
+   "aperture": 150,
+   "focal": 750,
+   "mount": "eq-manual",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "f630",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "explorer-200p",
+   "brand": "Sky-Watcher",
+   "name": "Explorer 200P EQ5",
+   "type": "newtonian",
+   "aperture": 200,
+   "focal": 1000,
+   "mount": "eq-manual",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "none",
+   "finder": "raci",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "startravel-102-azgti",
+   "brand": "Sky-Watcher",
+   "name": "StarTravel 102 AZ-GTi",
+   "type": "refractor",
+   "aperture": 102,
+   "focal": 500,
+   "mount": "azgti",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "evostar-72ed",
+   "brand": "Sky-Watcher",
+   "name": "Evostar 72ED (tube)",
+   "type": "refractor",
+   "aperture": 72,
+   "focal": 420,
+   "mount": null,
+   "eyepieces": [],
+   "diagonal": "d2",
+   "finder": "none",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "evostar-80ed",
+   "brand": "Sky-Watcher",
+   "name": "Evostar 80ED (tube)",
+   "type": "refractor",
+   "aperture": 80,
+   "focal": 600,
+   "mount": null,
+   "eyepieces": [],
+   "diagonal": "d2",
+   "finder": "none",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "evostar-100ed",
+   "brand": "Sky-Watcher",
+   "name": "Evostar 100ED (tube)",
+   "type": "refractor",
+   "aperture": 100,
+   "focal": 900,
+   "mount": null,
+   "eyepieces": [],
+   "diagonal": "d2",
+   "finder": "none",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "evostar-90-az",
+   "brand": "Sky-Watcher",
+   "name": "Evostar 90 AZ Pronto",
+   "type": "refractor",
+   "aperture": 90,
+   "focal": 900,
+   "mount": "az-manual",
+   "eyepieces": [
+    25,
+    10
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "orion-xt8",
+   "brand": "Orion",
+   "name": "SkyQuest XT8 Dobsonian",
+   "type": "dob",
+   "aperture": 203,
+   "focal": 1200,
+   "mount": "dob",
+   "eyepieces": [
+    25
+   ],
+   "diagonal": "none",
+   "finder": "raci",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "orion-starblast",
+   "brand": "Orion",
+   "name": "StarBlast 4.5 Astro",
+   "type": "dob",
+   "aperture": 114,
+   "focal": 450,
+   "mount": "dob",
+   "eyepieces": [
+    17,
+    6
+   ],
+   "diagonal": "none",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "apertura-ad8",
+   "brand": "Apertura",
+   "name": "AD8 Dobsonian",
+   "type": "dob",
+   "aperture": 203,
+   "focal": 1200,
+   "mount": "dob",
+   "eyepieces": [
+    30,
+    9
+   ],
+   "diagonal": "none",
+   "finder": "raci",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "meade-etx90",
+   "brand": "Meade",
+   "name": "ETX90 Observer",
+   "type": "mak",
+   "aperture": 90,
+   "focal": 1250,
+   "mount": "etx",
+   "eyepieces": [
+    26
+   ],
+   "diagonal": "d125",
+   "finder": "reddot",
+   "camera": null,
+   "allInOne": false
+  },
+  {
+   "id": "seestar-s50",
+   "brand": "ZWO",
+   "name": "Seestar S50 smart telescope",
+   "type": "smart",
+   "aperture": 50,
+   "focal": 250,
+   "mount": "smart",
+   "eyepieces": [],
+   "diagonal": "none",
+   "finder": "none",
+   "camera": "seestar-s50",
+   "allInOne": true
+  },
+  {
+   "id": "seestar-s30",
+   "brand": "ZWO",
+   "name": "Seestar S30 smart telescope",
+   "type": "smart",
+   "aperture": 30,
+   "focal": 150,
+   "mount": "smart",
+   "eyepieces": [],
+   "diagonal": "none",
+   "finder": "none",
+   "camera": "seestar-s30",
+   "allInOne": true
+  },
+  {
+   "id": "dwarf-3",
+   "brand": "DWARFLAB",
+   "name": "DWARF 3 smart telescope",
+   "type": "smart",
+   "aperture": 35,
+   "focal": 150,
+   "mount": "smart",
+   "eyepieces": [],
+   "diagonal": "none",
+   "finder": "none",
+   "camera": "dwarf3",
+   "allInOne": true
+  },
+  {
+   "id": "vespera-2",
+   "brand": "Vaonis",
+   "name": "Vespera II smart telescope",
+   "type": "smart",
+   "aperture": 50,
+   "focal": 250,
+   "mount": "smart",
+   "eyepieces": [],
+   "diagonal": "none",
+   "finder": "none",
+   "camera": "vespera2",
+   "allInOne": true
+  }
+ ]
+}

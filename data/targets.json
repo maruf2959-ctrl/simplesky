@@ -1,0 +1,921 @@
+{
+ "note": "RA/Dec J2000 in degrees; w/h in arcminutes; core = extra 'brightness' for objects with a concentrated centre (mag); hc = NexStar hand-control catalogue path.",
+ "solarSystem": [
+  {
+   "id": "moon",
+   "name": "Moon",
+   "common": "The Moon",
+   "type": "moon",
+   "hc": "Solar System → Moon",
+   "desc": "Craters, mountains and shadows along the terminator. Best away from full."
+  },
+  {
+   "id": "mercury",
+   "name": "Mercury",
+   "common": "Mercury",
+   "type": "planet",
+   "hc": "Solar System → Mercury",
+   "desc": "Elusive inner planet, only ever low in twilight."
+  },
+  {
+   "id": "venus",
+   "name": "Venus",
+   "common": "Venus",
+   "type": "planet",
+   "hc": "Solar System → Venus",
+   "desc": "Brilliant; shows phases like the Moon."
+  },
+  {
+   "id": "mars",
+   "name": "Mars",
+   "common": "Mars",
+   "type": "planet",
+   "hc": "Solar System → Mars",
+   "desc": "Red planet: polar caps and dark markings when close to Earth."
+  },
+  {
+   "id": "jupiter",
+   "name": "Jupiter",
+   "common": "Jupiter",
+   "type": "planet",
+   "hc": "Solar System → Jupiter",
+   "desc": "Cloud belts, the Great Red Spot and four moons that move nightly."
+  },
+  {
+   "id": "saturn",
+   "name": "Saturn",
+   "common": "Saturn",
+   "type": "planet",
+   "hc": "Solar System → Saturn",
+   "desc": "The rings! Plus Titan and other moons."
+  },
+  {
+   "id": "uranus",
+   "name": "Uranus",
+   "common": "Uranus",
+   "type": "planet",
+   "hc": "Solar System → Uranus",
+   "desc": "Tiny blue-green disc."
+  },
+  {
+   "id": "neptune",
+   "name": "Neptune",
+   "common": "Neptune",
+   "type": "planet",
+   "hc": "Solar System → Neptune",
+   "desc": "Faint blue dot, the outermost planet."
+  }
+ ],
+ "deepSky": [
+  {
+   "id": "M42",
+   "name": "M42",
+   "common": "Orion Nebula",
+   "type": "nebula",
+   "ra": 83.82,
+   "dec": -5.39,
+   "mag": 4.0,
+   "w": 65,
+   "h": 60,
+   "core": 1.5,
+   "hc": "Messier → 42",
+   "desc": "Glowing gas cloud where stars are being born; the Trapezium stars sit in its heart."
+  },
+  {
+   "id": "M31",
+   "name": "M31",
+   "common": "Andromeda Galaxy",
+   "type": "galaxy",
+   "ra": 10.68,
+   "dec": 41.27,
+   "mag": 3.4,
+   "w": 178,
+   "h": 63,
+   "core": 0.8,
+   "hc": "Messier → 31",
+   "desc": "Our nearest big galaxy, 2.5 million light years away. The bright core is easy; the arms need dark skies."
+  },
+  {
+   "id": "M33",
+   "name": "M33",
+   "common": "Triangulum Galaxy",
+   "type": "galaxy",
+   "ra": 23.46,
+   "dec": 30.66,
+   "mag": 5.7,
+   "w": 70,
+   "h": 40,
+   "core": 0.2,
+   "hc": "Messier → 33",
+   "desc": "Large, faint face-on spiral. A real test of dark skies."
+  },
+  {
+   "id": "M51",
+   "name": "M51",
+   "common": "Whirlpool Galaxy",
+   "type": "galaxy",
+   "ra": 202.47,
+   "dec": 47.2,
+   "mag": 8.4,
+   "w": 11,
+   "h": 7,
+   "core": 0.3,
+   "hc": "Messier → 51",
+   "desc": "Face-on spiral interacting with a smaller companion."
+  },
+  {
+   "id": "M81",
+   "name": "M81",
+   "common": "Bode's Galaxy",
+   "type": "galaxy",
+   "ra": 148.89,
+   "dec": 69.07,
+   "mag": 6.9,
+   "w": 27,
+   "h": 14,
+   "core": 0.5,
+   "hc": "Messier → 81",
+   "desc": "Bright spiral, sharing the field with M82 in a low-power eyepiece."
+  },
+  {
+   "id": "M82",
+   "name": "M82",
+   "common": "Cigar Galaxy",
+   "type": "galaxy",
+   "ra": 148.97,
+   "dec": 69.68,
+   "mag": 8.4,
+   "w": 11,
+   "h": 4,
+   "core": 0.6,
+   "hc": "Messier → 82",
+   "desc": "Edge-on starburst galaxy with a dark dust lane."
+  },
+  {
+   "id": "M101",
+   "name": "M101",
+   "common": "Pinwheel Galaxy",
+   "type": "galaxy",
+   "ra": 210.8,
+   "dec": 54.35,
+   "mag": 7.9,
+   "w": 29,
+   "h": 27,
+   "core": 0.0,
+   "hc": "Messier → 101",
+   "desc": "Huge, faint face-on spiral; very hard under light pollution."
+  },
+  {
+   "id": "M104",
+   "name": "M104",
+   "common": "Sombrero Galaxy",
+   "type": "galaxy",
+   "ra": 189.99,
+   "dec": -11.62,
+   "mag": 8.0,
+   "w": 9,
+   "h": 4,
+   "core": 0.6,
+   "hc": "Messier → 104",
+   "desc": "Edge-on galaxy with a striking dust lane. Low from the UK."
+  },
+  {
+   "id": "M63",
+   "name": "M63",
+   "common": "Sunflower Galaxy",
+   "type": "galaxy",
+   "ra": 198.96,
+   "dec": 42.03,
+   "mag": 8.6,
+   "w": 12,
+   "h": 7.5,
+   "core": 0.4,
+   "hc": "Messier → 63",
+   "desc": "Bright oval glow with a concentrated core."
+  },
+  {
+   "id": "M64",
+   "name": "M64",
+   "common": "Black Eye Galaxy",
+   "type": "galaxy",
+   "ra": 194.18,
+   "dec": 21.68,
+   "mag": 8.5,
+   "w": 10,
+   "h": 5,
+   "core": 0.5,
+   "hc": "Messier → 64",
+   "desc": "Bright core with a dark dust patch, the 'black eye'."
+  },
+  {
+   "id": "M66",
+   "name": "M66",
+   "common": "Leo Triplet (M65/M66)",
+   "type": "galaxy",
+   "ra": 170.06,
+   "dec": 12.99,
+   "mag": 8.9,
+   "w": 9,
+   "h": 4,
+   "core": 0.3,
+   "hc": "Messier → 66",
+   "desc": "Two galaxies (three with NGC 3628) in one low-power view."
+  },
+  {
+   "id": "M106",
+   "name": "M106",
+   "common": "M106",
+   "type": "galaxy",
+   "ra": 184.74,
+   "dec": 47.3,
+   "mag": 8.4,
+   "w": 19,
+   "h": 8,
+   "core": 0.4,
+   "hc": "Messier → 106",
+   "desc": "Large spiral with a bright nucleus."
+  },
+  {
+   "id": "M13",
+   "name": "M13",
+   "common": "Great Hercules Cluster",
+   "type": "globular",
+   "ra": 250.42,
+   "dec": 36.46,
+   "mag": 5.8,
+   "w": 20,
+   "h": 20,
+   "core": 0.8,
+   "hc": "Messier → 13",
+   "desc": "Hundreds of thousands of stars in a ball; resolves into stars at 100×+."
+  },
+  {
+   "id": "M92",
+   "name": "M92",
+   "common": "M92",
+   "type": "globular",
+   "ra": 259.28,
+   "dec": 43.14,
+   "mag": 6.4,
+   "w": 14,
+   "h": 14,
+   "core": 0.8,
+   "hc": "Messier → 92",
+   "desc": "Often-overlooked neighbour of M13, almost as good."
+  },
+  {
+   "id": "M3",
+   "name": "M3",
+   "common": "M3",
+   "type": "globular",
+   "ra": 205.55,
+   "dec": 28.38,
+   "mag": 6.2,
+   "w": 18,
+   "h": 18,
+   "core": 0.8,
+   "hc": "Messier → 3",
+   "desc": "Rich globular cluster in Canes Venatici."
+  },
+  {
+   "id": "M5",
+   "name": "M5",
+   "common": "M5",
+   "type": "globular",
+   "ra": 229.64,
+   "dec": 2.08,
+   "mag": 5.6,
+   "w": 23,
+   "h": 23,
+   "core": 0.8,
+   "hc": "Messier → 5",
+   "desc": "One of the finest globulars in the sky."
+  },
+  {
+   "id": "M15",
+   "name": "M15",
+   "common": "M15",
+   "type": "globular",
+   "ra": 322.49,
+   "dec": 12.17,
+   "mag": 6.2,
+   "w": 18,
+   "h": 18,
+   "core": 0.9,
+   "hc": "Messier → 15",
+   "desc": "Dense globular with a very bright core."
+  },
+  {
+   "id": "M2",
+   "name": "M2",
+   "common": "M2",
+   "type": "globular",
+   "ra": 323.36,
+   "dec": -0.82,
+   "mag": 6.5,
+   "w": 16,
+   "h": 16,
+   "core": 0.8,
+   "hc": "Messier → 2",
+   "desc": "Bright, compact globular in Aquarius."
+  },
+  {
+   "id": "M22",
+   "name": "M22",
+   "common": "M22",
+   "type": "globular",
+   "ra": 279.1,
+   "dec": -23.9,
+   "mag": 5.1,
+   "w": 32,
+   "h": 32,
+   "core": 0.7,
+   "hc": "Messier → 22",
+   "desc": "Superb globular, but always low from the UK."
+  },
+  {
+   "id": "M57",
+   "name": "M57",
+   "common": "Ring Nebula",
+   "type": "pn",
+   "ra": 283.4,
+   "dec": 33.03,
+   "mag": 8.8,
+   "w": 1.4,
+   "h": 1.0,
+   "core": 0.5,
+   "hc": "Messier → 57",
+   "desc": "A smoke ring of gas thrown off by a dying star."
+  },
+  {
+   "id": "M27",
+   "name": "M27",
+   "common": "Dumbbell Nebula",
+   "type": "pn",
+   "ra": 299.9,
+   "dec": 22.72,
+   "mag": 7.4,
+   "w": 8,
+   "h": 5.7,
+   "core": 0.4,
+   "hc": "Messier → 27",
+   "desc": "Big, bright planetary nebula with an 'apple core' shape."
+  },
+  {
+   "id": "M97",
+   "name": "M97",
+   "common": "Owl Nebula",
+   "type": "pn",
+   "ra": 168.7,
+   "dec": 55.02,
+   "mag": 9.9,
+   "w": 3.4,
+   "h": 3.4,
+   "core": 0.0,
+   "hc": "Messier → 97",
+   "desc": "Faint round glow; the owl's 'eyes' need dark skies and a filter."
+  },
+  {
+   "id": "M76",
+   "name": "M76",
+   "common": "Little Dumbbell",
+   "type": "pn",
+   "ra": 25.58,
+   "dec": 51.58,
+   "mag": 10.1,
+   "w": 2.7,
+   "h": 1.8,
+   "core": 0.3,
+   "hc": "Messier → 76",
+   "desc": "Small and faint. A challenge object."
+  },
+  {
+   "id": "NGC6543",
+   "name": "NGC 6543",
+   "common": "Cat's Eye Nebula",
+   "type": "pn",
+   "ra": 269.64,
+   "dec": 66.63,
+   "mag": 8.1,
+   "w": 0.4,
+   "h": 0.4,
+   "core": 0.5,
+   "hc": "Caldwell → 6",
+   "desc": "Tiny, very bright blue-green disc. Great at high power."
+  },
+  {
+   "id": "NGC7662",
+   "name": "NGC 7662",
+   "common": "Blue Snowball",
+   "type": "pn",
+   "ra": 351.47,
+   "dec": 42.54,
+   "mag": 8.3,
+   "w": 0.5,
+   "h": 0.5,
+   "core": 0.5,
+   "hc": "Caldwell → 22",
+   "desc": "Small bright blue disc; loves magnification."
+  },
+  {
+   "id": "NGC2392",
+   "name": "NGC 2392",
+   "common": "Eskimo Nebula",
+   "type": "pn",
+   "ra": 112.29,
+   "dec": 20.91,
+   "mag": 9.1,
+   "w": 0.8,
+   "h": 0.8,
+   "core": 0.5,
+   "hc": "Caldwell → 39",
+   "desc": "Bright central star in a fuzzy 'hood'."
+  },
+  {
+   "id": "M1",
+   "name": "M1",
+   "common": "Crab Nebula",
+   "type": "nebula",
+   "ra": 83.63,
+   "dec": 22.01,
+   "mag": 8.4,
+   "w": 7,
+   "h": 5,
+   "core": 0.0,
+   "hc": "Messier → 1",
+   "desc": "Remains of a star that exploded in 1054. Faint grey patch visually."
+  },
+  {
+   "id": "M8",
+   "name": "M8",
+   "common": "Lagoon Nebula",
+   "type": "nebula",
+   "ra": 270.9,
+   "dec": -24.38,
+   "mag": 6.0,
+   "w": 90,
+   "h": 40,
+   "core": 0.8,
+   "hc": "Messier → 8",
+   "desc": "Bright nebula with a cluster. Very low from the UK."
+  },
+  {
+   "id": "M17",
+   "name": "M17",
+   "common": "Omega (Swan) Nebula",
+   "type": "nebula",
+   "ra": 275.2,
+   "dec": -16.18,
+   "mag": 6.0,
+   "w": 46,
+   "h": 37,
+   "core": 0.8,
+   "hc": "Messier → 17",
+   "desc": "Bright swan-shaped nebula, low in the south."
+  },
+  {
+   "id": "NGC7000",
+   "name": "NGC 7000",
+   "common": "North America Nebula",
+   "type": "nebula",
+   "ra": 314.7,
+   "dec": 44.3,
+   "mag": 4.0,
+   "w": 120,
+   "h": 100,
+   "core": 0.0,
+   "hc": "Caldwell → 20",
+   "desc": "Huge and faint. A camera-lens target, not for the eyepiece."
+  },
+  {
+   "id": "M45",
+   "name": "M45",
+   "common": "Pleiades",
+   "type": "open",
+   "ra": 56.75,
+   "dec": 24.12,
+   "mag": 1.6,
+   "w": 110,
+   "h": 110,
+   "core": 0.0,
+   "hc": "Messier → 45",
+   "desc": "The Seven Sisters. Best in binoculars or a wide view."
+  },
+  {
+   "id": "M44",
+   "name": "M44",
+   "common": "Beehive Cluster",
+   "type": "open",
+   "ra": 130.1,
+   "dec": 19.67,
+   "mag": 3.7,
+   "w": 95,
+   "h": 95,
+   "core": 0.0,
+   "hc": "Messier → 44",
+   "desc": "Big, bright swarm of stars. Needs a wide field."
+  },
+  {
+   "id": "NGC869",
+   "name": "NGC 869/884",
+   "common": "Double Cluster",
+   "type": "open",
+   "ra": 34.75,
+   "dec": 57.13,
+   "mag": 4.3,
+   "w": 60,
+   "h": 30,
+   "core": 0.0,
+   "hc": "Caldwell → 14",
+   "desc": "Two glittering clusters side by side. A showpiece."
+  },
+  {
+   "id": "M35",
+   "name": "M35",
+   "common": "M35",
+   "type": "open",
+   "ra": 92.25,
+   "dec": 24.33,
+   "mag": 5.1,
+   "w": 28,
+   "h": 28,
+   "core": 0.0,
+   "hc": "Messier → 35",
+   "desc": "Rich cluster in Gemini."
+  },
+  {
+   "id": "M36",
+   "name": "M36",
+   "common": "M36",
+   "type": "open",
+   "ra": 84.08,
+   "dec": 34.14,
+   "mag": 6.0,
+   "w": 12,
+   "h": 12,
+   "core": 0.0,
+   "hc": "Messier → 36",
+   "desc": "Compact Auriga cluster."
+  },
+  {
+   "id": "M37",
+   "name": "M37",
+   "common": "M37",
+   "type": "open",
+   "ra": 88.07,
+   "dec": 32.55,
+   "mag": 5.6,
+   "w": 24,
+   "h": 24,
+   "core": 0.0,
+   "hc": "Messier → 37",
+   "desc": "The richest of the Auriga clusters."
+  },
+  {
+   "id": "M38",
+   "name": "M38",
+   "common": "M38",
+   "type": "open",
+   "ra": 82.17,
+   "dec": 35.85,
+   "mag": 6.4,
+   "w": 21,
+   "h": 21,
+   "core": 0.0,
+   "hc": "Messier → 38",
+   "desc": "Cross-shaped cluster in Auriga."
+  },
+  {
+   "id": "M11",
+   "name": "M11",
+   "common": "Wild Duck Cluster",
+   "type": "open",
+   "ra": 282.77,
+   "dec": -6.27,
+   "mag": 6.3,
+   "w": 14,
+   "h": 14,
+   "core": 0.0,
+   "hc": "Messier → 11",
+   "desc": "Dense, rich cluster shaped like a flight of ducks."
+  },
+  {
+   "id": "M52",
+   "name": "M52",
+   "common": "M52",
+   "type": "open",
+   "ra": 351.2,
+   "dec": 61.59,
+   "mag": 7.3,
+   "w": 13,
+   "h": 13,
+   "core": 0.0,
+   "hc": "Messier → 52",
+   "desc": "Rich cluster in Cassiopeia."
+  },
+  {
+   "id": "NGC457",
+   "name": "NGC 457",
+   "common": "Owl (ET) Cluster",
+   "type": "open",
+   "ra": 19.88,
+   "dec": 58.29,
+   "mag": 6.4,
+   "w": 13,
+   "h": 13,
+   "core": 0.0,
+   "hc": "Caldwell → 13",
+   "desc": "Looks like a figure with two bright 'eyes'."
+  },
+  {
+   "id": "Albireo",
+   "name": "Albireo",
+   "common": "Gold and blue double",
+   "type": "double",
+   "ra": 292.68,
+   "dec": 27.96,
+   "mag": 3.1,
+   "hc": "Named Star → Albireo",
+   "desc": "The prettiest colour-contrast double star.",
+   "sep": 34.4
+  },
+  {
+   "id": "Mizar",
+   "name": "Mizar",
+   "common": "Mizar and Alcor",
+   "type": "double",
+   "ra": 200.98,
+   "dec": 54.93,
+   "mag": 2.2,
+   "hc": "Named Star → Mizar",
+   "desc": "Naked-eye pair; the telescope splits Mizar itself.",
+   "sep": 14.4
+  },
+  {
+   "id": "Castor",
+   "name": "Castor",
+   "common": "Castor",
+   "type": "double",
+   "ra": 113.65,
+   "dec": 31.89,
+   "mag": 1.6,
+   "hc": "Named Star → Castor",
+   "desc": "Tight bright pair; a good test of optics.",
+   "sep": 5.5
+  },
+  {
+   "id": "EpsLyr",
+   "name": "ε Lyrae",
+   "common": "Double Double",
+   "type": "double",
+   "ra": 281.08,
+   "dec": 39.67,
+   "mag": 4.7,
+   "hc": "Named Star → Vega, then nudge 1.7° NE",
+   "desc": "Two pairs, each splitting at high power on a steady night.",
+   "sep": 2.3
+  },
+  {
+   "id": "Almach",
+   "name": "Almach",
+   "common": "Gold and blue double",
+   "type": "double",
+   "ra": 30.97,
+   "dec": 42.33,
+   "mag": 2.2,
+   "hc": "Named Star → Almach",
+   "desc": "Orange and blue pair in Andromeda.",
+   "sep": 9.6
+  },
+  {
+   "id": "Algieba",
+   "name": "Algieba",
+   "common": "Golden double",
+   "type": "double",
+   "ra": 154.99,
+   "dec": 19.84,
+   "mag": 2.4,
+   "hc": "Named Star → Algieba",
+   "desc": "Two golden stars close together.",
+   "sep": 4.7
+  },
+  {
+   "id": "CorCar",
+   "name": "Cor Caroli",
+   "common": "Cor Caroli",
+   "type": "double",
+   "ra": 194.0,
+   "dec": 38.32,
+   "mag": 2.9,
+   "hc": "Named Star → Cor Caroli",
+   "desc": "Easy white and lilac pair.",
+   "sep": 19.6
+  }
+ ],
+ "alignStars": [
+  {
+   "name": "Sirius",
+   "ra": 101.29,
+   "dec": -16.72,
+   "mag": -1.5
+  },
+  {
+   "name": "Arcturus",
+   "ra": 213.92,
+   "dec": 19.18,
+   "mag": -0.05
+  },
+  {
+   "name": "Vega",
+   "ra": 279.23,
+   "dec": 38.78,
+   "mag": 0.03
+  },
+  {
+   "name": "Capella",
+   "ra": 79.17,
+   "dec": 46.0,
+   "mag": 0.08
+  },
+  {
+   "name": "Rigel",
+   "ra": 78.63,
+   "dec": -8.2,
+   "mag": 0.13
+  },
+  {
+   "name": "Procyon",
+   "ra": 114.83,
+   "dec": 5.22,
+   "mag": 0.34
+  },
+  {
+   "name": "Betelgeuse",
+   "ra": 88.79,
+   "dec": 7.41,
+   "mag": 0.5
+  },
+  {
+   "name": "Altair",
+   "ra": 297.7,
+   "dec": 8.87,
+   "mag": 0.77
+  },
+  {
+   "name": "Aldebaran",
+   "ra": 68.98,
+   "dec": 16.51,
+   "mag": 0.85
+  },
+  {
+   "name": "Antares",
+   "ra": 247.35,
+   "dec": -26.43,
+   "mag": 1.0
+  },
+  {
+   "name": "Spica",
+   "ra": 201.3,
+   "dec": -11.16,
+   "mag": 1.04
+  },
+  {
+   "name": "Pollux",
+   "ra": 116.33,
+   "dec": 28.03,
+   "mag": 1.14
+  },
+  {
+   "name": "Fomalhaut",
+   "ra": 344.41,
+   "dec": -29.62,
+   "mag": 1.16
+  },
+  {
+   "name": "Deneb",
+   "ra": 310.36,
+   "dec": 45.28,
+   "mag": 1.25
+  },
+  {
+   "name": "Regulus",
+   "ra": 152.09,
+   "dec": 11.97,
+   "mag": 1.36
+  },
+  {
+   "name": "Castor",
+   "ra": 113.65,
+   "dec": 31.89,
+   "mag": 1.58
+  },
+  {
+   "name": "Bellatrix",
+   "ra": 81.28,
+   "dec": 6.35,
+   "mag": 1.64
+  },
+  {
+   "name": "Elnath",
+   "ra": 81.57,
+   "dec": 28.61,
+   "mag": 1.65
+  },
+  {
+   "name": "Alioth",
+   "ra": 193.51,
+   "dec": 55.96,
+   "mag": 1.76
+  },
+  {
+   "name": "Dubhe",
+   "ra": 165.93,
+   "dec": 61.75,
+   "mag": 1.79
+  },
+  {
+   "name": "Mirfak",
+   "ra": 51.08,
+   "dec": 49.86,
+   "mag": 1.79
+  },
+  {
+   "name": "Alkaid",
+   "ra": 206.89,
+   "dec": 49.31,
+   "mag": 1.86
+  },
+  {
+   "name": "Alhena",
+   "ra": 99.43,
+   "dec": 16.4,
+   "mag": 1.92
+  },
+  {
+   "name": "Hamal",
+   "ra": 31.79,
+   "dec": 23.46,
+   "mag": 2.0
+  },
+  {
+   "name": "Alpheratz",
+   "ra": 2.1,
+   "dec": 29.09,
+   "mag": 2.06
+  },
+  {
+   "name": "Denebola",
+   "ra": 177.26,
+   "dec": 14.57,
+   "mag": 2.13
+  },
+  {
+   "name": "Kochab",
+   "ra": 222.68,
+   "dec": 74.16,
+   "mag": 2.07
+  },
+  {
+   "name": "Rasalhague",
+   "ra": 263.73,
+   "dec": 12.56,
+   "mag": 2.07
+  },
+  {
+   "name": "Enif",
+   "ra": 326.05,
+   "dec": 9.88,
+   "mag": 2.39
+  },
+  {
+   "name": "Schedar",
+   "ra": 10.13,
+   "dec": 56.54,
+   "mag": 2.24
+  },
+  {
+   "name": "Markab",
+   "ra": 346.19,
+   "dec": 15.21,
+   "mag": 2.48
+  },
+  {
+   "name": "Mizar",
+   "ra": 200.98,
+   "dec": 54.93,
+   "mag": 2.23
+  },
+  {
+   "name": "Alphecca",
+   "ra": 233.67,
+   "dec": 26.71,
+   "mag": 2.23
+  },
+  {
+   "name": "Eltanin",
+   "ra": 269.15,
+   "dec": 51.49,
+   "mag": 2.23
+  }
+ ]
+}

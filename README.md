@@ -1,20 +1,30 @@
-# Camera Finder · 127 SLT
+# Stargazer · Camera Finder
 
-A stargazing-themed web app with **live UK listings** for astrophotography cameras that suit a
-**Celestron NexStar 127 SLT** (127 mm Maksutov, 1,500 mm, f/12, alt-az GoTo). It also has an honest
-research guide to what that telescope and mount can achieve.
+An all-round **stargazing app for your phone**: what *your* telescope can see tonight, the weather,
+a sky calendar, your kit, and live UK gear prices. It started as a camera finder for a
+**Celestron NexStar 127 SLT** and now works with any telescope. It's installable (Add to Home Screen),
+works offline at a dark site, and has a red night mode.
 
-The listings refresh **every day** through a GitHub Action, and the site is served free from GitHub Pages.
+The plan and progress live in [ROADMAP.md](ROADMAP.md).
 
-## What's in it
+## Tabs
 
-| Section | What it does |
+| Tab | What it does |
 |---|---|
-| **Tonight over Worthing** | Dark window, moon phase, cloud forecast (Open-Meteo), and the altitude of M42/M31/M51/M81/M13/M57/M27/Jupiter/Saturn. It also gives the **field-rotation-limited exposure** for your chosen camera, calculated live. |
-| **Live UK listings** | eBay UK (official API), CeX, and First Light Optics prices, filtered to the recommended cameras. Spares, accessories and "for parts" items are excluded. Listings below the median are flagged as deals. |
-| **Rankings** | 8 cameras ranked for *this* telescope, with live prices, image scale, field of view and a price-trend sparkline. |
-| **Framing simulator** | Draws each sensor's field against each target at prime focus, with the 0.5× reducer, with the 2× Barlow, or on a camera lens. |
-| **Limits, kit list, alternatives, examples, sources** | The research: f/12 brightness, field rotation, SLT tracking, frames to stack, Barlow use, exact adapters with totals, the lens-plus-tracker alternative, and real 127 Mak results. |
+| **Home** | Tonight at a glance, the best targets for your kit, "Did you know?" facts, and a beginner's start guide. |
+| **Tonight** | Cloud timeline, darkness, Moon, dew and wind. Every target is **rated 0–100 for your kit** (viewing, and photography if you've added a camera), with the eyepiece to use, the reasons behind the score, and a **GoTo helper** (alignment stars to use now plus hand-controller paths). |
+| **Events** | Calculated sky calendar (Moon phases, meteor showers, oppositions, elongations, conjunctions, seasons, clock changes) plus NASA/ESA headlines refreshed daily. |
+| **My Kit** | Search about 50 popular telescopes (or enter your own), build the setup on a tappable diagram, switch between modular and all-in-one, and see magnification, field of view, limiting magnitude and camera numbers. Multiple setups are supported. |
+| **Shop** | Live UK listings (eBay, CeX, First Light Optics), rankings, framing simulator and the 127 SLT camera guide. |
+| **Location & sky** (📍 at the top) | GPS, place or UK postcode search, a live map with a NASA night-lights layer, an automatic Bortle estimate, and stargazing conditions. |
+
+### How the ratings work
+
+`assets/rating.js` scores each target from standard observing formulae: aperture resolution (Dawes limit)
+against a planet's size; limiting magnitude and surface brightness against your sky (Bortle class); the
+target's size against your widest eyepiece field; Moon brightness and distance; and altitude. For
+photography it adds focal ratio, sensor framing, pixel sampling, read noise and the longest sub your
+mount allows (tracking or alt-az field rotation). The results are heuristics, tested in `test/rating.test.mjs`.
 
 ## Setup (about 10 minutes)
 
@@ -33,7 +43,8 @@ Your site will be at `https://<your-username>.github.io/Camera-finder-/`.
 ```bash
 node scripts/update-listings.mjs   # refresh data/listings.json (set EBAY_* env vars for eBay)
 npm run serve                      # then open http://localhost:8080
-npm test                           # listing-filter unit tests
+node scripts/update-news.mjs       # refresh data/news.json
+npm test                           # listing filters, RSS parsing and rating engine
 ```
 
 ## Data sources and their limits
