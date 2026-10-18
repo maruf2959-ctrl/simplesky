@@ -58,7 +58,7 @@
     App.sheet(title,
       el('figure', { class: 'obj-hero' },
         photo(info, 'obj-img'),
-        info?.imageCredit ? el('figcaption', {}, 'Photo: ', info.imageSource ? el('a', { href: info.imageSource, target: '_blank', rel: 'noopener' }, info.imageCredit) : info.imageCredit) : null),
+        info?.imageCredit ? el('figcaption', {}, 'Image: ', info.imageSource ? el('a', { href: info.imageSource, target: '_blank', rel: 'noopener' }, info.imageCredit) : info.imageCredit) : null),
       el('div', { class: 'row wrap', style: 'gap:0.4rem;margin:0.2rem 0 0.6rem' },
         el('span', { class: 'pill-type' }, `${App.TYPE_ICON[t.type] || ''} ${App.TYPE_NAME[t.type] || ''}`),
         t.name !== title ? el('span', { class: 'pill-type' }, t.name) : null,

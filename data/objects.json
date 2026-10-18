@@ -163,7 +163,7 @@
    "distance": "21 million light years",
    "textCredit": "Wikipedia (CC BY-SA 4.0)",
    "image": "assets/img/M101.jpg",
-   "imageCredit": "Credit:\n\nImage: European Space Agency & NASA\n\nAcknowledgements:\n\nProject Investi · CC BY 4.0",
+   "imageCredit": "Credit: Image: European Space Agency & NASA Acknowledgements: Project Investi · CC BY 4.0",
    "imageSource": "https://commons.wikimedia.org/wiki/File:M101_hires_STScI-PRC2006-10a.jpg"
   },
   "M104": {
@@ -295,7 +295,7 @@
    "distance": "1,360 light years",
    "textCredit": "Wikipedia (CC BY-SA 4.0)",
    "image": "assets/img/M27.jpg",
-   "imageCredit": "Credit: T.A. Rector (University of Alaska Anchorage) and H. Schweiker (WIYN and  · CC BY 4.0",
+   "imageCredit": "Credit: T.A. Rector (University of Alaska Anchorage) and H. Schweiker (WIYN and · CC BY 4.0",
    "imageSource": "https://commons.wikimedia.org/wiki/File:M27_-_Noao-m27-kpno-mayall-4-m.jpg"
   },
   "M97": {
@@ -345,7 +345,10 @@
    "url": "https://en.wikipedia.org/wiki/Eskimo_Nebula",
    "constellation": "Gemini",
    "distance": "4,000 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/NGC2392.jpg",
+   "imageCredit": "European Space Agency · CC BY 4.0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Lion_Nebula_roars_to_life_for_Webb_ESA524574.jpg"
   },
   "M1": {
    "title": "Crab Nebula",
@@ -399,7 +402,7 @@
    "distance": "444 light years",
    "textCredit": "Wikipedia (CC BY-SA 4.0)",
    "image": "assets/img/M45.jpg",
-   "imageCredit": "NASA, ESA, AURA/Caltech, Palomar Observatory\n\nThe science team consists of: D. S · Public domain",
+   "imageCredit": "NASA, ESA, AURA/Caltech, Palomar Observatory The science team consists of: D. S · Public domain",
    "imageSource": "https://commons.wikimedia.org/wiki/File:Pleiades_large.jpg"
   },
   "M44": {
@@ -408,7 +411,10 @@
    "url": "https://en.wikipedia.org/wiki/Beehive_Cluster",
    "constellation": "Cancer",
    "distance": "577 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M44.jpg",
+   "imageCredit": "Chuck Ayoub · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M44-Star-Cluster.png"
   },
   "NGC869": {
    "title": "Double Cluster",
@@ -416,7 +422,10 @@
    "url": "https://en.wikipedia.org/wiki/Double_Cluster",
    "constellation": "Perseus",
    "distance": "7,500 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/NGC869.jpg",
+   "imageCredit": "Genuson · CC BY-SA 3.0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Double_Cluster.jpg"
   },
   "M35": {
    "title": "Messier 35",
@@ -424,7 +433,10 @@
    "url": "https://en.wikipedia.org/wiki/Messier_35",
    "constellation": "Gemini",
    "distance": "2,800 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M35.jpg",
+   "imageCredit": "Chuck Ayoub · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M35_and_NGC_2158.png"
   },
   "M36": {
    "title": "Messier 36",
@@ -432,7 +444,10 @@
    "url": "https://en.wikipedia.org/wiki/Messier_36",
    "constellation": "Auriga",
    "distance": "4,100 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M36.jpg",
+   "imageCredit": "Chuck Ayoub · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M36-pinwheel-cluster.png"
   },
   "M37": {
    "title": "Messier 37",
@@ -440,7 +455,10 @@
    "url": "https://en.wikipedia.org/wiki/Messier_37",
    "constellation": "Auriga",
    "distance": "4,500 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M37.jpg",
+   "imageCredit": "Chuck Ayoub · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M37_Star_Cluster.png"
   },
   "M38": {
    "title": "Messier 38",
@@ -470,7 +488,10 @@
    "url": "https://en.wikipedia.org/wiki/Messier_52",
    "constellation": "Cassiopeia",
    "distance": "5,000 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M52.jpg",
+   "imageCredit": "Unknown author · Public domain",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M52atlas.jpg"
   },
   "NGC457": {
    "title": "NGC 457",
@@ -478,7 +499,10 @@
    "url": "https://en.wikipedia.org/wiki/NGC_457",
    "constellation": "Cassiopeia",
    "distance": "7,900 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/NGC457.jpg",
+   "imageCredit": "Chuck Ayoub · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:BGC_457Cluster.png"
   },
   "Albireo": {
    "title": "Albireo",
@@ -488,7 +512,7 @@
    "distance": "430 light years",
    "textCredit": "Wikipedia (CC BY-SA 4.0)",
    "image": "assets/img/Albireo.jpg",
-   "imageCredit": "Cygnus_constellation_map.png: Torsten Bronger\nderivative work: Kxx (talk) · CC BY-SA 3.0",
+   "imageCredit": "Cygnus_constellation_map.png: Torsten Bronger derivative work: Kxx (talk) · CC BY-SA 3.0",
    "imageSource": "https://commons.wikimedia.org/wiki/File:Cygnus_constellation_map.svg"
   },
   "Mizar": {
@@ -497,7 +521,10 @@
    "url": "https://en.wikipedia.org/wiki/Mizar_and_Alcor",
    "constellation": "Ursa Major",
    "distance": "83 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/Mizar.jpg",
+   "imageCredit": "Chuck Ayoub · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Mizar_and_Alcor.png"
   },
   "Castor": {
    "title": "Castor (star)",
@@ -507,7 +534,7 @@
    "distance": "51 light years",
    "textCredit": "Wikipedia (CC BY-SA 4.0)",
    "image": "assets/img/Castor.jpg",
-   "imageCredit": "Gemini_constellation_map.png: Torsten Bronger\nderivative work: Kxx (talk) · CC BY-SA 3.0",
+   "imageCredit": "Gemini_constellation_map.png: Torsten Bronger derivative work: Kxx (talk) · CC BY-SA 3.0",
    "imageSource": "https://commons.wikimedia.org/wiki/File:Gemini_constellation_map.svg"
   },
   "EpsLyr": {
@@ -526,7 +553,7 @@
    "distance": "350 light years",
    "textCredit": "Wikipedia (CC BY-SA 4.0)",
    "image": "assets/img/Almach.jpg",
-   "imageCredit": "Andromeda_constellation_map.png: Torsten Bronger\nderivative work: Kxx (talk) · CC BY-SA 3.0",
+   "imageCredit": "Andromeda_constellation_map.png: Torsten Bronger derivative work: Kxx (talk) · CC BY-SA 3.0",
    "imageSource": "https://commons.wikimedia.org/wiki/File:Andromeda_constellation_map.svg"
   },
   "Algieba": {
@@ -537,7 +564,7 @@
    "distance": "130 light years",
    "textCredit": "Wikipedia (CC BY-SA 4.0)",
    "image": "assets/img/Algieba.jpg",
-   "imageCredit": "Leo_constellation_map.png: Torsten Bronger.\nderivative work: Kxx (talk) · CC BY-SA 3.0",
+   "imageCredit": "Leo_constellation_map.png: Torsten Bronger. derivative work: Kxx (talk) · CC BY-SA 3.0",
    "imageSource": "https://commons.wikimedia.org/wiki/File:Leo_constellation_map.svg"
   },
   "CorCar": {
@@ -546,7 +573,10 @@
    "url": "https://en.wikipedia.org/wiki/Cor_Caroli",
    "constellation": "Canes Venatici",
    "distance": "110 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/CorCar.jpg",
+   "imageCredit": "IAU and Sky & Telescope magazine (Roger Sinnott & Rick Fienberg) · CC BY 3.0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Canes_Venatici_IAU.svg"
   },
   "M63": {
    "title": "Messier 63",

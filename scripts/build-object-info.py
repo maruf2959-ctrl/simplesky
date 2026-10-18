@@ -121,7 +121,7 @@ def fetch_image(oid, src):
     fname = urllib.parse.unquote(parts[-2] if '/thumb/' in path else parts[-1])
     meta = get('https://commons.wikimedia.org/w/api.php?' + urllib.parse.urlencode({
         'action': 'query', 'titles': 'File:' + fname, 'prop': 'imageinfo',
-        'iiprop': 'url|extmetadata', 'iiurlwidth': 800, 'format': 'json'}))
+        'iiprop': 'url|extmetadata', 'iiurlwidth': 960,  # a standard Wikimedia thumbnail size 'format': 'json'}))
     page = next(iter(meta['query']['pages'].values()))
     ii = (page.get('imageinfo') or [None])[0]
     if not ii:  # file lives on en.wikipedia (non-free); skip it
