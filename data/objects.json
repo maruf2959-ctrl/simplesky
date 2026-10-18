@@ -40,7 +40,10 @@
    "url": "https://en.wikipedia.org/wiki/Mars",
    "constellation": null,
    "distance": null,
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/mars.jpg",
+   "imageCredit": "Kevin Gill from Los Angeles, CA, United States · CC BY 2.0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Mars_-_August_30_2021_-_Flickr_-_Kevin_M._Gill.png"
   },
   "jupiter": {
    "title": "Jupiter",
@@ -48,7 +51,10 @@
    "url": "https://en.wikipedia.org/wiki/Jupiter",
    "constellation": null,
    "distance": null,
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/jupiter.jpg",
+   "imageCredit": "NASA/STSCI (S.T.A.R.S) · Public domain",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Jupiter_OPAL_2024.png"
   },
   "saturn": {
    "title": "Saturn",
@@ -67,7 +73,10 @@
    "url": "https://en.wikipedia.org/wiki/Uranus",
    "constellation": null,
    "distance": null,
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/uranus.jpg",
+   "imageCredit": "Ardenau4 · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Uranus_Voyager2_color_calibrated.png"
   },
   "neptune": {
    "title": "Neptune",
@@ -75,7 +84,10 @@
    "url": "https://en.wikipedia.org/wiki/Neptune",
    "constellation": null,
    "distance": null,
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/neptune.jpg",
+   "imageCredit": "NASA / Voyager 2 / PDS / OPUS / Ardenau4 · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Neptune_Voyager2_color_calibrated.png"
   },
   "M42": {
    "title": "Orion Nebula",
@@ -182,7 +194,10 @@
    "url": "https://en.wikipedia.org/wiki/Leo_Triplet",
    "constellation": "Leo",
    "distance": "35 million light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M66.jpg",
+   "imageCredit": "Chuck Ayoub · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Leo-Triplet.png"
   },
   "M106": {
    "title": "Messier 106",
@@ -201,7 +216,10 @@
    "url": "https://en.wikipedia.org/wiki/Messier_13",
    "constellation": "Hercules",
    "distance": "22,000 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M13.jpg",
+   "imageCredit": "Chuck Ayoub · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M13-Globular-Cluster.png"
   },
   "M3": {
    "title": "Messier 3",
@@ -209,7 +227,10 @@
    "url": "https://en.wikipedia.org/wiki/Messier_3",
    "constellation": "Canes Venatici",
    "distance": "34,000 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M3.jpg",
+   "imageCredit": "NASA, ESA, and A. Sarajedini (Florida Atlantic University); Processing: Gladys K · Public domain",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:NASA%E2%80%99s_Hubble_Spots_Star-Spangled_Cosmic_Scene_(M3).jpg"
   },
   "M5": {
    "title": "Messier 5",
@@ -217,7 +238,10 @@
    "url": "https://en.wikipedia.org/wiki/Messier_5",
    "constellation": "Serpens",
    "distance": "25,000 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M5.jpg",
+   "imageCredit": "Chuck Ayoub · CC0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M5-Messier-5.png"
   },
   "M15": {
    "title": "Messier 15",
@@ -225,7 +249,10 @@
    "url": "https://en.wikipedia.org/wiki/Messier_15",
    "constellation": "Pegasus",
    "distance": "33,000 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M15.jpg",
+   "imageCredit": "Ngc1535 · CC BY-SA 4.0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M15_Globular_Cluster_from_the_Mount_Lemmon_SkyCenter_Schulman_Telescope_courtesy_Adam_Block.jpg"
   },
   "M2": {
    "title": "Messier 2",
@@ -233,7 +260,10 @@
    "url": "https://en.wikipedia.org/wiki/Messier_2",
    "constellation": "Aquarius",
    "distance": "37,000 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M2.jpg",
+   "imageCredit": "Credit: ESA/Hubble & NASA, G. Piotto et al. · CC BY 4.0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Messier2_-_HST_-_Potw1913a.jpg"
   },
   "M22": {
    "title": "Messier 22",
@@ -508,6 +538,28 @@
    "constellation": "Canes Venatici",
    "distance": "110 light years",
    "textCredit": "Wikipedia (CC BY-SA 4.0)"
+  },
+  "M63": {
+   "title": "Messier 63",
+   "summary": "Messier 63 or M63, also known as NGC 5055 or the Sunflower Galaxy, is a spiral galaxy in the northern constellation of Canes Venatici. M63 was first discovered by the French astronomer Pierre Méchain, then later verified by his colleague Charles Messier on 14 June 1779. The galaxy became listed as object 63 in the Messier Catalogue. In the mid-19th century, Anglo-Irish astronomer Lord Rosse identified spiral structures within the galaxy, making this one of the first galaxies in which such structure was identified.",
+   "url": "https://en.wikipedia.org/wiki/Messier_63",
+   "constellation": "Canes Venatici",
+   "distance": "29 million light years",
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M63.jpg",
+   "imageCredit": "NASA/ESA - The Hubble Legacy Archive (HLA): Space Telescope Science Institute (S · Public domain",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M63_(NGC_5055).jpg"
+  },
+  "M92": {
+   "title": "Messier 92",
+   "summary": "Messier 92 is a globular cluster of stars in the northern constellation of Hercules.",
+   "url": "https://en.wikipedia.org/wiki/Messier_92",
+   "constellation": "Hercules",
+   "distance": "27,000 light years",
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M92.jpg",
+   "imageCredit": "en:NASA, en:STScI, en:WikiSky · Public domain",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M92_Hubble_WikiSky.jpg"
   }
  }
 }

@@ -43,6 +43,8 @@ throughout. It has a **bottom tab bar** like a phone app.
 
 ## Decisions
 
+- **Pushing to GitHub (owner's rule, 18 Oct 2026):** never push, open PRs, rename or trigger workflows without asking the owner first. Commit locally as work progresses, then do **one batched push** when the owner says so. Keep automated GitHub activity low to avoid being flagged again.
+
 - **Personal use first:** no accounts. Kit and location are saved on the device (browser storage), and the whole app works offline where possible.
 - **Hosting:** stays free, using GitHub Pages plus a daily GitHub Action for listings and news.
 - **Stack:** plain HTML, CSS and JavaScript with no build step, kept simple so any future session can continue it. Small libraries from a CDN only where they earn their place (e.g. Leaflet for the map).
