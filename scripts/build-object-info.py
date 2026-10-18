@@ -81,7 +81,7 @@ def get(url, binary=False):
                 return data if binary else json.loads(data)
         except urllib.error.HTTPError as e:
             if e.code in (429, 503) and attempt < 3:
-                time.sleep(5 * (attempt + 1))
+                time.sleep(int(e.headers.get('Retry-After') or 0) or 30 * (attempt + 1))
                 continue
             raise
 
@@ -101,58 +101,68 @@ def short(text, limit=520):
     return out
 
 
+def fetch_entry(title, constellation, distance):
+    s = get('https://en.wikipedia.org/api/rest_v1/page/summary/' + urllib.parse.quote(title.replace(' ', '_')))
+    entry = {
+        'title': s['title'],
+        'summary': short(s.get('extract', '')),
+        'url': s['content_urls']['mobile']['page'],
+        'constellation': constellation,
+        'distance': distance,
+        'textCredit': 'Wikipedia (CC BY-SA 4.0)',
+    }
+    src = (s.get('originalimage') or s.get('thumbnail') or {}).get('source')
+    return entry, src
+
+
+def fetch_image(oid, src):
+    path = urllib.parse.urlparse(src).path  # drops ?utm_... tracking parameters
+    parts = path.split('/')
+    fname = urllib.parse.unquote(parts[-2] if '/thumb/' in path else parts[-1])
+    meta = get('https://commons.wikimedia.org/w/api.php?' + urllib.parse.urlencode({
+        'action': 'query', 'titles': 'File:' + fname, 'prop': 'imageinfo',
+        'iiprop': 'url|extmetadata', 'iiurlwidth': 800, 'format': 'json'}))
+    page = next(iter(meta['query']['pages'].values()))
+    ii = (page.get('imageinfo') or [None])[0]
+    if not ii:  # file lives on en.wikipedia (non-free); skip it
+        raise LookupError(f'{fname} not on Commons')
+    em = ii.get('extmetadata', {})
+    lic = strip(em.get('LicenseShortName', {}).get('value'))
+    artist = strip(em.get('Artist', {}).get('value')) or strip(em.get('Credit', {}).get('value'))
+    artist = re.sub(r'\s+', ' ', artist)
+    time.sleep(2)
+    img = Image.open(io.BytesIO(get(ii.get('thumburl') or ii['url'], binary=True))).convert('RGB')
+    img.thumbnail((640, 640))
+    img.save(ROOT / f'assets/img/{oid}.jpg', 'JPEG', quality=78, optimize=True, progressive=True)
+    return {'image': f'assets/img/{oid}.jpg', 'imageCredit': f"{(artist[:80] or 'Unknown author')} · {lic or 'see source'}", 'imageSource': ii.get('descriptionurl')}
+
+
 def main():
+    """Incremental: only objects missing text or a photo are fetched (pass --all to refresh everything)."""
+    refresh_all = '--all' in sys.argv
     targets = json.loads((ROOT / 'data/targets.json').read_text())
     ids = [t['id'] for t in targets['solarSystem'] + targets['deepSky']]
     out_path = ROOT / 'data/objects.json'
-    previous = json.loads(out_path.read_text())['objects'] if out_path.exists() else {}
-    objects = {}
+    objects = json.loads(out_path.read_text())['objects'] if out_path.exists() else {}
     for oid in ids:
         title, constellation, distance = INFO[oid]
+        have = objects.get(oid, {})
+        if not refresh_all and have.get('summary') and have.get('image') and (ROOT / have['image']).exists():
+            continue
         try:
-            s = get('https://en.wikipedia.org/api/rest_v1/page/summary/' + urllib.parse.quote(title.replace(' ', '_')))
-            entry = {
-                'title': s['title'],
-                'summary': short(s.get('extract', '')),
-                'url': s['content_urls']['mobile']['page'],
-                'constellation': constellation,
-                'distance': distance,
-                'textCredit': 'Wikipedia (CC BY-SA 4.0)',
-            }
-            src = (s.get('originalimage') or s.get('thumbnail') or {}).get('source')
+            entry, src = fetch_entry(title, constellation, distance)
+            objects[oid] = {**have, **entry}
             if src:
-                fname = urllib.parse.unquote(src.split('/')[-1])
-                if '/thumb/' in src:  # thumb URL: the real file name is the second-last segment
-                    fname = urllib.parse.unquote(src.split('/')[-2])
-                meta = get('https://commons.wikimedia.org/w/api.php?' + urllib.parse.urlencode({
-                    'action': 'query', 'titles': 'File:' + fname, 'prop': 'imageinfo',
-                    'iiprop': 'url|extmetadata', 'iiurlwidth': 800, 'format': 'json'}))
-                page = next(iter(meta['query']['pages'].values()))
-                ii = (page.get('imageinfo') or [None])[0]
-                if not ii:  # file lives on en.wikipedia (non-free); skip the image
-                    raise LookupError('image not on Commons')
-                em = ii.get('extmetadata', {})
-                lic = strip(em.get('LicenseShortName', {}).get('value'))
-                artist = strip(em.get('Artist', {}).get('value')) or strip(em.get('Credit', {}).get('value'))
-                img = Image.open(io.BytesIO(get(ii.get('thumburl') or ii['url'], binary=True))).convert('RGB')
-                img.thumbnail((640, 640))
-                img.save(ROOT / f'assets/img/{oid}.jpg', 'JPEG', quality=78, optimize=True, progressive=True)
-                entry['image'] = f'assets/img/{oid}.jpg'
-                entry['imageCredit'] = f"{(artist[:80] or 'Unknown author')} · {lic or 'see source'}"
-                entry['imageSource'] = ii.get('descriptionurl')
-            objects[oid] = entry
-            print(f'✓ {oid}: {entry["title"]}{" + image" if "image" in entry else ""}')
-        except Exception as e:  # keep the last good entry rather than losing it
+                time.sleep(2)
+                objects[oid].update(fetch_image(oid, src))
+            print(f'✓ {oid}: {entry["title"]}{" + image" if "image" in objects[oid] else ""}')
+        except Exception as e:  # keep whatever we already had
             print(f'✗ {oid}: {e}', file=sys.stderr)
-            if oid in previous:
-                objects[oid] = previous[oid]
-            elif 'entry' in dir() and entry.get('title') == title:
-                objects[oid] = entry
-        time.sleep(1.0)
-    out_path.write_text(json.dumps({
-        'note': 'Generated by scripts/build-object-info.py. Text from Wikipedia (CC BY-SA 4.0); images from Wikimedia Commons with the credits shown.',
-        'objects': objects}, indent=1, ensure_ascii=False) + '\n')
-    print(f'Wrote {len(objects)} objects.')
+        out_path.write_text(json.dumps({
+            'note': 'Generated by scripts/build-object-info.py. Text from Wikipedia (CC BY-SA 4.0); images from Wikimedia Commons with the credits shown.',
+            'objects': objects}, indent=1, ensure_ascii=False) + '\n')
+        time.sleep(3)
+    print(f'Done: {sum(1 for o in objects.values() if o.get("image"))}/{len(ids)} with photos.')
 
 
 if __name__ == '__main__':

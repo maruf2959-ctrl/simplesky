@@ -102,7 +102,7 @@
         el('div', { class: 'gal' }, all.filter((t) => types.includes(t.type)).map((t) =>
           el('button', { class: 'gal-tile', onclick: () => open(t.id), 'aria-label': t.common || t.name },
             photo(objects[t.id], 'gal-img'),
-            el('span', { class: 'gal-name' }, (up.has(t.id) ? '✓ ' : '') + (t.common && t.common.length < 22 ? t.common : t.name)))))));
+            el('span', { class: 'gal-name' }, (up.has(t.id) ? '✓ ' : '') + (t.common && t.common.length < 22 ? t.common : t.name))))))));
   }
 
   window.ObjectInfo = { open, gallery, photo, objects: objectsData };
