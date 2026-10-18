@@ -30,7 +30,7 @@ async function main() {
   let items = [];
   for (const f of FEEDS) {
     try {
-      const res = await fetch(f.url, { headers: { 'User-Agent': 'SimpleSky/1.0 (+https://github.com/maruf2959-ctrl/SimpleSky)' }, signal: AbortSignal.timeout(20000) });
+      const res = await fetch(f.url, { headers: { 'User-Agent': 'SimpleSky/1.0 (+https://github.com/maruf2959-ctrl/simplesky)' }, signal: AbortSignal.timeout(20000) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const got = parseRss(await res.text(), f.source);
       console.log(`✓ ${f.source}: ${got.length}`);
