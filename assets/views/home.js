@@ -82,17 +82,23 @@
         c ? el('div', {}, el('span', { class: 'k' }, 'Cloud'), el('span', { class: 'v' }, `${c.cloud}%`)) : null),
       el('a', { class: 'btn primary', href: '#tonight', style: 'margin-top:0.9rem;width:100%' }, 'Open tonight’s plan'));
 
-    const top = plan.filter((e) => e.visual || e.imaging).slice(0, 4);
+    const objects = await ObjectInfo.objects();
+    const top = plan.filter((e) => e.visual || e.imaging).slice(0, 8);
     picksCard.append(
-      el('div', { class: 'card-head' }, el('h2', {}, 'Best for your kit tonight'), el('a', { href: '#tonight' }, 'All →')),
-      el('p', { class: 'small muted', style: 'margin:0 0 0.6rem' }, `Rated for ${setup?.name || 'your kit'}`),
+      el('div', { class: 'card-head' }, el('h2', {}, 'Tonight’s highlights'), el('a', { href: '#tonight' }, 'All →')),
+      el('p', { class: 'small muted', style: 'margin:0 0 0.6rem' }, `Best for ${setup?.name || 'your kit'} · tap for details`),
       top.length
-        ? el('div', { class: 'tlist' }, top.map((e) => {
+        ? el('div', { class: 'hl-row' }, top.map((e) => {
             const r = e.visual ?? e.imaging;
-            return el('a', { class: 'titem', href: '#tonight', style: 'text-decoration:none;color:inherit' },
-              el('div', { class: 'row', style: 'padding:0.7rem 0.9rem' }, App.scoreRing(r.score), el('div', { class: 'grow' }, el('div', { class: 'tname' }, e.target.common || e.target.name), el('div', { class: 'tsub' }, `${r.label} · best ${fmtTime(e.best.t)}, ${Math.round(e.best.alt)}° ${App.compass(e.best.az)}`))));
+            return el('button', { class: 'hl-card', onclick: () => ObjectInfo.open(e.target.id), 'aria-label': `${e.target.common || e.target.name}, ${r.label}` },
+              ObjectInfo.photo(objects[e.target.id], 'hl-img'),
+              el('span', { class: 'hl-score s-' + App.scoreClass(r.score) }, r.score),
+              el('span', { class: 'hl-text' },
+                el('strong', {}, e.target.common || e.target.name),
+                el('small', {}, `${r.label} · best ${fmtTime(e.best.t)}`)));
           }))
-        : el('p', { class: 'muted' }, 'Nothing well placed. Check back later.'));
+        : el('p', { class: 'muted' }, 'Nothing well placed. Check back later.'),
+      el('button', { class: 'btn', style: 'width:100%;margin-top:0.8rem', onclick: () => ObjectInfo.gallery() }, '🔭 Explore the sky: planets, nebulae, galaxies'));
 
     if (k) {
       const lm = Rating.NELM(P.loc.bortle) + 5 * Math.log10(k.D / 7) - 0.5;

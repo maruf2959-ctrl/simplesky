@@ -360,3 +360,35 @@ html.red #sky { opacity: 0.4; }
 /* Embedded hosts (e.g. a claude.ai page) already pad the top for the safe area. */
 html.embed .appbar { top: env(safe-area-inset-top, 0px); padding-top: 10px; }
 html.embed body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 25; background: var(--bg); }
+
+/* ============================================================ object pictures */
+.tcard { display: flex; gap: 0.75rem; align-items: center; width: 100%; padding: 0.6rem 0.75rem; text-align: left; color: var(--text); font: inherit; cursor: pointer; }
+.tcard:focus-visible, .hl-card:focus-visible, .gal-tile:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.tthumb { width: 58px; height: 58px; flex: none; border-radius: 12px; object-fit: cover; background: #04060f; }
+.noimg { display: grid; place-items: center; color: var(--gold); font-size: 1.4rem; background: radial-gradient(circle at 50% 40%, #1b2050, #04060f); }
+
+.hl-row { display: grid; grid-auto-flow: column; grid-auto-columns: 62%; gap: 0.7rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; scrollbar-width: none; }
+.hl-row::-webkit-scrollbar { display: none; }
+.hl-card { position: relative; scroll-snap-align: start; padding: 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: #04060f; color: var(--text); font: inherit; text-align: left; cursor: pointer; aspect-ratio: 4 / 5; max-width: 100%; }
+.hl-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hl-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(3,5,13,0) 40%, rgba(3,5,13,0.92)); }
+.hl-text { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; display: flex; flex-direction: column; padding: 0.7rem 0.8rem; }
+.hl-text strong { font-size: 1rem; line-height: 1.2; }
+.hl-text small { color: var(--muted); margin-top: 0.15rem; }
+.hl-score { position: absolute; top: 8px; right: 8px; z-index: 1; min-width: 34px; padding: 0.15rem 0.45rem; border-radius: 999px; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 0.9rem; text-align: center; background: rgba(3,5,13,0.75); border: 1px solid var(--c, var(--line)); color: var(--c, var(--text)); }
+.hl-score.s-ex { --c: var(--ok); } .hl-score.s-good { --c: #b6e07b; } .hl-score.s-fair { --c: var(--gold); } .hl-score.s-tough { --c: #ffae6b; } .hl-score.s-no { --c: var(--bad); }
+
+.obj-hero { margin: 0 0 0.6rem; }
+.obj-img { display: block; width: 100%; max-width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; background: #04060f; }
+.obj-hero figcaption { font-size: 0.68rem; color: var(--muted); margin-top: 0.3rem; overflow-wrap: anywhere; }
+.obj-hero figcaption a { color: var(--muted); }
+.pill-type { font-size: 0.78rem; padding: 0.2rem 0.6rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+.sheet-h { margin: 1rem 0 0.3rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); font-family: Inter, sans-serif; }
+.obj-text { margin: 0; line-height: 1.6; }
+.reasons { margin: 0.3rem 0 0; padding-left: 1.1rem; font-size: 0.88rem; }
+.reality { margin: 0.9rem 0 0; padding: 0.7rem 0.8rem; border-radius: 12px; background: rgba(111, 211, 224, 0.08); border: 1px solid rgba(111, 211, 224, 0.25); font-size: 0.88rem; }
+
+.gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.5rem; }
+.gal-tile { display: flex; flex-direction: column; gap: 0.3rem; padding: 0; border: 0; background: none; color: var(--text); font: inherit; text-align: left; cursor: pointer; min-width: 0; }
+.gal-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); background: #04060f; }
+.gal-name { font-size: 0.78rem; line-height: 1.25; overflow-wrap: anywhere; }

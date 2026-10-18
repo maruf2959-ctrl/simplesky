@@ -95,7 +95,8 @@
   }
 
   // ------------------------------------------------------------- item card
-  function targetCard(e, mode, setup, k) {
+  // A picture card; tapping it opens the full object sheet (photo, description, rating).
+  function targetCard(e, mode, objects) {
     const t = e.target;
     const r = mode === 'photo' ? e.imaging : e.visual ?? e.imaging;
     const score = r?.score ?? 0;
@@ -103,25 +104,16 @@
     const upNow = e.now.alt > 10;
     const when = mode === 'photo' && r?.at ? r.at : e.best.t;
     const sky = e.best.clear;
-    const hasGoto = ['altaz-goto', 'eq-goto', 'tracker'].includes(k.mount?.type) && k.mount?.handset;
-    return el('details', { class: 'titem' },
-      el('summary', {},
-        App.scoreRing(score, r?.label),
-        el('div', { class: 'grow' },
-          el('div', { class: 'tname' }, name),
-          el('div', { class: 'tsub' }, `${App.TYPE_ICON[t.type] || ''} ${App.TYPE_NAME[t.type] || ''} · `, el('span', { class: 'lbl-' + App.scoreClass(score) }, r?.label || '')),
-          el('div', { class: 'tmeta' },
-            el('span', {}, upNow ? `Up now ${Math.round(e.now.alt)}° ${App.compass(e.now.az)}` : `Best ${fmtTime(when)}`),
-            el('span', {}, `Peak ${Math.round(e.best.alt)}° ${App.compass(e.best.az)}`),
-            sky != null ? el('span', {}, `Sky ${App.scoreLabel(sky).toLowerCase()}`) : null))),
-      el('div', { class: 'tbody' },
-        el('p', {}, t.desc),
-        r?.view ? el('p', {}, el('strong', {}, 'Eyepiece: '), `${r.view.label} → ${Math.round(r.view.mag)}×, ${r.view.tfov >= 60 ? (r.view.tfov / 60).toFixed(1) + '°' : Math.round(r.view.tfov) + '′'} field`) : null,
-        el('h4', {}, mode === 'photo' ? 'Photography rating: why' : 'Why this rating'),
-        el('ul', {}, (r?.reasons || ['No rating available for this kit.']).map((x) => el('li', {}, x))),
-        mode !== 'photo' && e.imaging ? el('p', { class: 'small muted' }, `Photography: ${e.imaging.score}/100 (${e.imaging.label}). Switch to Photography above for details.`) : null,
-        hasGoto && t.hc ? el('div', { class: 'goto' }, '🎯 GoTo: ', t.hc, ' → ENTER') : null,
-        el('p', { class: 'small muted' }, `Best placed at ${fmtTime(e.best.t)} (${Math.round(e.best.alt)}° high, ${App.compass(e.best.az)}).`)));
+    return el('button', { class: 'titem tcard', onclick: () => ObjectInfo.open(t.id), 'aria-label': `${name}: ${r?.label || ''}. Open details` },
+      ObjectInfo.photo(objects[t.id], 'tthumb'),
+      el('div', { class: 'grow' },
+        el('div', { class: 'tname' }, name),
+        el('div', { class: 'tsub' }, `${App.TYPE_NAME[t.type] || ''} · `, el('span', { class: 'lbl-' + App.scoreClass(score) }, r?.label || '')),
+        el('div', { class: 'tmeta' },
+          el('span', {}, upNow ? `Up now ${Math.round(e.now.alt)}° ${App.compass(e.now.az)}` : `Best ${fmtTime(when)}`),
+          el('span', {}, `Peak ${Math.round(e.best.alt)}°`),
+          sky != null ? el('span', {}, `Sky ${App.scoreLabel(sky).toLowerCase()}`) : null)),
+      App.scoreRing(score, r?.label));
   }
 
   // ------------------------------------------------------------------ render
@@ -135,6 +127,7 @@
       return;
     }
     const { plan, night, hours, k, kit, setup, gear, loc, now } = P;
+    const objects = await ObjectInfo.objects();
     section.replaceChildren();
     if (!k) {
       section.append(el('div', { class: 'card' }, el('h2', {}, 'Add your telescope first'), el('p', {}, 'Ratings are worked out for your own kit.'), el('a', { class: 'btn primary', href: '#kit' }, 'Go to My Kit')));
@@ -210,12 +203,13 @@
       chips.replaceChildren(...filters.map(([id, txt]) => el('button', { class: f === id ? 'on' : '', onclick: () => { f = id; App.store.set('tonightFilter', id); draw(); } }, txt)));
       const key = mode === 'photo' ? (e) => (e.imaging?.score ?? 0) * (e.best.clear == null ? 1 : 0.35 + 0.65 * (e.best.clear / 100)) : (e) => e.tonight;
       const rows = plan.filter(match).filter((e) => (mode === 'photo' ? e.imaging : e.visual ?? e.imaging)).sort((a, b) => key(b) - key(a));
-      list.replaceChildren(...(rows.length ? rows.map((e) => targetCard(e, mode, setup, k)) : [el('p', { class: 'empty' }, 'Nothing in this group is well placed tonight.')]));
+      list.replaceChildren(...(rows.length ? rows.map((e) => targetCard(e, mode, objects)) : [el('p', { class: 'empty' }, 'Nothing in this group is well placed tonight.')]));
     }
     draw();
     section.append(
       el('div', { class: 'card-head', style: 'margin-top:1.2rem' }, el('h2', { style: 'margin:0;font-size:1.15rem' }, mode === 'photo' ? 'Best to photograph tonight' : 'Best to see tonight'), el('span', { class: 'small muted' }, `${plan.length} up`)),
-      el('p', { class: 'small muted', style: 'margin:0.2rem 0 0.4rem' }, 'Scores are for your kit at the target’s best moment tonight, including the Moon and your sky darkness. The order also accounts for forecast cloud.'),
+      el('p', { class: 'small muted', style: 'margin:0.2rem 0 0.4rem' }, 'Scores are for your kit at each object’s best moment tonight, including the Moon and your sky darkness. Tap any object for photos and details.'),
+      el('button', { class: 'btn small', style: 'margin:0 0 0.5rem', onclick: () => ObjectInfo.gallery() }, '🔭 Explore all objects'),
       chips,
       list);
   }
