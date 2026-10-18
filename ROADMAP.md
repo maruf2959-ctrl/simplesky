@@ -24,7 +24,7 @@ throughout. It has a **bottom tab bar** like a phone app.
 
 | | |
 |---|---|
-| Live site | https://maruf2959-ctrl.github.io/Camera-finder-/ |
+| Live site | https://maruf2959-ctrl.github.io/simplesky/ (repository renamed from Camera-finder- on 18 Oct 2026) |
 | Current version | v2: tabbed phone app, built 18 Oct 2026 on branch `claude/astrophotography-camera-research-i0qhy2` (merge to go live) |
 | Now working on | Owner review of v2, then the "Next up" list below |
 | Last updated | 18 Oct 2026 |
