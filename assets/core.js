@@ -2,6 +2,8 @@
 (function (global) {
   'use strict';
 
+  // Set by a host page (e.g. a claude.ai preview) that can't reach outside services.
+  const EMBED = !!global.SIMPLESKY_EMBED;
   const DEFAULT_LOCATION = { name: 'Worthing, West Sussex', lat: 50.8179, lon: -0.3728, bortle: 6, bortleAuto: true };
   const TZ = 'Europe/London';
 
@@ -79,6 +81,7 @@
   // ----------------------------------------------------------- weather
   let weatherCache = null;
   function weather() {
+    if (EMBED) return Promise.resolve(null);
     const loc = site();
     const key = `${loc.lat.toFixed(2)},${loc.lon.toFixed(2)}`;
     const saved = store.get('weather', null);
@@ -266,7 +269,7 @@
     }
     rerenderOn('location', 'map');
     route();
-    if ('serviceWorker' in navigator && global.location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+    if (!EMBED && 'serviceWorker' in navigator && global.location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
   }
 
   // ---------------------------------------------------------- shared UI
@@ -286,6 +289,7 @@
   }
 
   global.App = {
+    embed: EMBED,
     scoreClass, scoreRing, TYPE_ICON, TYPE_NAME, compass, sheet,
     $, $$, el, esc, fmtTime, fmtDay, clamp, store, on, emit,
     location: site, setLocation: setSite, data, weather, hourScore, scoreLabel, night,

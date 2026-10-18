@@ -62,7 +62,7 @@
   }
 
   function verdict(c) {
-    if (!c) return { text: 'Forecast unavailable', sub: 'Check the sky. The ratings below assume clear skies.' };
+    if (!c) return { text: App.embed ? 'Check the sky yourself' : 'Forecast unavailable', sub: App.embed ? 'Live weather isn’t available in this version. Ratings assume a clear sky.' : 'Check the sky. The ratings below assume clear skies.' };
     if (c.avg >= 75) return { text: 'Great night. Get out there!', sub: `${c.clearHours} clear hours forecast.` };
     if (c.avg >= 55) return { text: 'Worth setting up', sub: `Clearest around ${fmtTime(c.best.t)}.` };
     if (c.avg >= 35) return { text: 'Patchy: grab gaps', sub: c.bestScore >= 60 ? `Best gap around ${fmtTime(c.best.t)}.` : 'Planets and the Moon through gaps.' };

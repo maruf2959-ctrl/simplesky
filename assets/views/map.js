@@ -87,20 +87,28 @@
         results.replaceChildren(...(hits.length ? hits.map((h) => el('button', { onclick: () => setSite(h) }, h.name, el('small', {}, `${h.lat.toFixed(3)}, ${h.lon.toFixed(3)}`))) : [el('p', { class: 'small muted' }, 'No matches.')]));
       }, 350);
     });
+    const status = el('p', { class: 'small', style: 'color:var(--bad);margin:0.4rem 0 0', role: 'status' });
     const gps = el('button', { class: 'btn', onclick: () => {
-      if (!navigator.geolocation) return alert('Location is not available on this device.');
+      if (!navigator.geolocation) return (status.textContent = 'Location isn’t available on this device. Search for your town instead.');
       gps.textContent = 'Locating…';
       navigator.geolocation.getCurrentPosition(
         (p) => setSite({ name: 'My location', lat: +p.coords.latitude.toFixed(4), lon: +p.coords.longitude.toFixed(4) }),
-        () => { gps.textContent = '📍 Use my location'; alert('Could not get your location. Check location permissions.'); },
+        () => { gps.textContent = '📍 Use my location'; status.textContent = 'Couldn’t get your location. Check location permissions, or search for your town.'; },
         { enableHighAccuracy: false, timeout: 15000 });
     } }, '📍 Use my location');
+
+    if (App.embed) {
+      section.append(manualLocation(loc));
+      section.append(bortleCard(loc));
+      return conditionsCard(section, loc);
+    }
 
     section.append(el('div', { class: 'card' },
       el('p', { class: 'kicker' }, 'Observing from'),
       el('h2', { style: 'margin:0' }, loc.name),
       el('p', { class: 'small muted', style: 'margin:0.2rem 0 0.7rem' }, `${loc.lat.toFixed(3)}°, ${loc.lon.toFixed(3)}° · tap the map to move the pin`),
       el('div', { class: 'row wrap' }, el('div', { class: 'grow', style: 'flex-basis:200px' }, input), gps),
+      status,
       results));
 
     // Map.
@@ -109,16 +117,52 @@
     section.append(el('div', { class: 'card' }, mapBox, layerToggle, el('p', { class: 'small muted', style: 'margin:0.3rem 0 0' }, 'Black and blue = dark skies. Yellow and white = heavy light pollution. Head for the dark patches!')));
     initMap(mapBox, loc, layerToggle.querySelector('input'));
 
-    // Bortle.
+    section.append(bortleCard(loc));
+    await conditionsCard(section, loc);
+  }
+
+  // Embedded hosts block GPS, place search and map tiles, so offer places and coordinates.
+  const PRESETS = [
+    { name: 'Worthing, West Sussex', lat: 50.8179, lon: -0.3728, bortle: 6 },
+    { name: 'Brighton', lat: 50.8225, lon: -0.1372, bortle: 7 },
+    { name: 'Ditchling Beacon, South Downs', lat: 50.9006, lon: -0.1066, bortle: 4 },
+    { name: 'London', lat: 51.5072, lon: -0.1276, bortle: 9 },
+    { name: 'Exmoor Dark Sky Reserve', lat: 51.13, lon: -3.65, bortle: 3 },
+    { name: 'Kielder Forest', lat: 55.23, lon: -2.58, bortle: 2 }
+  ];
+  function manualLocation(loc) {
+    const lat = el('input', { type: 'number', inputmode: 'decimal', id: 'manLat', step: 'any', value: loc.lat, 'aria-label': 'Latitude' });
+    const lon = el('input', { type: 'number', inputmode: 'decimal', id: 'manLon', step: 'any', value: loc.lon, 'aria-label': 'Longitude' });
+    const msg = el('p', { class: 'small', style: 'color:var(--bad);margin:0.3rem 0 0', role: 'status' });
+    return el('div', { class: 'card' },
+      el('p', { class: 'kicker' }, 'Observing from'),
+      el('h2', { style: 'margin:0' }, loc.name),
+      el('p', { class: 'small muted', style: 'margin:0.2rem 0 0.7rem' }, `${loc.lat.toFixed(3)}°, ${loc.lon.toFixed(3)}°`),
+      el('p', { class: 'small muted', style: 'margin:0 0 0.4rem' }, 'Pick a place, or enter coordinates (find them in Apple or Google Maps by pressing on a spot).'),
+      el('div', { class: 'chipbar', style: 'flex-wrap:wrap' }, PRESETS.map((p) => el('button', { class: p.name === loc.name ? 'on' : '', onclick: () => App.setLocation({ ...p, bortleAuto: true }) }, p.name.split(',')[0]))),
+      el('div', { class: 'row wrap', style: 'margin-top:0.6rem' },
+        el('label', { class: 'field grow', style: 'margin:0;flex-basis:120px' }, 'Latitude', lat),
+        el('label', { class: 'field grow', style: 'margin:0;flex-basis:120px' }, 'Longitude', lon),
+        el('button', { class: 'btn', style: 'align-self:flex-end', onclick: () => {
+          const a = Number(lat.value), b = Number(lon.value);
+          if (!(a >= -90 && a <= 90 && b >= -180 && b <= 180)) return (msg.textContent = 'Latitude must be between -90 and 90, longitude between -180 and 180.');
+          App.setLocation({ name: `Custom spot (${a.toFixed(2)}, ${b.toFixed(2)})`, lat: a, lon: b, bortleAuto: false });
+        } }, 'Use these')),
+      msg);
+  }
+
+  function bortleCard(loc) {
     const cur = BORTLE[(loc.bortle || 6) - 1];
-    section.append(el('div', { class: 'card' },
+    return el('div', { class: 'card' },
       el('div', { class: 'card-head' }, el('h2', {}, `Sky darkness: Bortle ${loc.bortle}`), loc.bortleAuto ? el('span', { class: 'small muted' }, 'estimated') : el('span', { class: 'small muted' }, 'set by you')),
       el('p', { style: 'margin:0' }, el('strong', {}, cur[2]), ` · ${cur[3]}`),
       el('div', { class: 'bortle', role: 'radiogroup', 'aria-label': 'Bortle class' },
         BORTLE.map(([n, col, name]) => el('button', { class: n === loc.bortle ? 'on' : '', style: `background:${col}`, title: name, 'aria-label': `Bortle ${n}: ${name}`, onclick: () => App.setLocation({ bortle: n, bortleAuto: false }) }, n))),
-      el('p', { class: 'small muted', style: 'margin:0.5rem 0 0' }, 'Estimated from satellite night-lights data. Adjust it if your sky looks darker or brighter. Every rating in the app uses this.'),
-      el('button', { class: 'btn small', style: 'margin-top:0.5rem', onclick: () => estimateBortle(loc.lat, loc.lon).then((r) => App.setLocation({ bortle: r.bortle, bortleAuto: true, nightLights: r.value })).catch(() => alert('Could not read the light-pollution map.')) }, 'Re-estimate from map')));
+      el('p', { class: 'small muted', style: 'margin:0.5rem 0 0' }, App.embed ? 'Tap the number that matches your sky. Every rating in the app uses this.' : 'Estimated from satellite night-lights data. Adjust it if your sky looks darker or brighter. Every rating in the app uses this.'),
+      App.embed ? null : el('button', { class: 'btn small', style: 'margin-top:0.5rem', onclick: () => estimateBortle(loc.lat, loc.lon).then((r) => App.setLocation({ bortle: r.bortle, bortleAuto: true, nightLights: r.value })).catch(() => {}) }, 'Re-estimate from map'));
+  }
 
+  async function conditionsCard(section, loc) {
     // Conditions panel.
     const cond = el('div', { class: 'card' }, el('p', { class: 'muted' }, 'Loading conditions…'));
     section.append(cond);

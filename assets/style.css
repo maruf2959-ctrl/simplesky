@@ -356,3 +356,7 @@ html.red #sky { opacity: 0.4; }
   main { max-width: 1000px; }
   .tabbar { left: 50%; right: auto; transform: translateX(-50%); width: min(560px, 100%); bottom: 12px; border-radius: 20px; border: 1px solid var(--line); }
 }
+
+/* Embedded hosts (e.g. a claude.ai page) already pad the top for the safe area. */
+html.embed .appbar { top: env(safe-area-inset-top, 0px); padding-top: 10px; }
+html.embed body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 25; background: var(--bg); }

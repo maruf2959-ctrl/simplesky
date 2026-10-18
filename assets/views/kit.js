@@ -111,14 +111,16 @@
     const ap = el('input', { type: 'number', inputmode: 'numeric', placeholder: 'e.g. 150', min: 20, max: 1000 });
     const fl = el('input', { type: 'number', inputmode: 'numeric', placeholder: 'e.g. 750', min: 100, max: 5000 });
     const type = el('select', {}, Object.entries(TYPE_LABEL).map(([k, v]) => el('option', { value: k }, v)));
+    const err = el('p', { class: 'small', style: 'color:var(--bad)', role: 'alert' });
     const close = App.sheet('Add your own telescope',
       el('label', { class: 'field' }, 'Name', name),
       el('div', { class: 'row' }, el('label', { class: 'field grow' }, 'Aperture (mm)', ap), el('label', { class: 'field grow' }, 'Focal length (mm)', fl)),
       el('label', { class: 'field' }, 'Type', type),
       el('p', { class: 'small muted' }, 'Both numbers are usually printed on the tube or the box, e.g. “D=127mm F=1500mm”.'),
+      err,
       el('button', { class: 'btn primary', style: 'width:100%', onclick: () => {
         const D = Number(ap.value), F = Number(fl.value);
-        if (!(D >= 20 && F >= 100)) return alert('Please enter the aperture and focal length in millimetres.');
+        if (!(D >= 20 && F >= 100)) return (err.textContent = 'Enter the aperture and focal length in millimetres.');
         close();
         onChoose({ id: null, brand: '', name: name.value.trim() || `${D} mm ${TYPE_LABEL[type.value].toLowerCase()}`, type: type.value, aperture: D, focal: F, mount: null, eyepieces: [], custom: true });
       } }, 'Add telescope'));
@@ -319,8 +321,13 @@
       const nums = numbers(setup);
       if (nums) section.append(nums);
 
-      if (kit.setups.length > 1) section.append(el('button', { class: 'btn ghost', style: 'color:var(--bad);margin:0.5rem 0 1rem', onclick: () => {
-        if (!confirm(`Delete “${setup.name}”?`)) return;
+      if (kit.setups.length > 1) section.append(el('button', { class: 'btn ghost', style: 'color:var(--bad);margin:0.5rem 0 1rem', onclick: (e) => {
+        // Two taps to delete (browser confirm dialogs aren't available everywhere).
+        if (e.currentTarget.dataset.armed !== '1') {
+          e.currentTarget.dataset.armed = '1';
+          e.currentTarget.textContent = `Tap again to delete “${setup.name}”`;
+          return;
+        }
         kit.setups = kit.setups.filter((s) => s.id !== setup.id);
         kit.active = kit.setups[0].id;
         Kit.save(kit);
