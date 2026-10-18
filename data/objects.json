@@ -293,7 +293,10 @@
    "url": "https://en.wikipedia.org/wiki/Dumbbell_Nebula",
    "constellation": "Vulpecula",
    "distance": "1,360 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M27.jpg",
+   "imageCredit": "Credit: T.A. Rector (University of Alaska Anchorage) and H. Schweiker (WIYN and  · CC BY 4.0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:M27_-_Noao-m27-kpno-mayall-4-m.jpg"
   },
   "M97": {
    "title": "Owl Nebula",
@@ -312,7 +315,10 @@
    "url": "https://en.wikipedia.org/wiki/Little_Dumbbell_Nebula",
    "constellation": "Perseus",
    "distance": "2,500 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/M76.jpg",
+   "imageCredit": "Göran Nilsson, Wim van Berlo & The Liverpool Telescope · CC BY-SA 4.0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Little_Dumbbell_Nebula_M76_by_Goran_Nilsson,_Wim_van_Berlo_%26_Liverpool_Telescope.jpg"
   },
   "NGC6543": {
    "title": "Cat's Eye Nebula",
@@ -320,7 +326,10 @@
    "url": "https://en.wikipedia.org/wiki/Cat's_Eye_Nebula",
    "constellation": "Draco",
    "distance": "3,300 light years",
-   "textCredit": "Wikipedia (CC BY-SA 4.0)"
+   "textCredit": "Wikipedia (CC BY-SA 4.0)",
+   "image": "assets/img/NGC6543.jpg",
+   "imageCredit": "ESA/Hubble & NASA, Z. Tsvetanov · CC BY 4.0",
+   "imageSource": "https://commons.wikimedia.org/wiki/File:Looking_at_the_Cat%E2%80%99s_Eye_Nebula_with_Hubble_(potm2602b).jpg"
   },
   "NGC7662": {
    "title": "NGC 7662",
