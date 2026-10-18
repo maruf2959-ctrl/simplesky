@@ -25,9 +25,21 @@ throughout. It has a **bottom tab bar** like a phone app.
 | | |
 |---|---|
 | Live site | https://maruf2959-ctrl.github.io/simplesky/ (repository renamed from Camera-finder- on 18 Oct 2026; Pages paths are case-sensitive) |
-| Current version | v2: tabbed phone app, built 18 Oct 2026 on branch `claude/astrophotography-camera-research-i0qhy2` (merge to go live) |
-| Now working on | Owner review of v2, then the "Next up" list below |
-| Last updated | 18 Oct 2026 |
+| Current version | v2 live on GitHub Pages until the suspension (see below); v2.1 (object photos) built locally |
+| Now working on | Phase 4b: object photos and info sheets (owner review notes, 18 Oct 2026) |
+| Last updated | 18 Oct 2026 (evening) |
+
+## ⚠️ GitHub account suspended (18 Oct 2026): how to resume
+
+- The owner's GitHub account `maruf2959-ctrl` was suspended on 18 Oct 2026 for an unstated Terms of Service reason, shortly after the repo renames and the first runs of the daily scraping Action. GitHub Pages and git access are down.
+- **Appeal:** GitHub Support ticket **#4871705** (reinstatement request). Replies arrive by email.
+- **Interim app:** a private claude.ai page, https://claude.ai/artifact/XjZUDqUBWex2VdXpmMLV1o, built with `window.SIMPLESKY_EMBED = true` (no live weather, map or GPS there, because the sandbox blocks outside requests; everything else works).
+- **Work not yet on GitHub:** commits made on branch `claude/astrophotography-camera-research-i0qhy2` after PR #5 (embed mode, object photos and info sheets, this roadmap update). They're in the owner's backup zip (`simplesky-backup-*.zip`), which includes a git bundle (`simplesky.bundle`) holding the exact commits.
+- **When access returns:**
+  1. Reconnect GitHub in claude.ai connector settings.
+  2. Restore the commits: unzip, then `git fetch /path/simplesky.bundle claude/astrophotography-camera-research-i0qhy2`, or copy the files over a fresh clone and commit.
+  3. Push the branch, open a PR, merge, and check Pages redeploys at https://maruf2959-ctrl.github.io/simplesky/.
+  4. **Before re-enabling the schedule, make the daily Action safer:** drop the retailer-page scraping (use the official eBay API only, plus links), refresh less often, and stop committing data every day (deploy it as a Pages artifact instead). This was the most likely trigger for the suspension.
 
 ## Decisions
 
@@ -109,6 +121,12 @@ throughout. It has a **bottom tab bar** like a phone app.
 - [x] **GoTo helper**: three well-spread alignment stars for right now, plus each target's hand-control path
 - [ ] Next: 7Timer seeing/transparency (needs a server-side fetch, as there's no CORS); altitude-over-time chart per target; more targets (Caldwell list)
 
+### Phase 4b: Object photos and info sheets (in progress, owner review notes 18 Oct 2026)
+- [x] `scripts/build-object-info.py`: downloads a Wikipedia summary (CC BY-SA) and a Wikimedia Commons photo, with author and licence credits, for every target. Photos are resized to 640 px in `assets/img/`; text and credits go in `data/objects.json`. Both ship with the app, so they work offline and in sandboxed hosts.
+- [x] **Object info sheet** (`assets/views/objinfo.js`): tap any object to see a big photo, "What is it?", distance, constellation, brightness and size, best time tonight, viewing and photography ratings with reasons, a "what you'll really see" note for beginners, the GoTo path, and credits.
+- [x] Tonight list uses picture cards; Home has a swipeable "Tonight's highlights" photo row; an **Explore the sky** gallery shows every object grouped by type.
+- [ ] Next: thumbnails on Events entries; more objects (Caldwell highlights); a "what it looks like in your eyepiece" simulated view (greyscale, scaled to your field of view).
+
 ### Phase 5: Events and news ✅
 - [x] Calculated 12-month calendar: Moon phases, meteor-shower peaks (with Moon interference), oppositions, Mercury/Venus elongations, Moon–planet and planet–planet conjunctions, equinoxes and solstices, UK clock changes, plus the Aug 2027 eclipse
 - [x] "This week" highlights
@@ -126,6 +144,8 @@ throughout. It has a **bottom tab bar** like a phone app.
 - [ ] Observing lists and Messier marathon tracker
 
 ## Changelog
+
+- **18 Oct 2026:** GitHub account suspended (appeal #4871705). Interim claude.ai version published. Added embed mode (no outside requests), replaced browser alert/confirm dialogs, and started Phase 4b (object photos, info sheets, Explore gallery) from the owner's review notes.
 
 - **18 Oct 2026:** App renamed **SimpleSky** (was Stargazer / Camera Finder). The repository name and URL are unchanged for now.
 - **18 Oct 2026:** v2 built: tabbed phone app (Home, Tonight with ratings and GoTo helper, Events with news, My Kit with telescope search and diagram, Location map with light pollution, Shop), red mode, PWA. 11 tests passing.
