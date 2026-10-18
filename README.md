@@ -36,7 +36,7 @@ mount allows (tracking or alt-az field rotation). The results are heuristics, te
    3. In the repository, go to *Settings → Secrets and variables → Actions* and add `EBAY_CLIENT_ID` (the App ID) and `EBAY_CLIENT_SECRET` (the Cert ID).
 4. Go to *Actions → "Update listings & deploy site" → Run workflow* to do the first refresh. After that it runs daily at 05:17 UTC.
 
-Your site will be at `https://<your-username>.github.io/SimpleSky/`.
+Your site will be at `https://<your-username>.github.io/simplesky/`.
 
 ## Run locally
 

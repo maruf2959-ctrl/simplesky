@@ -21,7 +21,7 @@ const CAMERAS = path.join(ROOT, 'data/cameras.json');
 const LISTINGS = path.join(ROOT, 'data/listings.json');
 const HISTORY = path.join(ROOT, 'data/history.json');
 const DRY_RUN = process.argv.includes('--dry-run');
-const UA = 'SimpleSky/1.0 (+https://github.com/maruf2959-ctrl/SimpleSky; daily price check)';
+const UA = 'SimpleSky/1.0 (+https://github.com/maruf2959-ctrl/simplesky; daily price check)';
 const HISTORY_DAYS = 180;
 
 // Titles containing any of these are accessories, spares or broken items.
