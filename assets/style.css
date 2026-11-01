@@ -423,9 +423,10 @@ html.embed body::before { content: ""; position: fixed; inset: 0 0 auto; height:
   .tabbar::before { content: "✦ SimpleSky"; font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 1.25rem; color: var(--gold); padding: 0.2rem 0.8rem 1.2rem; }
   .tabbar a { flex-direction: row; justify-content: flex-start; gap: 0.8rem; padding: 0.7rem 0.9rem; font-size: 0.95rem; }
   .tabbar a.on { background: var(--gold-soft); }
-  .appbar, main { margin-left: var(--side-w); }
-  .appbar { padding-left: 2rem; padding-right: 2rem; }
-  main { max-width: 1240px; padding: 0 2rem 3rem; }
+  /* Centre the content in the space to the right of the sidebar on wide screens. */
+  :root { --content-w: 1240px; --gutter-x: max(2rem, calc((100vw - var(--side-w) - var(--content-w)) / 2 + 2rem)); }
+  .appbar { margin-left: var(--side-w); padding-left: var(--gutter-x); padding-right: var(--gutter-x); }
+  main { max-width: none; margin-left: var(--side-w); padding: 0 var(--gutter-x) 3rem; }
   .segmented { top: 64px; }
 
   /* Two-column screens. */
@@ -435,7 +436,8 @@ html.embed body::before { content: ""; position: fixed; inset: 0 0 auto; height:
 
   /* Home: a dashboard of cards. */
   #view-home.active { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 1.5rem; align-items: start; }
-  #view-home > .hello, #view-home > div:nth-of-type(3) { grid-column: 1 / -1; }
+  #view-home > .hello, #view-home > div:nth-of-type(2), #view-home > div:nth-of-type(3) { grid-column: 1 / -1; }
+  #view-home > div:nth-of-type(2) .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .hl-row { grid-auto-columns: calc((100% - 2.1rem) / 4); }
   .tlist { grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); }
   .two-col .tlist { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
