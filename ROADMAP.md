@@ -101,6 +101,7 @@ GitHub Support (ticket #4871705) cleared the restrictions on 30 Oct 2026: it was
 - [x] **Best setup per object:** Tonight rates every object with all your setups and shows "★ Better with…"; each object sheet lists every setup with a "Use" button.
 - [x] **Pictures:** Explore tab (searchable photo gallery), Events thumbnails, and a simulated **eyepiece view and camera frame** at your kit's real field of view.
 - [x] **Desktop layout:** left sidebar, two-column Tonight, Kit and Events, a card dashboard on Home, and centred dialogs. Phones keep the bottom tab bar.
+- [x] **Stargazing rating and map** (owner request, 1 Nov 2026): `assets/conditions.js` rates each hour from cloud, transparency, steadiness (jet stream), wind and gusts, Moon and darkness, with a verdict. The Location screen has an hour slider, factor bars, a forecast grid map (9×9 points, Open-Meteo multi-location, light pollution sampled per square from NASA tiles, sea squares excluded) and "best spot nearby". It's fetched when opened, with no scheduled jobs.
 - [ ] Next ideas: per-lens zoom setting (choose any focal length), a session log, and the two missing photos (Blue Snowball, Double Double) if the Wikimedia retry fails.
 
 ## Build plan
@@ -165,6 +166,7 @@ GitHub Support (ticket #4871705) cleared the restrictions on 30 Oct 2026: it was
 
 ## Changelog
 
+- **1 Nov 2026:** Added the stargazing rating and forecast map. 18 tests passing.
 - **1 Nov 2026:** v3 built locally (see the v3 section). 14 tests passing. Not pushed yet.
 
 - **1 Nov 2026:** GitHub account reinstated (30 Oct). Merged the bot's last data commits, replaced the scheduled scrape-and-commit workflow with a deploy-only one, and prepared v2.1 for a single push.

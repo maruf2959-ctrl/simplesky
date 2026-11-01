@@ -16,7 +16,7 @@ The plan and progress live in [ROADMAP.md](ROADMAP.md).
 | **Explore** | A photo gallery of all 55 objects with search and filters. Tap any object for its **info sheet**: a credited photo, a beginner-friendly description, facts, your ratings, a simulated **eyepiece view and camera frame** at your kit's real field of view, and how each of your setups compares. |
 | **Events** | Calculated sky calendar (Moon phases, meteor showers, oppositions, elongations, conjunctions, seasons, clock changes) with thumbnails, plus NASA/ESA headlines. |
 | **My Kit** | **One search box for all gear:** telescopes, smart telescopes, cameras (DSLR, mirrorless, astro), camera lenses, binoculars and mounts. Build setups part by part on a tappable diagram, keep as many setups as you like, and see what each can do, including how to connect your camera (e.g. *Nikon F T-ring + 1.25″ adapter*). New users start with the naked eye. |
-| **Location & sky** (📍 at the top) | GPS, place or UK postcode search, a live map with a NASA night-lights layer, an automatic Bortle estimate, and stargazing conditions. |
+| **Location & sky** (📍 at the top) | GPS, place or UK postcode search. A **stargazing rating** for any hour tonight (hour slider) built from cloud, transparency, steadiness (jet-stream wind), ground wind and gusts, the Moon and darkness, with a plain-English verdict. A **stargazing map**: a forecast grid of about 20 km squares coloured by that rating, a NASA night-lights layer, and the **best spot nearby** (dark land, not sea). Also an automatic Bortle estimate. |
 
 On a computer, the tabs move into a left sidebar and the screens use two columns.
 
@@ -49,7 +49,7 @@ npm test                           # RSS parsing and rating engine
 
 ## Data sources
 
-- **Weather:** Open-Meteo. **Geocoding:** Open-Meteo and postcodes.io. **Light pollution:** NASA Black Marble (GIBS). **Map:** Esri dark-grey basemap.
+- **Weather:** Open-Meteo (cloud layers, humidity, visibility, wind, gusts, 250 hPa jet-stream wind; the map grid fetches 81 points in one request). **Geocoding:** Open-Meteo and postcodes.io. **Light pollution:** NASA Black Marble (GIBS). **Map:** Esri dark-grey basemap.
 - **Object photos and text:** Wikimedia Commons and Wikipedia, with credits in `data/objects.json`.
 - **News:** NASA and ESA RSS via `scripts/update-news.mjs` (run by hand).
 - Nothing runs on a schedule. See ROADMAP.md for why.

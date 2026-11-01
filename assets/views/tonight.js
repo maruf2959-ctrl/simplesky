@@ -70,7 +70,9 @@
       temp: Math.round(Math.min(...list.map((h) => h.temp))),
       wind: Math.round(Math.max(...list.map((h) => h.wind))),
       dew: dewGap < 1.5 ? 'High' : dewGap < 3.5 ? 'Moderate' : 'Low',
-      rain: Math.max(...list.map((h) => h.rain ?? 0))
+      rain: Math.max(...list.map((h) => h.rain ?? 0)),
+      steady: Sky.steadinessScore({ jet: list.reduce((a, h) => a + (h.jet ?? 0), 0) / list.length }),
+      gust: Math.round(Math.max(...list.map((h) => h.gust ?? h.wind ?? 0)))
     };
   }
 
@@ -171,8 +173,10 @@
           el('div', {}, el('span', { class: 'k' }, 'Moon'), el('span', { class: 'v' }, `${Astro.phaseName(mp.age)} ${Math.round(mp.illum * 100)}%`), el('div', { class: 'small muted' }, mt.upNow ? `Up now${mt.set ? ', sets ' + fmtTime(mt.set) : ''}` : mt.rise ? `Rises ${fmtTime(mt.rise)}` : '')),
           c ? el('div', {}, el('span', { class: 'k' }, 'Cloud'), el('span', { class: 'v' }, `${c.cloud}% avg`)) : null,
           c ? el('div', {}, el('span', { class: 'k' }, 'Dew risk'), el('span', { class: 'v' }, c.dew)) : null,
-          c ? el('div', {}, el('span', { class: 'k' }, 'Low / wind'), el('span', { class: 'v' }, `${c.temp}°C · ${c.wind} mph`)) : null,
+          c ? el('div', {}, el('span', { class: 'k' }, 'Low / wind'), el('span', { class: 'v' }, `${c.temp}°C · ${c.wind} mph`), el('div', { class: 'small muted' }, `gusts to ${c.gust} mph`)) : null,
+          c?.steady != null ? el('div', {}, el('span', { class: 'k' }, 'Steadiness'), el('span', { class: 'v' }, c.steady >= 70 ? 'Steady' : c.steady >= 45 ? 'Some twinkle' : 'Turbulent'), el('div', { class: 'small muted' }, c.steady >= 70 ? 'sharp planets' : 'planets look soft')) : null,
           el('div', {}, el('span', { class: 'k' }, 'Sky darkness'), el('span', { class: 'v' }, `Bortle ${loc.bortle} `), el('a', { href: '#map', class: 'small' }, 'change'))),
+        el('a', { href: '#map', class: 'btn small', style: 'margin-top:0.8rem' }, '🗺 Stargazing map and full rating'),
         timeline(hours, night) ? el('div', { style: 'margin-top:0.9rem' }, timeline(hours, night)) : null));
 
     // Setup + mode.

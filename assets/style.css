@@ -451,3 +451,18 @@ html.embed body::before { content: ""; position: fixed; inset: 0 0 auto; height:
 @media (min-width: 1400px) {
   .hl-row { grid-auto-columns: calc((100% - 2.8rem) / 5); }
 }
+
+/* stargazing rating + forecast map */
+.rating-card .verdict-big h3 { font-size: 1.05rem; }
+.slider-row { display: flex; align-items: center; gap: 0.6rem; margin: 0.9rem 0 0.3rem; }
+.slider-row input[type="range"] { flex: 1; accent-color: var(--gold); min-width: 0; }
+.slider-time { font-family: "Space Grotesk", sans-serif; font-weight: 700; color: var(--gold); }
+.factors { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.6rem 1rem; margin-top: 0.9rem; }
+.factor-top { display: flex; justify-content: space-between; font-size: 0.85rem; }
+.factor .bar { height: 6px; border-radius: 99px; background: rgba(255,255,255,0.08); overflow: hidden; margin: 0.25rem 0; }
+.factor .bar i { display: block; height: 100%; border-radius: 99px; }
+.best-spot { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin-top: 0.6rem; font-size: 0.88rem; }
+.leaflet-popup-content { font-size: 0.85rem; line-height: 1.45; }
+.leaflet-popup-content .btn { margin-top: 0.4rem; }
+.leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--panel-solid); color: var(--text); border: 1px solid var(--line); }
+.leaflet-container a.leaflet-popup-close-button { color: var(--muted); }
