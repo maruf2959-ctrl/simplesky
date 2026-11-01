@@ -1,11 +1,11 @@
 // Offline support: app shell is cached; data and weather use the network first
 // and fall back to the last copy, so the app still opens at a dark site with no signal.
-const VERSION = 'simplesky-v7';
+const VERSION = 'simplesky-v8';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest',
   'assets/style.css', 'assets/astro.js', 'assets/conditions.js', 'assets/core.js', 'assets/rating.js',
   'assets/views/objinfo.js', 'assets/views/home.js', 'assets/views/tonight.js', 'assets/views/events.js', 'assets/views/kit.js', 'assets/views/map.js', 'assets/views/explore.js',
-  'assets/icon.svg', 'assets/icon-192.png',
+  'assets/favicon-64.png', 'assets/apple-touch-icon.png', 'assets/icon-192.png',
   'data/targets.json', 'data/gear.json', 'data/telescopes.json', 'data/objects.json'
 ];
 
