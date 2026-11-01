@@ -129,7 +129,7 @@
       const isNew = Date.now() - new Date(l.firstSeen) < 36 * 3600000;
       grid.append(
         el('a', { class: 'listing' + (l.stale ? ' stale' : ''), href: l.url, target: '_blank', rel: 'noopener' },
-          el('div', { class: 'thumb' }, l.image ? el('img', { src: l.image, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer' }) : el('span', {}, '✦')),
+          el('div', { class: 'thumb' }, l.image && !App.embed ? el('img', { src: l.image, alt: '', loading: 'lazy', referrerpolicy: 'no-referrer', onerror: (e) => e.target.replaceWith(el('span', {}, '✦')) }) : el('span', {}, '✦')),
           el('div', { class: 'body' },
             el('div', { class: 'tags' },
               el('span', { class: 'tag src-' + l.source.replace(/\W/g, '').toLowerCase() }, l.source),

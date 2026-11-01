@@ -20,6 +20,19 @@
       const now = new Date();
       const night = App.night(now);
       const plan = k ? Rating.plan({ targets, k, loc, night, hours, now }) : [];
+      // Rate every target with each of the user's other setups too, so we can say which one is best.
+      const scores = new Map();
+      for (const s of kit.setups.filter((x) => x.scope)) {
+        const ks = s.id === setup?.id ? k : Rating.derive(s, gear);
+        if (!ks) continue;
+        const p = s.id === setup?.id ? plan : Rating.plan({ targets, k: ks, loc, night, hours, now });
+        for (const e of p) {
+          const list = scores.get(e.target.id) || [];
+          list.push({ id: s.id, name: s.name, view: e.visual?.score ?? null, photo: e.imaging?.score ?? null, best: Math.max(e.visual?.score ?? 0, e.imaging?.score ?? 0) });
+          scores.set(e.target.id, list);
+        }
+      }
+      for (const e of plan) e.setups = (scores.get(e.target.id) || []).sort((a, b) => b.best - a.best);
       return { plan, night, hours, k, kit, setup, gear, targets, loc, now };
     })();
     memo = { at: Date.now(), value: p };
@@ -57,12 +70,14 @@
       temp: Math.round(Math.min(...list.map((h) => h.temp))),
       wind: Math.round(Math.max(...list.map((h) => h.wind))),
       dew: dewGap < 1.5 ? 'High' : dewGap < 3.5 ? 'Moderate' : 'Low',
-      rain: Math.max(...list.map((h) => h.rain ?? 0))
+      rain: Math.max(...list.map((h) => h.rain ?? 0)),
+      steady: Sky.steadinessScore({ jet: list.reduce((a, h) => a + (h.jet ?? 0), 0) / list.length }),
+      gust: Math.round(Math.max(...list.map((h) => h.gust ?? h.wind ?? 0)))
     };
   }
 
   function verdict(c) {
-    if (!c) return { text: 'Forecast unavailable', sub: 'Check the sky. The ratings below assume clear skies.' };
+    if (!c) return { text: App.embed ? 'Check the sky yourself' : 'Forecast unavailable', sub: App.embed ? 'Live weather isn’t available in this version. Ratings assume a clear sky.' : 'Check the sky. The ratings below assume clear skies.' };
     if (c.avg >= 75) return { text: 'Great night. Get out there!', sub: `${c.clearHours} clear hours forecast.` };
     if (c.avg >= 55) return { text: 'Worth setting up', sub: `Clearest around ${fmtTime(c.best.t)}.` };
     if (c.avg >= 35) return { text: 'Patchy: grab gaps', sub: c.bestScore >= 60 ? `Best gap around ${fmtTime(c.best.t)}.` : 'Planets and the Moon through gaps.' };
@@ -95,7 +110,15 @@
   }
 
   // ------------------------------------------------------------- item card
-  function targetCard(e, mode, setup, k) {
+  // If another of the user's setups does clearly better on this object, say so.
+  function betterWith(e, score) {
+    const top = e.setups?.[0];
+    if (!top || e.setups.length < 2 || top.id === Kit.get().active || top.best < score + 6) return null;
+    return el('div', { class: 'better' }, `★ Better with ${top.name} (${top.best})`);
+  }
+
+  // A picture card; tapping it opens the full object sheet (photo, description, rating).
+  function targetCard(e, mode, objects) {
     const t = e.target;
     const r = mode === 'photo' ? e.imaging : e.visual ?? e.imaging;
     const score = r?.score ?? 0;
@@ -103,25 +126,17 @@
     const upNow = e.now.alt > 10;
     const when = mode === 'photo' && r?.at ? r.at : e.best.t;
     const sky = e.best.clear;
-    const hasGoto = ['altaz-goto', 'eq-goto', 'tracker'].includes(k.mount?.type) && k.mount?.handset;
-    return el('details', { class: 'titem' },
-      el('summary', {},
-        App.scoreRing(score, r?.label),
-        el('div', { class: 'grow' },
-          el('div', { class: 'tname' }, name),
-          el('div', { class: 'tsub' }, `${App.TYPE_ICON[t.type] || ''} ${App.TYPE_NAME[t.type] || ''} · `, el('span', { class: 'lbl-' + App.scoreClass(score) }, r?.label || '')),
-          el('div', { class: 'tmeta' },
-            el('span', {}, upNow ? `Up now ${Math.round(e.now.alt)}° ${App.compass(e.now.az)}` : `Best ${fmtTime(when)}`),
-            el('span', {}, `Peak ${Math.round(e.best.alt)}° ${App.compass(e.best.az)}`),
-            sky != null ? el('span', {}, `Sky ${App.scoreLabel(sky).toLowerCase()}`) : null))),
-      el('div', { class: 'tbody' },
-        el('p', {}, t.desc),
-        r?.view ? el('p', {}, el('strong', {}, 'Eyepiece: '), `${r.view.label} → ${Math.round(r.view.mag)}×, ${r.view.tfov >= 60 ? (r.view.tfov / 60).toFixed(1) + '°' : Math.round(r.view.tfov) + '′'} field`) : null,
-        el('h4', {}, mode === 'photo' ? 'Photography rating: why' : 'Why this rating'),
-        el('ul', {}, (r?.reasons || ['No rating available for this kit.']).map((x) => el('li', {}, x))),
-        mode !== 'photo' && e.imaging ? el('p', { class: 'small muted' }, `Photography: ${e.imaging.score}/100 (${e.imaging.label}). Switch to Photography above for details.`) : null,
-        hasGoto && t.hc ? el('div', { class: 'goto' }, '🎯 GoTo: ', t.hc, ' → ENTER') : null,
-        el('p', { class: 'small muted' }, `Best placed at ${fmtTime(e.best.t)} (${Math.round(e.best.alt)}° high, ${App.compass(e.best.az)}).`)));
+    return el('button', { class: 'titem tcard', onclick: () => ObjectInfo.open(t.id), 'aria-label': `${name}: ${r?.label || ''}. Open details` },
+      ObjectInfo.photo(objects[t.id], 'tthumb'),
+      el('div', { class: 'grow' },
+        el('div', { class: 'tname' }, name),
+        el('div', { class: 'tsub' }, `${App.TYPE_NAME[t.type] || ''} · `, el('span', { class: 'lbl-' + App.scoreClass(score) }, r?.label || '')),
+        el('div', { class: 'tmeta' },
+          el('span', {}, upNow ? `Up now ${Math.round(e.now.alt)}° ${App.compass(e.now.az)}` : `Best ${fmtTime(when)}`),
+          el('span', {}, `Peak ${Math.round(e.best.alt)}°`),
+          sky != null ? el('span', {}, `Sky ${App.scoreLabel(sky).toLowerCase()}`) : null),
+        betterWith(e, score)),
+      App.scoreRing(score, r?.label));
   }
 
   // ------------------------------------------------------------------ render
@@ -135,6 +150,7 @@
       return;
     }
     const { plan, night, hours, k, kit, setup, gear, loc, now } = P;
+    const objects = await ObjectInfo.objects();
     section.replaceChildren();
     if (!k) {
       section.append(el('div', { class: 'card' }, el('h2', {}, 'Add your telescope first'), el('p', {}, 'Ratings are worked out for your own kit.'), el('a', { class: 'btn primary', href: '#kit' }, 'Go to My Kit')));
@@ -157,16 +173,19 @@
           el('div', {}, el('span', { class: 'k' }, 'Moon'), el('span', { class: 'v' }, `${Astro.phaseName(mp.age)} ${Math.round(mp.illum * 100)}%`), el('div', { class: 'small muted' }, mt.upNow ? `Up now${mt.set ? ', sets ' + fmtTime(mt.set) : ''}` : mt.rise ? `Rises ${fmtTime(mt.rise)}` : '')),
           c ? el('div', {}, el('span', { class: 'k' }, 'Cloud'), el('span', { class: 'v' }, `${c.cloud}% avg`)) : null,
           c ? el('div', {}, el('span', { class: 'k' }, 'Dew risk'), el('span', { class: 'v' }, c.dew)) : null,
-          c ? el('div', {}, el('span', { class: 'k' }, 'Low / wind'), el('span', { class: 'v' }, `${c.temp}°C · ${c.wind} mph`)) : null,
+          c ? el('div', {}, el('span', { class: 'k' }, 'Low / wind'), el('span', { class: 'v' }, `${c.temp}°C · ${c.wind} mph`), el('div', { class: 'small muted' }, `gusts to ${c.gust} mph`)) : null,
+          c?.steady != null ? el('div', {}, el('span', { class: 'k' }, 'Steadiness'), el('span', { class: 'v' }, c.steady >= 70 ? 'Steady' : c.steady >= 45 ? 'Some twinkle' : 'Turbulent'), el('div', { class: 'small muted' }, c.steady >= 70 ? 'sharp planets' : 'planets look soft')) : null,
           el('div', {}, el('span', { class: 'k' }, 'Sky darkness'), el('span', { class: 'v' }, `Bortle ${loc.bortle} `), el('a', { href: '#map', class: 'small' }, 'change'))),
+        el('a', { href: '#map', class: 'btn small', style: 'margin-top:0.8rem' }, '🗺 Stargazing map and full rating'),
         timeline(hours, night) ? el('div', { style: 'margin-top:0.9rem' }, timeline(hours, night)) : null));
 
     // Setup + mode.
     let mode = App.store.get('tonightMode', 'view');
     if (!k.camera && mode === 'photo') mode = 'view';
-    if (k.setup.scope.type === 'smart') mode = 'photo';
+    const cameraOnly = ['smart', 'lens'].includes(k.type);
+    if (cameraOnly) mode = 'photo';
     const modeSwitch = el('div', { class: 'switch' },
-      el('button', { class: mode === 'view' ? 'on' : '', disabled: k.setup.scope.type === 'smart', onclick: () => setMode('view') }, '👁 Viewing'),
+      el('button', { class: mode === 'view' ? 'on' : '', disabled: cameraOnly, onclick: () => setMode('view') }, '👁 Viewing'),
       el('button', { class: mode === 'photo' ? 'on' : '', disabled: !k.camera, onclick: () => setMode('photo') }, '📷 Photography'));
     function setMode(m) {
       App.store.set('tonightMode', m);
@@ -179,7 +198,8 @@
       el('div', { class: 'row wrap' }, el('span', { class: 'muted small' }, 'Rated for'), setupSel, el('a', { href: '#kit', class: 'small' }, 'edit kit')),
       el('p', { class: 'small muted', style: 'margin:0.3rem 0 0.6rem' }, `${setup.scope.name} · ${k.D} mm f/${k.fr.toFixed(1)} · ${k.mount?.name || 'no mount set'}${k.camera ? ' · ' + k.camera.name : ''}`),
       modeSwitch,
-      !k.camera && k.setup.scope.type !== 'smart' ? el('p', { class: 'small muted', style: 'margin:0.5rem 0 0' }, 'Add a camera in My Kit to see photography ratings.') : null));
+      !k.camera && !cameraOnly ? el('p', { class: 'small muted', style: 'margin:0.5rem 0 0' }, k.type === 'eye' || k.type === 'binoculars' ? 'Add a telescope or camera in My Kit for more ratings.' : 'Add a camera in My Kit to see photography ratings.') : null,
+      k.type === 'lens' && !k.camera ? el('p', { class: 'small', style: 'color:var(--gold);margin:0.5rem 0 0' }, 'Add your camera body to this lens setup in My Kit.') : null));
 
     // GoTo helper.
     if (k.mount?.handset && ['altaz-goto', 'eq-goto'].includes(k.mount.type)) {
@@ -210,14 +230,25 @@
       chips.replaceChildren(...filters.map(([id, txt]) => el('button', { class: f === id ? 'on' : '', onclick: () => { f = id; App.store.set('tonightFilter', id); draw(); } }, txt)));
       const key = mode === 'photo' ? (e) => (e.imaging?.score ?? 0) * (e.best.clear == null ? 1 : 0.35 + 0.65 * (e.best.clear / 100)) : (e) => e.tonight;
       const rows = plan.filter(match).filter((e) => (mode === 'photo' ? e.imaging : e.visual ?? e.imaging)).sort((a, b) => key(b) - key(a));
-      list.replaceChildren(...(rows.length ? rows.map((e) => targetCard(e, mode, setup, k)) : [el('p', { class: 'empty' }, 'Nothing in this group is well placed tonight.')]));
+      list.replaceChildren(...(rows.length ? rows.map((e) => targetCard(e, mode, objects)) : [el('p', { class: 'empty' }, 'Nothing in this group is well placed tonight.')]));
     }
     draw();
     section.append(
       el('div', { class: 'card-head', style: 'margin-top:1.2rem' }, el('h2', { style: 'margin:0;font-size:1.15rem' }, mode === 'photo' ? 'Best to photograph tonight' : 'Best to see tonight'), el('span', { class: 'small muted' }, `${plan.length} up`)),
-      el('p', { class: 'small muted', style: 'margin:0.2rem 0 0.4rem' }, 'Scores are for your kit at the target’s best moment tonight, including the Moon and your sky darkness. The order also accounts for forecast cloud.'),
+      el('p', { class: 'small muted', style: 'margin:0.2rem 0 0.4rem' }, 'Scores are for your kit at each object’s best moment tonight, including the Moon and your sky darkness. Tap any object for photos and details.'),
+      
       chips,
       list);
+    columns(section, (n) => n.classList.contains('card'));
+  }
+
+  // On wide screens: conditions, setup and GoTo on the left, the target list on the right.
+  function columns(section, isSide) {
+    const side = el('div', { class: 'col-side' });
+    const main = el('div', { class: 'col-main' });
+    for (const n of [...section.children]) (isSide(n) ? side : main).append(n);
+    section.replaceChildren(side, main);
+    section.classList.add('two-col');
   }
 
   App.register('tonight', {

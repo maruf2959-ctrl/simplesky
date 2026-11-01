@@ -133,10 +133,17 @@
   },
   {
    "id": "tripod",
-   "name": "Camera tripod (no tracking)",
-   "type": "altaz-manual",
+   "name": "Photo tripod (no tracking)",
+   "type": "tripod",
    "track1000": 0,
    "payload": 3
+  },
+  {
+   "id": "handheld",
+   "name": "Hand-held / no mount",
+   "type": "handheld",
+   "track1000": 0,
+   "payload": 0
   }
  ],
  "eyepieceTypes": [
@@ -298,7 +305,9 @@
    "h": 6.26,
    "px": 2.9,
    "rn": 0.8,
-   "cooled": false
+   "cooled": false,
+   "brand": "ZWO",
+   "mount": "t2"
   },
   {
    "id": "asi662mc",
@@ -308,37 +317,45 @@
    "h": 3.13,
    "px": 2.9,
    "rn": 0.7,
-   "cooled": false
+   "cooled": false,
+   "brand": "ZWO",
+   "mount": "t2"
   },
   {
    "id": "canon-600d",
-   "name": "Canon EOS 600D / 650D / 700D (used)",
+   "name": "Canon EOS 600D / 650D / 700D",
    "kind": "dslr",
    "w": 22.3,
    "h": 14.9,
    "px": 4.3,
    "rn": 3.0,
-   "cooled": false
+   "cooled": false,
+   "brand": "Canon",
+   "mount": "canon-ef"
   },
   {
    "id": "nikon-d5300",
-   "name": "Nikon D5300 (used)",
+   "name": "Nikon D5300",
    "kind": "dslr",
    "w": 23.5,
    "h": 15.6,
    "px": 3.9,
    "rn": 1.8,
-   "cooled": false
+   "cooled": false,
+   "brand": "Nikon",
+   "mount": "nikon-f"
   },
   {
    "id": "asi224mc",
-   "name": "ZWO ASI224MC (used)",
+   "name": "ZWO ASI224MC",
    "kind": "astro",
    "w": 4.9,
    "h": 3.7,
    "px": 3.75,
    "rn": 0.8,
-   "cooled": false
+   "cooled": false,
+   "brand": "ZWO",
+   "mount": "t2"
   },
   {
    "id": "asi678mc",
@@ -348,17 +365,21 @@
    "h": 4.3,
    "px": 2.0,
    "rn": 0.6,
-   "cooled": false
+   "cooled": false,
+   "brand": "ZWO",
+   "mount": "t2"
   },
   {
    "id": "canon-rp",
-   "name": "Canon EOS RP (used, full-frame mirrorless)",
+   "name": "Canon EOS RP",
    "kind": "mirrorless",
    "w": 35.9,
    "h": 24.0,
    "px": 5.7,
    "rn": 2.5,
-   "cooled": false
+   "cooled": false,
+   "brand": "Canon",
+   "mount": "canon-rf"
   },
   {
    "id": "asi533mc-pro",
@@ -368,7 +389,9 @@
    "h": 11.31,
    "px": 3.76,
    "rn": 1.0,
-   "cooled": true
+   "cooled": true,
+   "brand": "ZWO",
+   "mount": "t2"
   },
   {
    "id": "asi120mc",
@@ -378,7 +401,9 @@
    "h": 3.6,
    "px": 3.75,
    "rn": 4.0,
-   "cooled": false
+   "cooled": false,
+   "brand": "ZWO",
+   "mount": "t2"
   },
   {
    "id": "asi462mc",
@@ -388,7 +413,9 @@
    "h": 3.2,
    "px": 2.9,
    "rn": 0.5,
-   "cooled": false
+   "cooled": false,
+   "brand": "ZWO",
+   "mount": "t2"
   },
   {
    "id": "asi715mc",
@@ -398,7 +425,9 @@
    "h": 3.1,
    "px": 1.45,
    "rn": 0.6,
-   "cooled": false
+   "cooled": false,
+   "brand": "ZWO",
+   "mount": "t2"
   },
   {
    "id": "sv105",
@@ -408,7 +437,9 @@
    "h": 3.1,
    "px": 2.9,
    "rn": 2.0,
-   "cooled": false
+   "cooled": false,
+   "brand": "SVBony",
+   "mount": "t2"
   },
   {
    "id": "canon-r6ii",
@@ -418,7 +449,9 @@
    "h": 23.9,
    "px": 6.0,
    "rn": 1.5,
-   "cooled": false
+   "cooled": false,
+   "brand": "Canon",
+   "mount": "canon-rf"
   },
   {
    "id": "canon-2000d",
@@ -428,7 +461,9 @@
    "h": 14.9,
    "px": 3.7,
    "rn": 3.0,
-   "cooled": false
+   "cooled": false,
+   "brand": "Canon",
+   "mount": "canon-ef"
   },
   {
    "id": "sony-a7iii",
@@ -438,7 +473,9 @@
    "h": 23.8,
    "px": 5.9,
    "rn": 1.5,
-   "cooled": false
+   "cooled": false,
+   "brand": "Sony",
+   "mount": "sony-e"
   },
   {
    "id": "phone",
@@ -448,7 +485,9 @@
    "h": 4.2,
    "px": 1.0,
    "rn": 2.0,
-   "cooled": false
+   "cooled": false,
+   "brand": "Smartphone",
+   "mount": "phone"
   },
   {
    "id": "seestar-s50",
@@ -458,7 +497,9 @@
    "h": 3.2,
    "px": 2.9,
    "rn": 0.5,
-   "cooled": false
+   "cooled": false,
+   "brand": "Seestar",
+   "mount": "smart"
   },
   {
    "id": "seestar-s30",
@@ -468,7 +509,9 @@
    "h": 3.1,
    "px": 2.9,
    "rn": 0.7,
-   "cooled": false
+   "cooled": false,
+   "brand": "Seestar",
+   "mount": "smart"
   },
   {
    "id": "dwarf3",
@@ -478,7 +521,9 @@
    "h": 4.3,
    "px": 2.0,
    "rn": 0.6,
-   "cooled": false
+   "cooled": false,
+   "brand": "DWARF",
+   "mount": "smart"
   },
   {
    "id": "vespera2",
@@ -488,7 +533,307 @@
    "h": 6.3,
    "px": 2.9,
    "rn": 0.8,
-   "cooled": false
+   "cooled": false,
+   "brand": "Vespera",
+   "mount": "smart"
+  },
+  {
+   "id": "nikon-d3300",
+   "name": "Nikon D3300 / D3400 / D3500",
+   "kind": "dslr",
+   "w": 23.5,
+   "h": 15.6,
+   "px": 3.9,
+   "rn": 2.2,
+   "cooled": false,
+   "brand": "Nikon",
+   "mount": "nikon-f"
+  },
+  {
+   "id": "nikon-d3200",
+   "name": "Nikon D3200",
+   "kind": "dslr",
+   "w": 23.2,
+   "h": 15.4,
+   "px": 3.85,
+   "rn": 2.5,
+   "cooled": false,
+   "brand": "Nikon",
+   "mount": "nikon-f"
+  },
+  {
+   "id": "nikon-d5600",
+   "name": "Nikon D5500 / D5600",
+   "kind": "dslr",
+   "w": 23.5,
+   "h": 15.6,
+   "px": 3.9,
+   "rn": 1.8,
+   "cooled": false,
+   "brand": "Nikon",
+   "mount": "nikon-f"
+  },
+  {
+   "id": "nikon-d7200",
+   "name": "Nikon D7100 / D7200",
+   "kind": "dslr",
+   "w": 23.5,
+   "h": 15.6,
+   "px": 3.9,
+   "rn": 1.8,
+   "cooled": false,
+   "brand": "Nikon",
+   "mount": "nikon-f"
+  },
+  {
+   "id": "nikon-d7500",
+   "name": "Nikon D7500",
+   "kind": "dslr",
+   "w": 23.5,
+   "h": 15.7,
+   "px": 4.2,
+   "rn": 1.8,
+   "cooled": false,
+   "brand": "Nikon",
+   "mount": "nikon-f"
+  },
+  {
+   "id": "nikon-d750",
+   "name": "Nikon D750 (full frame)",
+   "kind": "dslr",
+   "w": 35.9,
+   "h": 24.0,
+   "px": 5.95,
+   "rn": 2.0,
+   "cooled": false,
+   "brand": "Nikon",
+   "mount": "nikon-f"
+  },
+  {
+   "id": "nikon-z50",
+   "name": "Nikon Z50 / Z fc",
+   "kind": "mirrorless",
+   "w": 23.5,
+   "h": 15.7,
+   "px": 4.2,
+   "rn": 1.8,
+   "cooled": false,
+   "brand": "Nikon",
+   "mount": "nikon-z"
+  },
+  {
+   "id": "nikon-z6",
+   "name": "Nikon Z6 / Z6 II (full frame)",
+   "kind": "mirrorless",
+   "w": 35.9,
+   "h": 23.9,
+   "px": 5.9,
+   "rn": 1.5,
+   "cooled": false,
+   "brand": "Nikon",
+   "mount": "nikon-z"
+  },
+  {
+   "id": "canon-100d",
+   "name": "Canon EOS 100D / 200D / 250D",
+   "kind": "dslr",
+   "w": 22.3,
+   "h": 14.9,
+   "px": 3.72,
+   "rn": 2.5,
+   "cooled": false,
+   "brand": "Canon",
+   "mount": "canon-ef"
+  },
+  {
+   "id": "canon-80d",
+   "name": "Canon EOS 80D / 90D",
+   "kind": "dslr",
+   "w": 22.5,
+   "h": 15.0,
+   "px": 3.7,
+   "rn": 2.2,
+   "cooled": false,
+   "brand": "Canon",
+   "mount": "canon-ef"
+  },
+  {
+   "id": "canon-6d",
+   "name": "Canon EOS 6D (full frame)",
+   "kind": "dslr",
+   "w": 35.8,
+   "h": 23.9,
+   "px": 6.55,
+   "rn": 2.5,
+   "cooled": false,
+   "brand": "Canon",
+   "mount": "canon-ef"
+  },
+  {
+   "id": "canon-6dii",
+   "name": "Canon EOS 6D Mark II (full frame)",
+   "kind": "dslr",
+   "w": 35.9,
+   "h": 24.0,
+   "px": 5.7,
+   "rn": 2.0,
+   "cooled": false,
+   "brand": "Canon",
+   "mount": "canon-ef"
+  },
+  {
+   "id": "canon-r8",
+   "name": "Canon EOS R8 / R6 (full frame)",
+   "kind": "mirrorless",
+   "w": 36.0,
+   "h": 24.0,
+   "px": 6.0,
+   "rn": 1.5,
+   "cooled": false,
+   "brand": "Canon",
+   "mount": "canon-rf"
+  },
+  {
+   "id": "canon-m50",
+   "name": "Canon EOS M50",
+   "kind": "mirrorless",
+   "w": 22.3,
+   "h": 14.9,
+   "px": 3.7,
+   "rn": 2.5,
+   "cooled": false,
+   "brand": "Canon",
+   "mount": "canon-m"
+  },
+  {
+   "id": "sony-a6000",
+   "name": "Sony A6000 / A6100 / A6400",
+   "kind": "mirrorless",
+   "w": 23.5,
+   "h": 15.6,
+   "px": 3.9,
+   "rn": 2.0,
+   "cooled": false,
+   "brand": "Sony",
+   "mount": "sony-e"
+  },
+  {
+   "id": "sony-a7s3",
+   "name": "Sony A7S III (full frame)",
+   "kind": "mirrorless",
+   "w": 35.6,
+   "h": 23.8,
+   "px": 8.4,
+   "rn": 1.5,
+   "cooled": false,
+   "brand": "Sony",
+   "mount": "sony-e"
+  },
+  {
+   "id": "sony-a7iv",
+   "name": "Sony A7 IV (full frame)",
+   "kind": "mirrorless",
+   "w": 35.9,
+   "h": 23.9,
+   "px": 5.1,
+   "rn": 1.5,
+   "cooled": false,
+   "brand": "Sony",
+   "mount": "sony-e"
+  },
+  {
+   "id": "fuji-xt",
+   "name": "Fujifilm X-T3 / X-T4 / X-T30",
+   "kind": "mirrorless",
+   "w": 23.5,
+   "h": 15.6,
+   "px": 3.76,
+   "rn": 2.0,
+   "cooled": false,
+   "brand": "Fujifilm",
+   "mount": "fuji-x"
+  },
+  {
+   "id": "asi2600mc",
+   "name": "ZWO ASI2600MC Pro (cooled)",
+   "kind": "astro",
+   "w": 23.5,
+   "h": 15.7,
+   "px": 3.76,
+   "rn": 1.0,
+   "cooled": true,
+   "brand": "ZWO",
+   "mount": "t2"
+  },
+  {
+   "id": "asi294mc",
+   "name": "ZWO ASI294MC Pro (cooled)",
+   "kind": "astro",
+   "w": 19.1,
+   "h": 13.0,
+   "px": 4.63,
+   "rn": 1.4,
+   "cooled": true,
+   "brand": "ZWO",
+   "mount": "t2"
+  },
+  {
+   "id": "asi183mc",
+   "name": "ZWO ASI183MC",
+   "kind": "astro",
+   "w": 13.2,
+   "h": 8.8,
+   "px": 2.4,
+   "rn": 1.6,
+   "cooled": false,
+   "brand": "ZWO",
+   "mount": "t2"
+  },
+  {
+   "id": "sv705c",
+   "name": "SVBony SV705C",
+   "kind": "astro",
+   "w": 11.1,
+   "h": 6.3,
+   "px": 2.9,
+   "rn": 0.8,
+   "cooled": false,
+   "brand": "SVBony",
+   "mount": "t2"
+  },
+  {
+   "id": "sv305",
+   "name": "SVBony SV305",
+   "kind": "astro",
+   "w": 5.6,
+   "h": 3.2,
+   "px": 2.9,
+   "rn": 2.0,
+   "cooled": false,
+   "brand": "SVBony",
+   "mount": "t2"
+  },
+  {
+   "id": "neptune-c2",
+   "name": "Player One Neptune-C II",
+   "kind": "astro",
+   "w": 7.9,
+   "h": 4.5,
+   "px": 2.9,
+   "rn": 0.8,
+   "cooled": false,
+   "brand": "Player",
+   "mount": "t2"
   }
- ]
+ ],
+ "cameraMounts": {
+  "canon-ef": "Canon EF/EF-S",
+  "canon-rf": "Canon RF",
+  "canon-m": "Canon EF-M",
+  "nikon-f": "Nikon F",
+  "nikon-z": "Nikon Z",
+  "sony-e": "Sony E",
+  "fuji-x": "Fujifilm X",
+  "t2": "T2 (M42×0.75)"
+ }
 }

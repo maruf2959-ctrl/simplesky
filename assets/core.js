@@ -2,6 +2,8 @@
 (function (global) {
   'use strict';
 
+  // Set by a host page (e.g. a claude.ai preview) that can't reach outside services.
+  const EMBED = !!global.SIMPLESKY_EMBED;
   const DEFAULT_LOCATION = { name: 'Worthing, West Sussex', lat: 50.8179, lon: -0.3728, bortle: 6, bortleAuto: true };
   const TZ = 'Europe/London';
 
@@ -79,8 +81,9 @@
   // ----------------------------------------------------------- weather
   let weatherCache = null;
   function weather() {
+    if (EMBED) return Promise.resolve(null);
     const loc = site();
-    const key = `${loc.lat.toFixed(2)},${loc.lon.toFixed(2)}`;
+    const key = `v2:${loc.lat.toFixed(2)},${loc.lon.toFixed(2)}`;
     const saved = store.get('weather', null);
     const revive = (list) => list.map((h) => ({ ...h, t: new Date(h.t) }));
     if (!weatherCache && saved && saved.key === key && Date.now() - saved.at < 30 * 60000) weatherCache = Promise.resolve(revive(saved.data));
@@ -88,7 +91,7 @@
     const params = new URLSearchParams({
       latitude: loc.lat,
       longitude: loc.lon,
-      hourly: 'cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high,relative_humidity_2m,dew_point_2m,temperature_2m,wind_speed_10m,precipitation_probability,visibility',
+      hourly: 'cloud_cover,cloud_cover_low,cloud_cover_mid,cloud_cover_high,relative_humidity_2m,dew_point_2m,temperature_2m,wind_speed_10m,wind_gusts_10m,wind_speed_250hPa,precipitation_probability,visibility',
       daily: 'sunrise,sunset',
       timezone: 'UTC',
       forecast_days: '3',
@@ -108,6 +111,8 @@
           dew: h.dew_point_2m[i],
           temp: h.temperature_2m[i],
           wind: h.wind_speed_10m[i],
+          gust: h.wind_gusts_10m?.[i],
+          jet: h.wind_speed_250hPa?.[i],
           rain: h.precipitation_probability[i],
           vis: h.visibility[i]
         }));
@@ -122,18 +127,8 @@
     return weatherCache;
   }
 
-  // How good one hour is for stargazing, 0–100. Low cloud matters most and
-  // thin high cloud least; damp air means dew and haze.
-  function hourScore(h) {
-    if (!h) return null;
-    const cloud = 0.5 * h.low + 0.35 * h.mid + 0.15 * h.high;
-    const effective = Math.max(cloud, h.cloud * 0.6);
-    let s = 100 - effective;
-    if (h.rain > 40) s -= 20;
-    if (h.wind > 20) s -= 10;
-    if (h.rh > 92) s -= 8;
-    return clamp(Math.round(s), 0, 100);
-  }
+  // How good one hour's weather is for stargazing, 0–100 (see assets/conditions.js).
+  const hourScore = (h) => (h ? Sky.weatherScore(h) : null);
   const scoreLabel = (s) => (s == null ? 'Unknown' : s >= 80 ? 'Clear' : s >= 60 ? 'Mostly clear' : s >= 40 ? 'Patchy' : s >= 20 ? 'Mostly cloudy' : 'Overcast');
 
   // ------------------------------------------------------------- night
@@ -260,13 +255,13 @@
     setRed(store.get('red', false));
     $('#redToggle').addEventListener('click', () => setRed(!document.documentElement.classList.contains('red')));
     addEventListener('hashchange', route);
-    for (const v of ['home', 'tonight', 'events']) {
+    for (const v of ['home', 'tonight', 'events', 'explore']) {
       rerenderOn('kit', v);
       rerenderOn('location', v);
     }
     rerenderOn('location', 'map');
     route();
-    if ('serviceWorker' in navigator && global.location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+    if (!EMBED && 'serviceWorker' in navigator && global.location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
   }
 
   // ---------------------------------------------------------- shared UI
@@ -286,6 +281,7 @@
   }
 
   global.App = {
+    embed: EMBED,
     scoreClass, scoreRing, TYPE_ICON, TYPE_NAME, compass, sheet,
     $, $$, el, esc, fmtTime, fmtDay, clamp, store, on, emit,
     location: site, setLocation: setSite, data, weather, hourScore, scoreLabel, night,

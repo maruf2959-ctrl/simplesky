@@ -25,11 +25,29 @@ throughout. It has a **bottom tab bar** like a phone app.
 | | |
 |---|---|
 | Live site | https://maruf2959-ctrl.github.io/simplesky/ (repository renamed from Camera-finder- on 18 Oct 2026; Pages paths are case-sensitive) |
-| Current version | v2: tabbed phone app, built 18 Oct 2026 on branch `claude/astrophotography-camera-research-i0qhy2` (merge to go live) |
-| Now working on | Owner review of v2, then the "Next up" list below |
-| Last updated | 18 Oct 2026 |
+| Current version | v2 live on GitHub Pages; v2.1 (object photos, safer deploy) ready locally to push in one batch |
+| Now working on | v3 (Shop archived, gear search, lenses/binoculars, best-setup comparison, eyepiece views, desktop layout) ready locally; waiting for the owner's OK to push in one batch |
+| Last updated | 1 Nov 2026 |
+
+## ✅ GitHub suspension resolved (30 Oct 2026)
+
+GitHub Support (ticket #4871705) cleared the restrictions on 30 Oct 2026: it was a false positive from their automated abuse detection. In response, the scheduled data-collection Action was removed (`.github/workflows/deploy.yml` only deploys on merge or by hand), and pushes are batched and only made with the owner's OK. The history below is kept for reference.
+
+### Suspension notes (18 Oct 2026)
+
+- The owner's GitHub account `maruf2959-ctrl` was suspended on 18 Oct 2026 for an unstated Terms of Service reason, shortly after the repo renames and the first runs of the daily scraping Action. GitHub Pages and git access are down.
+- **Appeal:** GitHub Support ticket **#4871705** (reinstatement request). Replies arrive by email.
+- **Interim app:** a private claude.ai page, https://claude.ai/artifact/XjZUDqUBWex2VdXpmMLV1o, built with `window.SIMPLESKY_EMBED = true` (no live weather, map or GPS there, because the sandbox blocks outside requests; everything else works).
+- **Work not yet on GitHub:** commits made on branch `claude/astrophotography-camera-research-i0qhy2` after PR #5 (embed mode, object photos and info sheets, this roadmap update). They're in the owner's backup zip (`simplesky-backup-*.zip`), which includes a git bundle (`simplesky.bundle`) holding the exact commits.
+- **When access returns:**
+  1. Reconnect GitHub in claude.ai connector settings.
+  2. Restore the commits: unzip, then `git fetch /path/simplesky.bundle claude/astrophotography-camera-research-i0qhy2`, or copy the files over a fresh clone and commit.
+  3. Push the branch, open a PR, merge, and check Pages redeploys at https://maruf2959-ctrl.github.io/simplesky/.
+  4. **Before re-enabling the schedule, make the daily Action safer:** drop the retailer-page scraping (use the official eBay API only, plus links), refresh less often, and stop committing data every day (deploy it as a Pages artifact instead). This was the most likely trigger for the suspension.
 
 ## Decisions
+
+- **Pushing to GitHub (owner's rule, 18 Oct 2026):** never push, open PRs, rename or trigger workflows without asking the owner first. Commit locally as work progresses, then do **one batched push** when the owner says so. Keep automated GitHub activity low to avoid being flagged again.
 
 - **Personal use first:** no accounts. Kit and location are saved on the device (browser storage), and the whole app works offline where possible.
 - **Hosting:** stays free, using GitHub Pages plus a daily GitHub Action for listings and news.
@@ -60,16 +78,31 @@ throughout. It has a **bottom tab bar** like a phone app.
 | `assets/astro.js` | `Astro`: Sun, Moon and planet positions, alt/az, separation, field rotation, Moon phase. |
 | `assets/rating.js` | `Kit` model (setups saved on the device) and `Rating` engine: `derive`, `visual`, `imaging`, `plan`, `alignStars`. |
 | `assets/views/*.js` | One file per tab; each calls `App.register(name, { render })`. |
+| `assets/views/objinfo.js` | Object info sheet (photo, facts, ratings, eyepiece/camera simulation), used by every tab. |
+| `assets/views/explore.js` | Explore tab: searchable photo gallery. |
+| `archive/shop/` | The archived Shop tab and its listings scraper, with restore notes. |
+| `data/objects.json`, `assets/img/` | Object descriptions, credits and photos from `scripts/build-object-info.py`. |
 | `data/targets.json` | Moon, planets, 47 deep-sky and double-star targets (with NexStar hand-control paths), 34 alignment stars. |
 | `data/telescopes.json`, `data/gear.json` | Telescope database (49) and mounts, eyepiece types, Barlows, reducers, diagonals, finders, filters, cameras. |
-| `data/cameras.json`, `listings.json`, `history.json`, `news.json` | Shop catalogue plus files refreshed daily by the GitHub Action. |
+| `data/news.json` | NASA/ESA headlines, refreshed by hand with `scripts/update-news.mjs`. |
 | `sw.js`, `manifest.webmanifest` | Installable PWA and offline cache. |
-| `test/*.test.mjs` | `npm test`: listing filters, RSS parsing, rating sanity checks. |
+| `test/*.test.mjs` | `npm test`: RSS parsing and rating checks (telescopes, binoculars, naked eye, camera lenses). |
 
 ## Open questions for the owner
 
 - [ ] ISS and satellite passes: worth adding later? (They need orbital data and a bit more maths.)
 - [ ] Review the rating scores against real nights out. Anything that feels too generous or harsh?
+
+## v3 (1 Nov 2026, owner's notes after buying a Nikon D5300)
+
+- [x] **Shop archived** to `archive/shop/` (markup, script, listings scraper, data, tests, restore notes). Tabs are now Home · Tonight · Explore · Events · My Kit.
+- [x] **Gear for anyone:** one search box for telescopes (49), smart scopes, camera lenses (10), binoculars (5), cameras (44 with lens mounts) and mounts. Part pickers are searchable. New users start with **Naked eye**. Camera picks offer "use with this telescope" or "new camera + lens setup".
+- [x] **Ratings for every kind of kit:** binoculars and naked-eye viewing ratings; camera lenses (photo only); untracked tripod shots use the 500 rule; hand-held is flagged. The "how to connect your camera" advice comes from the camera's lens mount (e.g. Nikon F T-ring).
+- [x] **Best setup per object:** Tonight rates every object with all your setups and shows "★ Better with…"; each object sheet lists every setup with a "Use" button.
+- [x] **Pictures:** Explore tab (searchable photo gallery), Events thumbnails, and a simulated **eyepiece view and camera frame** at your kit's real field of view.
+- [x] **Desktop layout:** left sidebar, two-column Tonight, Kit and Events, a card dashboard on Home, and centred dialogs. Phones keep the bottom tab bar.
+- [x] **Stargazing rating and map** (owner request, 1 Nov 2026): `assets/conditions.js` rates each hour from cloud, transparency, steadiness (jet stream), wind and gusts, Moon and darkness, with a verdict. The Location screen has an hour slider, factor bars, a forecast grid map (9×9 points, Open-Meteo multi-location, light pollution sampled per square from NASA tiles, sea squares excluded) and "best spot nearby". It's fetched when opened, with no scheduled jobs.
+- [ ] Next ideas: per-lens zoom setting (choose any focal length), a session log, and the two missing photos (Blue Snowball, Double Double) if the Wikimedia retry fails.
 
 ## Build plan
 
@@ -109,6 +142,12 @@ throughout. It has a **bottom tab bar** like a phone app.
 - [x] **GoTo helper**: three well-spread alignment stars for right now, plus each target's hand-control path
 - [ ] Next: 7Timer seeing/transparency (needs a server-side fetch, as there's no CORS); altitude-over-time chart per target; more targets (Caldwell list)
 
+### Phase 4b: Object photos and info sheets (in progress, owner review notes 18 Oct 2026)
+- [x] `scripts/build-object-info.py`: downloads a Wikipedia summary (CC BY-SA) and a Wikimedia Commons photo, with author and licence credits, for every target. Photos are resized to 640 px in `assets/img/`; text and credits go in `data/objects.json`. Both ship with the app, so they work offline and in sandboxed hosts.
+- [x] **Object info sheet** (`assets/views/objinfo.js`): tap any object to see a big photo, "What is it?", distance, constellation, brightness and size, best time tonight, viewing and photography ratings with reasons, a "what you'll really see" note for beginners, the GoTo path, and credits.
+- [x] Tonight list uses picture cards; Home has a swipeable "Tonight's highlights" photo row; an **Explore the sky** gallery shows every object grouped by type.
+- [ ] Next: thumbnails on Events entries; more objects (Caldwell highlights); a "what it looks like in your eyepiece" simulated view (greyscale, scaled to your field of view).
+
 ### Phase 5: Events and news ✅
 - [x] Calculated 12-month calendar: Moon phases, meteor-shower peaks (with Moon interference), oppositions, Mercury/Venus elongations, Moon–planet and planet–planet conjunctions, equinoxes and solstices, UK clock changes, plus the Aug 2027 eclipse
 - [x] "This week" highlights
@@ -126,6 +165,13 @@ throughout. It has a **bottom tab bar** like a phone app.
 - [ ] Observing lists and Messier marathon tracker
 
 ## Changelog
+
+- **1 Nov 2026:** Added the stargazing rating and forecast map. 18 tests passing.
+- **1 Nov 2026:** v3 built locally (see the v3 section). 14 tests passing. Not pushed yet.
+
+- **1 Nov 2026:** GitHub account reinstated (30 Oct). Merged the bot's last data commits, replaced the scheduled scrape-and-commit workflow with a deploy-only one, and prepared v2.1 for a single push.
+
+- **18 Oct 2026:** GitHub account suspended (appeal #4871705). Interim claude.ai version published. Added embed mode (no outside requests), replaced browser alert/confirm dialogs, and started Phase 4b (object photos, info sheets, Explore gallery) from the owner's review notes.
 
 - **18 Oct 2026:** App renamed **SimpleSky** (was Stargazer / Camera Finder). The repository name and URL are unchanged for now.
 - **18 Oct 2026:** v2 built: tabbed phone app (Home, Tonight with ratings and GoTo helper, Events with news, My Kit with telescope search and diagram, Location map with light pollution, Shop), red mode, PWA. 11 tests passing.

@@ -12,26 +12,23 @@
   const log10 = Math.log10;
 
   // ------------------------------------------------------------------ kit
+  // New users start with the naked eye, so Tonight works before any kit is added.
   const DEFAULT_KIT = {
     starter: true,
     active: 's1',
     setups: [
       {
         id: 's1',
-        name: 'My 127 SLT',
-        scopeId: 'nexstar-127slt',
-        scope: { name: 'Celestron NexStar 127SLT', type: 'mak', aperture: 127, focal: 1500 },
-        mode: 'modular',
-        mountId: 'slt',
-        eyepieces: [
-          { focal: 25, afov: 50, type: 'plossl' },
-          { focal: 9, afov: 50, type: 'plossl' },
-          { focal: 6, afov: 50, type: 'plossl' }
-        ],
-        barlowId: 'b2',
+        name: 'Naked eye',
+        scopeId: 'naked-eye',
+        scope: { name: 'Naked eye', type: 'eye', aperture: 7, focal: null, magnification: 1, field: 120 },
+        mode: 'allinone',
+        mountId: 'handheld',
+        eyepieces: [],
+        barlowId: null,
         reducerId: null,
-        diagonalId: 'd125',
-        finderId: 'reddot',
+        diagonalId: null,
+        finderId: null,
         cameraId: null,
         filters: []
       }
@@ -67,8 +64,14 @@
     const barlow = find('barlows', setup.barlowId);
     const reducer = find('reducers', setup.reducerId);
     const camera = find('cameras', setup.cameraId);
+    const type = setup.scope.type;
     const views = [];
-    for (const ep of setup.eyepieces || []) {
+    // Binoculars and the naked eye have one fixed view; telescopes use their eyepieces.
+    if (type === 'binoculars' || type === 'eye') {
+      const mag = Number(setup.scope.magnification) || 1;
+      views.push({ label: type === 'eye' ? 'Naked eye' : `${mag}× binoculars`, mag, tfov: (Number(setup.scope.field) || 6) * 60, exit: D / mag, fixed: true });
+    }
+    for (const ep of type === 'lens' || type === 'binoculars' || type === 'eye' ? [] : setup.eyepieces || []) {
       const f = Number(ep.focal);
       if (!f) continue;
       const add = (factor, label) => {
@@ -79,12 +82,14 @@
       if (barlow) add(barlow.factor, `${f} mm + ${barlow.factor}× Barlow`);
     }
     views.sort((a, b) => a.mag - b.mag);
-    const maxUseful = Math.min(2 * D, 350);
+    const fixedView = type === 'binoculars' || type === 'eye';
+    const maxUseful = fixedView ? views[0].mag : Math.min(2 * D, 350);
     return {
       setup,
+      type,
       D,
-      F,
-      fr: F / D,
+      F: F || 0,
+      fr: F ? F / D : 0,
       mount,
       barlow,
       reducer,
@@ -92,7 +97,7 @@
       views,
       maxUseful,
       minUseful: D / 7,
-      res: 116 / D,
+      res: type === 'eye' ? 60 : 116 / D,
       widest: views.reduce((m, v) => (v.barlow ? m : Math.max(m, v.tfov)), 0) || (setup.scope.type === 'smart' ? 0 : 0),
       hasFilter: (id) => (setup.filters || []).includes(id),
       lightGrasp: (D / 7) ** 2
@@ -131,12 +136,13 @@
     const reasons = [];
     let score;
     let view = null;
-    const smart = k.setup.scope.type === 'smart';
-    if (smart) return null; // smart scopes are camera-only; see imaging()
+    // Smart scopes and camera lenses are camera-only; see imaging().
+    if (k.type === 'smart' || k.type === 'lens') return null;
+    const simple = k.type === 'eye' || k.type === 'binoculars';
     if (!k.views.length) reasons.push('Add an eyepiece in My Kit for magnification advice.');
 
     if (t.type === 'moon') {
-      score = 95;
+      score = k.type === 'eye' ? 80 : k.type === 'binoculars' ? 90 : 95;
       const age = ctx.pos?.age ?? 7;
       if (age > 12.5 && age < 16.5) reasons.push('Near full: bright and flat-looking. A Moon filter helps; the best detail is near the edge.');
       else reasons.push('Look along the terminator (the day–night line) for craters in deep shadow.');
@@ -146,6 +152,28 @@
       if (p.elongation < 12) return { score: 0, label: 'Not practical', reasons: ['Too close to the Sun right now. Never point a telescope near the Sun.'] };
       const detail = p.diameterArcsec / k.res;
       score = planetBase(p, k);
+      if (simple) {
+        const lmS = NELM(ctx.bortle) + (k.type === 'binoculars' ? 5 * log10(k.D / 7) : 0);
+        const mag = k.views[0].mag;
+        const notes = {
+          jupiter: mag >= 7 ? [78, 'Look for up to four of its moons in a line either side.'] : [70, 'Brilliant cream-coloured “star”.'],
+          saturn: mag >= 15 ? [60, 'Looks oval; at 15×+ you may glimpse the rings as “ears”.'] : [55, 'A steady golden “star”.'],
+          venus: [72, mag >= 10 ? 'Brilliant; you may make out its crescent or gibbous phase.' : 'The brightest “star” in the sky.'],
+          mars: [55, 'A distinctly orange-red “star”.'],
+          mercury: [45, 'Low in twilight; a satisfying catch.'],
+          uranus: [k.type === 'eye' ? 15 : 40, 'A faint blue-green “star”. You need a finder chart.'],
+          neptune: [k.type === 'eye' ? 3 : 22, 'A faint blue “star”. A challenge.']
+        };
+        const [base, note] = notes[t.id] || [40, ''];
+        score = p.mag < lmS - 0.3 ? base : 5;
+        reasons.length = 0;
+        reasons.push(p.mag < lmS - 0.3 ? note : `At magnitude ${p.mag.toFixed(1)} it’s too faint for ${k.type === 'eye' ? 'the naked eye' : 'these binoculars'} here.`, 'A telescope is needed for surface detail.');
+        view = k.views[0];
+        const af2 = altFactor(ctx.alt, true);
+        if (af2 < 1 && ctx.alt != null) reasons.push(`Not very high (${Math.round(ctx.alt)}°).`);
+        const sc = Math.round(clamp(score * af2, 0, 99));
+        return { score: sc, label: labelFor(sc), reasons, view };
+      }
       reasons.push(`${p.diameterArcsec.toFixed(1)}″ across; your ${k.D} mm aperture resolves ${k.res.toFixed(2)}″.`);
       if (detail > 15) reasons.push(t.id === 'saturn' ? 'Rings and the Cassini Division on steady nights.' : t.id === 'jupiter' ? 'Cloud belts, moons and maybe the Great Red Spot.' : 'Plenty of resolution for surface detail.');
       else if (detail > 5) reasons.push('A small disc; detail needs steady air.');
@@ -168,9 +196,9 @@
     } else {
       // Deep sky.
       const sqm = sqmFor(ctx.bortle);
-      const lm = NELM(ctx.bortle) + 5 * log10(k.D / 7) - 0.5;
+      const lm = NELM(ctx.bortle) + 5 * log10(k.D / 7) - (k.type === 'eye' ? 0 : 0.5);
       const margin = lm - t.mag;
-      const ap = 2.5 * log10(k.D / 80);
+      const ap = 2.5 * log10(Math.max(k.D, 25) / 80);
       if (t.type === 'open') {
         score = 58 + Math.min(30, margin * 3);
       } else {
@@ -219,11 +247,12 @@
   function imaging(t, ctx) {
     const k = ctx.k;
     const cam = k.camera;
-    if (!cam) return null;
+    if (!cam || k.type === 'eye' || k.type === 'binoculars') return null;
     const reasons = [];
     let score;
     const kind = cam.kind;
     const mountType = k.mount?.type || 'altaz-manual';
+    if (mountType === 'handheld' && t.type !== 'moon') return mk(5, ['Hand-held is too shaky for this. Put the camera on a tripod.']);
 
     if (kind === 'phone') {
       if (t.type === 'moon') return mk(85, ['Hold the phone to a low-power eyepiece; tap to focus, then lower exposure.']);
@@ -251,6 +280,10 @@
         score = planetBase(ctx.pos, k) * sampling * kindF;
         if (ctx.pos.elongation < 12) reasons.push('Too close to the Sun right now.');
         const px = ctx.pos.diameterArcsec / scale;
+        if (px < 8) {
+          score = Math.min(score, 25);
+          reasons.push(`Only ≈${Math.max(1, Math.round(px))} px across at ${Math.round(fl)} mm: it’ll be a bright dot${t.id === 'jupiter' ? ', but you can catch its four moons' : ''}. A telescope gives real detail.`);
+        } else
         reasons.push(`Shoot video at ${best.label} (f/${best.fr.toFixed(0)}; ideal ≈f/${ideal.toFixed(0)}), so the planet is ≈${Math.round(px)} px across.`);
         if (kind !== 'astro') reasons.push(kind === 'dslr' ? 'Use movie-crop / 640×480 mode if your camera has it.' : 'A dedicated planetary camera would do better.');
         reasons.push('Stack the best 10–25% of frames in AutoStakkert.');
@@ -278,7 +311,11 @@
       if (mountType === 'tracker' && fe > 600) reasons.push('A star tracker struggles to carry and track this focal length.');
       reasons.push(`Equatorial tracking: ≈${Math.round(sub)} s subs unguided.`);
     } else {
-      return mk(t.mag < 5 && t.type !== 'galaxy' ? 12 : 3, ['No motorised tracking: only the Moon and planets (as video) are practical.']);
+      // No tracking: the "500 rule" keeps stars round for about 500 ÷ (focal length × crop factor) seconds.
+      const crop = 43.27 / Math.hypot(cam.w, cam.h);
+      sub = Math.min(30, 500 / (fe * crop));
+      if (sub < 0.5) return mk(t.mag < 5 && t.type !== 'galaxy' ? 12 : 3, ['No motorised tracking: at this focal length stars trail in under half a second. Only the Moon and planets (as video) are practical.']);
+      reasons.push(`No tracking: keep exposures to ≈${sub < 10 ? sub.toFixed(1) : Math.round(sub)} s (the 500 rule) and stack lots of them.`);
     }
     if (mountType === 'tracker' && fe > 600) sub = Math.min(sub, 5);
     const sqm = sqmFor(ctx.bortle);
