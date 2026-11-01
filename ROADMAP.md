@@ -25,8 +25,8 @@ throughout. It has a **bottom tab bar** like a phone app.
 | | |
 |---|---|
 | Live site | https://maruf2959-ctrl.github.io/simplesky/ (repository renamed from Camera-finder- on 18 Oct 2026; Pages paths are case-sensitive) |
-| Current version | v2 live on GitHub Pages; v2.1 (object photos, safer deploy) ready locally to push in one batch |
-| Now working on | v3 (Shop archived, gear search, lenses/binoculars, best-setup comparison, eyepiece views, desktop layout) ready locally; waiting for the owner's OK to push in one batch |
+| Current version | v3 live on GitHub Pages (merged in PR #6, 1 Nov 2026) |
+| Now working on | Owner trying v3; next ideas below |
 | Last updated | 1 Nov 2026 |
 
 ## ✅ GitHub suspension resolved (30 Oct 2026)
@@ -166,6 +166,7 @@ GitHub Support (ticket #4871705) cleared the restrictions on 30 Oct 2026: it was
 
 ## Changelog
 
+- **1 Nov 2026:** v3 pushed in one batch and merged (PR #6); the new deploy-only workflow published it. The claude.ai copy is no longer needed.
 - **1 Nov 2026:** Added the stargazing rating and forecast map. 18 tests passing.
 - **1 Nov 2026:** v3 built locally (see the v3 section). 14 tests passing. Not pushed yet.
 
