@@ -261,7 +261,17 @@
     }
     rerenderOn('location', 'map');
     route();
-    if (!EMBED && 'serviceWorker' in navigator && global.location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+    if (!EMBED && 'serviceWorker' in navigator && global.location.protocol === 'https:') {
+      // Check for a new version on every visit, and reload once when it takes over.
+      const hadController = !!navigator.serviceWorker.controller;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (hadController && !global.__reloaded) {
+          global.__reloaded = true;
+          global.location.reload();
+        }
+      });
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then((r) => r.update()).catch(() => {});
+    }
   }
 
   // ---------------------------------------------------------- shared UI

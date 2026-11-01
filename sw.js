@@ -1,6 +1,6 @@
 // Offline support: app shell is cached; data and weather use the network first
 // and fall back to the last copy, so the app still opens at a dark site with no signal.
-const VERSION = 'simplesky-v6';
+const VERSION = 'simplesky-v7';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest',
   'assets/style.css', 'assets/astro.js', 'assets/conditions.js', 'assets/core.js', 'assets/rating.js',
@@ -24,9 +24,12 @@ self.addEventListener('fetch', (e) => {
   const sameOrigin = url.origin === self.location.origin;
   const cacheable = sameOrigin || /api\.open-meteo\.com|cdnjs\.cloudflare\.com|fonts\.(googleapis|gstatic)\.com/.test(url.host);
   if (!cacheable) return;
-  // Network first, cache fallback; keeps data fresh but works offline.
+  // Network first, cache fallback; keeps data fresh but works offline. Our own files are
+  // revalidated with the server every time (cache: 'no-cache'), so new versions show at once
+  // instead of waiting out GitHub Pages' 10-minute browser cache.
+  const fresh = sameOrigin ? fetch(req.url, { cache: 'no-cache', credentials: 'same-origin' }) : fetch(req);
   e.respondWith(
-    fetch(req)
+    fresh
       .then((res) => {
         if (res.ok) {
           const copy = res.clone();

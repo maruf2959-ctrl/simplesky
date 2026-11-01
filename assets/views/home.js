@@ -59,7 +59,7 @@
     if (window.EventsCalc) {
       const evs = window.EventsCalc.upcoming(3);
       eventsCard.append(el('div', { class: 'card-head' }, el('h2', {}, 'Coming up'), el('a', { href: '#events' }, 'Calendar →')),
-        evs.map((e) => el('div', { class: 'ev' }, el('div', { class: 'date' }, el('b', {}, e.date.toLocaleDateString('en-GB', { timeZone: App.TZ, day: 'numeric' })), el('span', {}, e.date.toLocaleDateString('en-GB', { timeZone: App.TZ, month: 'short' }))), el('div', {}, el('h4', {}, `${e.icon} ${e.title}`), el('p', {}, e.short || e.desc)))));
+        ...evs.map((e) => el('div', { class: 'ev' }, el('div', { class: 'date' }, el('b', {}, e.date.toLocaleDateString('en-GB', { timeZone: App.TZ, day: 'numeric' })), el('span', {}, e.date.toLocaleDateString('en-GB', { timeZone: App.TZ, month: 'short' }))), el('div', {}, el('h4', {}, `${e.icon} ${e.title}`), el('p', {}, e.short || e.desc)))));
     } else eventsCard.remove();
 
     let P;
