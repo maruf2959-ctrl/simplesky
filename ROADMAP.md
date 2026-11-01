@@ -25,11 +25,15 @@ throughout. It has a **bottom tab bar** like a phone app.
 | | |
 |---|---|
 | Live site | https://maruf2959-ctrl.github.io/simplesky/ (repository renamed from Camera-finder- on 18 Oct 2026; Pages paths are case-sensitive) |
-| Current version | v2 live on GitHub Pages until the suspension (see below); v2.1 (object photos) built locally |
-| Now working on | Phase 4b: object photos and info sheets (owner review notes, 18 Oct 2026) |
-| Last updated | 18 Oct 2026 (evening) |
+| Current version | v2 live on GitHub Pages; v2.1 (object photos, safer deploy) ready locally to push in one batch |
+| Now working on | One batched push of v2.1 (waiting for the owner's OK), then more review notes |
+| Last updated | 1 Nov 2026 |
 
-## ⚠️ GitHub account suspended (18 Oct 2026): how to resume
+## ✅ GitHub suspension resolved (30 Oct 2026)
+
+GitHub Support (ticket #4871705) cleared the restrictions on 30 Oct 2026: it was a false positive from their automated abuse detection. In response, the scheduled data-collection Action was removed (`.github/workflows/deploy.yml` only deploys on merge or by hand), and pushes are batched and only made with the owner's OK. The history below is kept for reference.
+
+### Suspension notes (18 Oct 2026)
 
 - The owner's GitHub account `maruf2959-ctrl` was suspended on 18 Oct 2026 for an unstated Terms of Service reason, shortly after the repo renames and the first runs of the daily scraping Action. GitHub Pages and git access are down.
 - **Appeal:** GitHub Support ticket **#4871705** (reinstatement request). Replies arrive by email.
@@ -146,6 +150,8 @@ throughout. It has a **bottom tab bar** like a phone app.
 - [ ] Observing lists and Messier marathon tracker
 
 ## Changelog
+
+- **1 Nov 2026:** GitHub account reinstated (30 Oct). Merged the bot's last data commits, replaced the scheduled scrape-and-commit workflow with a deploy-only one, and prepared v2.1 for a single push.
 
 - **18 Oct 2026:** GitHub account suspended (appeal #4871705). Interim claude.ai version published. Added embed mode (no outside requests), replaced browser alert/confirm dialogs, and started Phase 4b (object photos, info sheets, Explore gallery) from the owner's review notes.
 

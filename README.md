@@ -13,10 +13,12 @@ The plan and progress live in [ROADMAP.md](ROADMAP.md).
 |---|---|
 | **Home** | Tonight at a glance, the best targets for your kit, "Did you know?" facts, and a beginner's start guide. |
 | **Tonight** | Cloud timeline, darkness, Moon, dew and wind. Every target is **rated 0–100 for your kit** (viewing, and photography if you've added a camera), with the eyepiece to use, the reasons behind the score, and a **GoTo helper** (alignment stars to use now plus hand-controller paths). |
-| **Events** | Calculated sky calendar (Moon phases, meteor showers, oppositions, elongations, conjunctions, seasons, clock changes) plus NASA/ESA headlines refreshed daily. |
+| **Events** | Calculated sky calendar (Moon phases, meteor showers, oppositions, elongations, conjunctions, seasons, clock changes) plus NASA/ESA headlines (refreshed when the data is updated). |
 | **My Kit** | Search about 50 popular telescopes (or enter your own), build the setup on a tappable diagram, switch between modular and all-in-one, and see magnification, field of view, limiting magnitude and camera numbers. Multiple setups are supported. |
-| **Shop** | Live UK listings (eBay, CeX, First Light Optics), rankings, framing simulator and the 127 SLT camera guide. |
+| **Shop** | UK listings (eBay, CeX, First Light Optics, refreshed by hand), rankings, framing simulator and the 127 SLT camera guide. |
 | **Location & sky** (📍 at the top) | GPS, place or UK postcode search, a live map with a NASA night-lights layer, an automatic Bortle estimate, and stargazing conditions. |
+
+Tap any object for its **info sheet**: a photo (Wikimedia Commons, credited), a beginner-friendly description (Wikipedia), facts, your kit's ratings and the GoTo path. An **Explore the sky** gallery shows all 55 objects. Photos and text are bundled by `scripts/build-object-info.py`.
 
 ### How the ratings work
 
@@ -26,22 +28,18 @@ target's size against your widest eyepiece field; Moon brightness and distance; 
 photography it adds focal ratio, sensor framing, pixel sampling, read noise and the longest sub your
 mount allows (tracking or alt-az field rotation). The results are heuristics, tested in `test/rating.test.mjs`.
 
-## Setup (about 10 minutes)
+## Setup
 
-1. **Merge this branch into `main`.** Scheduled workflows only run on the default branch.
-2. **Turn on Pages:** go to *Settings → Pages → Build and deployment → Source* and choose **GitHub Actions**.
-3. **Add eBay API keys** (free). Without them, the site still works but shows only retailer and CeX prices.
-   1. Sign up at <https://developer.ebay.com> and create a **Production** keyset.
-   2. eBay asks production apps about *Marketplace Account Deletion* notifications. This app stores no eBay user data, so choose the **exemption / opt-out** option.
-   3. In the repository, go to *Settings → Secrets and variables → Actions* and add `EBAY_CLIENT_ID` (the App ID) and `EBAY_CLIENT_SECRET` (the Cert ID).
-4. Go to *Actions → "Update listings & deploy site" → Run workflow* to do the first refresh. After that it runs daily at 05:17 UTC.
+1. **Turn on Pages:** go to *Settings → Pages → Build and deployment → Source* and choose **GitHub Actions**.
+2. Merging to `main` runs `.github/workflows/deploy.yml`: it runs the tests and publishes the site. Nothing runs on a schedule.
+3. **Refreshing prices and news is manual on purpose** (see *Data sources* below): run the scripts, check the changes, and commit them yourself. For eBay listings, set `EBAY_CLIENT_ID` and `EBAY_CLIENT_SECRET` (a free Production keyset from <https://developer.ebay.com>) in your shell before running the listings script.
 
-Your site will be at `https://<your-username>.github.io/simplesky/`.
+The site lives at `https://<your-username>.github.io/simplesky/`.
 
 ## Run locally
 
 ```bash
-node scripts/update-listings.mjs   # refresh data/listings.json (set EBAY_* env vars for eBay)
+node scripts/update-listings.mjs   # refresh data/listings.json by hand (set EBAY_* env vars for eBay)
 npm run serve                      # then open http://localhost:8080
 node scripts/update-news.mjs       # refresh data/news.json
 npm test                           # listing filters, RSS parsing and rating engine
