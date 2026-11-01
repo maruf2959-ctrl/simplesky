@@ -11,14 +11,16 @@ The plan and progress live in [ROADMAP.md](ROADMAP.md).
 
 | Tab | What it does |
 |---|---|
-| **Home** | Tonight at a glance, the best targets for your kit, "Did you know?" facts, and a beginner's start guide. |
-| **Tonight** | Cloud timeline, darkness, Moon, dew and wind. Every target is **rated 0–100 for your kit** (viewing, and photography if you've added a camera), with the eyepiece to use, the reasons behind the score, and a **GoTo helper** (alignment stars to use now plus hand-controller paths). |
-| **Events** | Calculated sky calendar (Moon phases, meteor showers, oppositions, elongations, conjunctions, seasons, clock changes) plus NASA/ESA headlines (refreshed when the data is updated). |
-| **My Kit** | Search about 50 popular telescopes (or enter your own), build the setup on a tappable diagram, switch between modular and all-in-one, and see magnification, field of view, limiting magnitude and camera numbers. Multiple setups are supported. |
-| **Shop** | UK listings (eBay, CeX, First Light Optics, refreshed by hand), rankings, framing simulator and the 127 SLT camera guide. |
+| **Home** | Tonight at a glance, a swipeable row of photo highlights for your kit, coming-up events, "Did you know?" facts and a beginner's start guide. |
+| **Tonight** | Cloud timeline, darkness, Moon, dew and wind. Every object is **rated 0–100 for your kit** (viewing, and photography if your setup has a camera), with reasons, the eyepiece to use, a **GoTo helper** (alignment stars for right now plus hand-controller paths), and **"★ Better with…"** when another of your setups suits an object better. |
+| **Explore** | A photo gallery of all 55 objects with search and filters. Tap any object for its **info sheet**: a credited photo, a beginner-friendly description, facts, your ratings, a simulated **eyepiece view and camera frame** at your kit's real field of view, and how each of your setups compares. |
+| **Events** | Calculated sky calendar (Moon phases, meteor showers, oppositions, elongations, conjunctions, seasons, clock changes) with thumbnails, plus NASA/ESA headlines. |
+| **My Kit** | **One search box for all gear:** telescopes, smart telescopes, cameras (DSLR, mirrorless, astro), camera lenses, binoculars and mounts. Build setups part by part on a tappable diagram, keep as many setups as you like, and see what each can do, including how to connect your camera (e.g. *Nikon F T-ring + 1.25″ adapter*). New users start with the naked eye. |
 | **Location & sky** (📍 at the top) | GPS, place or UK postcode search, a live map with a NASA night-lights layer, an automatic Bortle estimate, and stargazing conditions. |
 
-Tap any object for its **info sheet**: a photo (Wikimedia Commons, credited), a beginner-friendly description (Wikipedia), facts, your kit's ratings and the GoTo path. An **Explore the sky** gallery shows all 55 objects. Photos and text are bundled by `scripts/build-object-info.py`.
+On a computer, the tabs move into a left sidebar and the screens use two columns.
+
+The old **Shop** tab (live UK camera prices) is archived in `archive/shop/`.
 
 ### How the ratings work
 
@@ -26,34 +28,32 @@ Tap any object for its **info sheet**: a photo (Wikimedia Commons, credited), a 
 against a planet's size; limiting magnitude and surface brightness against your sky (Bortle class); the
 target's size against your widest eyepiece field; Moon brightness and distance; and altitude. For
 photography it adds focal ratio, sensor framing, pixel sampling, read noise and the longest sub your
-mount allows (tracking or alt-az field rotation). The results are heuristics, tested in `test/rating.test.mjs`.
+mount allows (tracking, alt-az field rotation, or the 500 rule when untracked on a tripod). Binoculars and the naked eye get their own simpler ratings. The results are heuristics, tested in `test/rating.test.mjs`.
 
 ## Setup
 
 1. **Turn on Pages:** go to *Settings → Pages → Build and deployment → Source* and choose **GitHub Actions**.
 2. Merging to `main` runs `.github/workflows/deploy.yml`: it runs the tests and publishes the site. Nothing runs on a schedule.
-3. **Refreshing prices and news is manual on purpose** (see *Data sources* below): run the scripts, check the changes, and commit them yourself. For eBay listings, set `EBAY_CLIENT_ID` and `EBAY_CLIENT_SECRET` (a free Production keyset from <https://developer.ebay.com>) in your shell before running the listings script.
+3. **Refreshing news and object photos is manual on purpose:** run the scripts, check the changes, and commit them yourself.
 
 The site lives at `https://<your-username>.github.io/simplesky/`.
 
 ## Run locally
 
 ```bash
-node scripts/update-listings.mjs   # refresh data/listings.json by hand (set EBAY_* env vars for eBay)
 npm run serve                      # then open http://localhost:8080
 node scripts/update-news.mjs       # refresh data/news.json
-npm test                           # listing filters, RSS parsing and rating engine
+python3 scripts/build-object-info.py   # fetch missing object photos and descriptions
+npm test                           # RSS parsing and rating engine
 ```
 
-## Data sources and their limits
+## Data sources
 
-- **eBay UK** uses the Browse API (`EBAY_GB`, item location GB, "for parts" condition excluded).
-- **CeX** uses the public JSON that powers uk.webuy.com. It's best effort: CeX sometimes blocks cloud IPs. If it fails, the last good results stay on the site and are marked "Not re-checked".
-- **First Light Optics** reads the price and stock status from each product page.
-- **MPB** blocks automated access, so the site gives one-click pre-filled MPB, eBay, CeX, ABS UK and Stargazers Lounge searches instead.
-
-To add or tune a camera, edit `data/cameras.json`: `match` controls which titles count, `priceRange` sets the price filter, and `retail` lists product pages to price-check.
+- **Weather:** Open-Meteo. **Geocoding:** Open-Meteo and postcodes.io. **Light pollution:** NASA Black Marble (GIBS). **Map:** Esri dark-grey basemap.
+- **Object photos and text:** Wikimedia Commons and Wikipedia, with credits in `data/objects.json`.
+- **News:** NASA and ESA RSS via `scripts/update-news.mjs` (run by hand).
+- Nothing runs on a schedule. See ROADMAP.md for why.
 
 ## Not affiliated
 
-This site is an independent hobby project. Prices are indicative; always check the listing.
+SimpleSky is an independent hobby project. Ratings are estimates to help you plan, not guarantees.

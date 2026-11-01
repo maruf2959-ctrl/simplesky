@@ -263,7 +263,7 @@
     setRed(store.get('red', false));
     $('#redToggle').addEventListener('click', () => setRed(!document.documentElement.classList.contains('red')));
     addEventListener('hashchange', route);
-    for (const v of ['home', 'tonight', 'events']) {
+    for (const v of ['home', 'tonight', 'events', 'explore']) {
       rerenderOn('kit', v);
       rerenderOn('location', v);
     }

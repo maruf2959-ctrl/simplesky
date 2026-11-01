@@ -52,7 +52,7 @@
           el('a', { href: '#map' }, el('span', { class: 'em' }, '📍'), el('div', {}, el('strong', {}, '2 · Set your location'), el('small', {}, 'Weather, darkness and light pollution for where you are.'))),
           el('a', { href: '#tonight' }, el('span', { class: 'em' }, '🌙'), el('div', {}, el('strong', {}, '3 · Check tonight'), el('small', {}, 'What your kit can see, when, and how to find it.'))),
           el('a', { href: '#events' }, el('span', { class: 'em' }, '📅'), el('div', {}, el('strong', {}, '4 · Plan ahead'), el('small', {}, 'Meteor showers, Moon phases and planet highlights.'))),
-          el('a', { href: '#shop' }, el('span', { class: 'em' }, '🛒'), el('div', {}, el('strong', {}, '5 · Upgrade wisely'), el('small', {}, 'Live UK prices and honest advice on what’s worth buying.')))))
+          el('a', { href: '#explore' }, el('span', { class: 'em' }, '🪐'), el('div', {}, el('strong', {}, '5 · Explore'), el('small', {}, 'Photos and plain-English guides to every object.')))))
     );
 
     // Upcoming events teaser.
@@ -98,19 +98,23 @@
                 el('small', {}, `${r.label} · best ${fmtTime(e.best.t)}`)));
           }))
         : el('p', { class: 'muted' }, 'Nothing well placed. Check back later.'),
-      el('button', { class: 'btn', style: 'width:100%;margin-top:0.8rem', onclick: () => ObjectInfo.gallery() }, '🔭 Explore the sky: planets, nebulae, galaxies'));
+      el('a', { class: 'btn', href: '#explore', style: 'width:100%;margin-top:0.8rem' }, '🪐 Explore the sky: planets, nebulae, galaxies'));
 
-    if (k) {
-      const lm = Rating.NELM(P.loc.bortle) + 5 * Math.log10(k.D / 7) - 0.5;
+    if (P.kit.starter) {
       kitCard.append(
-        el('div', { class: 'card-head' }, el('h2', {}, 'Your kit'), el('a', { href: '#kit' }, 'Edit →')),
-        el('p', { style: 'margin:0' }, el('strong', {}, setup.scope.name), el('span', { class: 'muted' }, ` on ${k.mount?.name || 'no mount'}`)),
+        el('h2', {}, '🔭 Set up your kit'),
+        el('p', { style: 'margin:0 0 0.7rem' }, 'Ratings are for the naked eye right now. Add your telescope, camera or binoculars and everything in SimpleSky is rated for your own gear.'),
+        el('a', { class: 'btn primary', href: '#kit', style: 'width:100%' }, 'Find my gear'));
+    } else if (k) {
+      const cam = k.camera;
+      kitCard.append(
+        el('div', { class: 'card-head' }, el('h2', {}, 'Your kit'), el('a', { href: '#kit' }, 'Change →')),
+        el('p', { style: 'margin:0' }, el('strong', {}, setup.name), el('span', { class: 'muted' }, P.kit.setups.length > 1 ? ` · ${P.kit.setups.length} setups` : '')),
         el('div', { class: 'stats' },
-          el('div', {}, el('span', { class: 'k' }, 'Light grasp'), el('span', { class: 'v' }, `${Math.round(k.lightGrasp)}× your eye`)),
-          el('div', {}, el('span', { class: 'k' }, 'Faintest stars'), el('span', { class: 'v' }, `mag ${lm.toFixed(1)}`)),
-          el('div', {}, el('span', { class: 'k' }, 'Max useful power'), el('span', { class: 'v' }, `${Math.round(k.maxUseful)}×`)),
-          el('div', {}, el('span', { class: 'k' }, 'Resolves'), el('span', { class: 'v' }, `${k.res.toFixed(2)}″`))));
-      if (P.kit.starter) kitCard.append(el('p', { class: 'small muted', style: 'margin:0.6rem 0 0' }, 'This is a starter setup (127 SLT). Make it yours in My Kit.'));
+          el('div', {}, el('span', { class: 'k' }, 'Main'), el('span', { class: 'v' }, setup.scope.name)),
+          cam ? el('div', {}, el('span', { class: 'k' }, 'Camera'), el('span', { class: 'v' }, cam.name)) : null,
+          k.mount ? el('div', {}, el('span', { class: 'k' }, 'Mount'), el('span', { class: 'v' }, k.mount.name)) : null,
+          el('div', {}, el('span', { class: 'k' }, 'Light grasp'), el('span', { class: 'v' }, `${Math.round(k.lightGrasp)}× your eye`))));
     }
   }
 

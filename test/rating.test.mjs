@@ -16,8 +16,12 @@ const { Kit, Rating } = ctx;
 const loc = { lat: 50.8179, lon: -0.3728, bortle: 6 };
 const now = new Date('2026-10-17T21:00:00Z');
 const night = { isDark: true, start: now, end: new Date('2026-10-18T04:40:00Z'), sunset: new Date('2026-10-17T17:05:00Z') };
-const planFor = (mod) => {
-  const s = Kit.get().setups[0];
+const slt = () => ({
+  id: 't', name: '127 SLT', scope: { name: '127 SLT', type: 'mak', aperture: 127, focal: 1500 }, mountId: 'slt',
+  eyepieces: [{ focal: 25, afov: 50 }, { focal: 9, afov: 50 }, { focal: 6, afov: 50 }], barlowId: 'b2', filters: []
+});
+const planFor = (mod, base = slt) => {
+  const s = base();
   mod?.(s);
   return Rating.plan({ targets, k: Rating.derive(s, gear), loc, night, hours: null, now });
 };
@@ -43,7 +47,7 @@ test('a smart scope out-images the 127 SLT on big targets but not planets', () =
 
 test('darker skies raise deep-sky ratings', () => {
   const town = find(planFor(), 'M51').visual.score;
-  const s = Kit.get().setups[0];
+  const s = slt();
   const dark = find(Rating.plan({ targets, k: Rating.derive(s, gear), loc: { ...loc, bortle: 3 }, night, hours: null, now }), 'M51').visual.score;
   assert.ok(dark > town + 15);
 });
@@ -52,4 +56,26 @@ test('alignment stars are well spread and above 20°', () => {
   const stars = Rating.alignStars(targets.alignStars, now, loc);
   assert.equal(stars.length, 3);
   for (const s of stars) assert.ok(s.alt > 20);
+});
+
+test('new users start with the naked eye', () => {
+  assert.equal(Kit.get().setups[0].scope.type, 'eye');
+  const p = planFor(null, () => Kit.get().setups[0]);
+  assert.ok(find(p, 'M45').visual.score > 50, 'the Pleiades are a naked-eye sight');
+  assert.ok(find(p, 'M51').visual.score < 10, 'the Whirlpool is not');
+});
+
+test('binoculars show Jupiter and Saturn as bright points, not detail', () => {
+  const p = planFor(null, () => ({ id: 'b', scope: { type: 'binoculars', aperture: 50, magnification: 10, field: 6.5 }, mountId: 'handheld', eyepieces: [], filters: [] }));
+  assert.ok(find(p, 'jupiter').visual.score >= 60);
+  assert.equal(find(p, 'M42').imaging, null);
+});
+
+test('a DSLR with a short lens on a tripod suits big targets better than the 127 SLT', () => {
+  const lens = () => ({ id: 'l', scope: { type: 'lens', aperture: 17.9, focal: 50 }, mountId: 'tripod', cameraId: 'nikon-d5300', eyepieces: [], filters: [] });
+  const tripod = planFor(null, lens);
+  const scope = planFor((s) => (s.cameraId = 'nikon-d5300'));
+  assert.ok(find(tripod, 'M45').imaging.score > find(scope, 'M45').imaging.score);
+  assert.ok(find(scope, 'saturn').imaging.score > find(tripod, 'saturn').imaging.score + 20);
+  assert.equal(find(tripod, 'M42').visual, null, 'a camera lens has no viewing rating');
 });

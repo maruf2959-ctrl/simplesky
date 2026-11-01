@@ -20,6 +20,19 @@
       const now = new Date();
       const night = App.night(now);
       const plan = k ? Rating.plan({ targets, k, loc, night, hours, now }) : [];
+      // Rate every target with each of the user's other setups too, so we can say which one is best.
+      const scores = new Map();
+      for (const s of kit.setups.filter((x) => x.scope)) {
+        const ks = s.id === setup?.id ? k : Rating.derive(s, gear);
+        if (!ks) continue;
+        const p = s.id === setup?.id ? plan : Rating.plan({ targets, k: ks, loc, night, hours, now });
+        for (const e of p) {
+          const list = scores.get(e.target.id) || [];
+          list.push({ id: s.id, name: s.name, view: e.visual?.score ?? null, photo: e.imaging?.score ?? null, best: Math.max(e.visual?.score ?? 0, e.imaging?.score ?? 0) });
+          scores.set(e.target.id, list);
+        }
+      }
+      for (const e of plan) e.setups = (scores.get(e.target.id) || []).sort((a, b) => b.best - a.best);
       return { plan, night, hours, k, kit, setup, gear, targets, loc, now };
     })();
     memo = { at: Date.now(), value: p };
@@ -95,6 +108,13 @@
   }
 
   // ------------------------------------------------------------- item card
+  // If another of the user's setups does clearly better on this object, say so.
+  function betterWith(e, score) {
+    const top = e.setups?.[0];
+    if (!top || e.setups.length < 2 || top.id === Kit.get().active || top.best < score + 6) return null;
+    return el('div', { class: 'better' }, `★ Better with ${top.name} (${top.best})`);
+  }
+
   // A picture card; tapping it opens the full object sheet (photo, description, rating).
   function targetCard(e, mode, objects) {
     const t = e.target;
@@ -112,7 +132,8 @@
         el('div', { class: 'tmeta' },
           el('span', {}, upNow ? `Up now ${Math.round(e.now.alt)}° ${App.compass(e.now.az)}` : `Best ${fmtTime(when)}`),
           el('span', {}, `Peak ${Math.round(e.best.alt)}°`),
-          sky != null ? el('span', {}, `Sky ${App.scoreLabel(sky).toLowerCase()}`) : null)),
+          sky != null ? el('span', {}, `Sky ${App.scoreLabel(sky).toLowerCase()}`) : null),
+        betterWith(e, score)),
       App.scoreRing(score, r?.label));
   }
 
@@ -157,9 +178,10 @@
     // Setup + mode.
     let mode = App.store.get('tonightMode', 'view');
     if (!k.camera && mode === 'photo') mode = 'view';
-    if (k.setup.scope.type === 'smart') mode = 'photo';
+    const cameraOnly = ['smart', 'lens'].includes(k.type);
+    if (cameraOnly) mode = 'photo';
     const modeSwitch = el('div', { class: 'switch' },
-      el('button', { class: mode === 'view' ? 'on' : '', disabled: k.setup.scope.type === 'smart', onclick: () => setMode('view') }, '👁 Viewing'),
+      el('button', { class: mode === 'view' ? 'on' : '', disabled: cameraOnly, onclick: () => setMode('view') }, '👁 Viewing'),
       el('button', { class: mode === 'photo' ? 'on' : '', disabled: !k.camera, onclick: () => setMode('photo') }, '📷 Photography'));
     function setMode(m) {
       App.store.set('tonightMode', m);
@@ -172,7 +194,8 @@
       el('div', { class: 'row wrap' }, el('span', { class: 'muted small' }, 'Rated for'), setupSel, el('a', { href: '#kit', class: 'small' }, 'edit kit')),
       el('p', { class: 'small muted', style: 'margin:0.3rem 0 0.6rem' }, `${setup.scope.name} · ${k.D} mm f/${k.fr.toFixed(1)} · ${k.mount?.name || 'no mount set'}${k.camera ? ' · ' + k.camera.name : ''}`),
       modeSwitch,
-      !k.camera && k.setup.scope.type !== 'smart' ? el('p', { class: 'small muted', style: 'margin:0.5rem 0 0' }, 'Add a camera in My Kit to see photography ratings.') : null));
+      !k.camera && !cameraOnly ? el('p', { class: 'small muted', style: 'margin:0.5rem 0 0' }, k.type === 'eye' || k.type === 'binoculars' ? 'Add a telescope or camera in My Kit for more ratings.' : 'Add a camera in My Kit to see photography ratings.') : null,
+      k.type === 'lens' && !k.camera ? el('p', { class: 'small', style: 'color:var(--gold);margin:0.5rem 0 0' }, 'Add your camera body to this lens setup in My Kit.') : null));
 
     // GoTo helper.
     if (k.mount?.handset && ['altaz-goto', 'eq-goto'].includes(k.mount.type)) {
@@ -209,9 +232,19 @@
     section.append(
       el('div', { class: 'card-head', style: 'margin-top:1.2rem' }, el('h2', { style: 'margin:0;font-size:1.15rem' }, mode === 'photo' ? 'Best to photograph tonight' : 'Best to see tonight'), el('span', { class: 'small muted' }, `${plan.length} up`)),
       el('p', { class: 'small muted', style: 'margin:0.2rem 0 0.4rem' }, 'Scores are for your kit at each object’s best moment tonight, including the Moon and your sky darkness. Tap any object for photos and details.'),
-      el('button', { class: 'btn small', style: 'margin:0 0 0.5rem', onclick: () => ObjectInfo.gallery() }, '🔭 Explore all objects'),
+      
       chips,
       list);
+    columns(section, (n) => n.classList.contains('card'));
+  }
+
+  // On wide screens: conditions, setup and GoTo on the left, the target list on the right.
+  function columns(section, isSide) {
+    const side = el('div', { class: 'col-side' });
+    const main = el('div', { class: 'col-main' });
+    for (const n of [...section.children]) (isSide(n) ? side : main).append(n);
+    section.replaceChildren(side, main);
+    section.classList.add('two-col');
   }
 
   App.register('tonight', {

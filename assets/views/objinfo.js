@@ -41,6 +41,49 @@
     return info?.distance || null;
   }
 
+  // A rough simulation of how big the object looks in your eyepiece (circle) or camera frame
+  // (rectangle). Photos are assumed to frame the object at ~70% (deep sky) or ~90% (planets) width.
+  function viewSim(t, info, pos, field, opts) {
+    if (!info?.image || t.type === 'double' || !field?.w) return null;
+    const objArcmin = t.type === 'planet' || t.type === 'moon' ? pos.diameterArcsec / 60 : Math.max(t.w, t.h);
+    const fill = t.type === 'planet' || t.type === 'moon' ? 0.9 : 0.7;
+    const W = 320, H = Math.round(W * (field.h / field.w));
+    const c = el('canvas', { width: W * 2, height: H * 2, class: 'sim-canvas' + (opts.round ? ' round' : ''), role: 'img', 'aria-label': opts.label });
+    const ctx = c.getContext('2d');
+    ctx.scale(2, 2);
+    ctx.fillStyle = '#04060f';
+    ctx.fillRect(0, 0, W, H);
+    // A few background stars.
+    let seed = t.id.split('').reduce((a, ch) => a + ch.charCodeAt(0), 0);
+    const rnd = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    for (let i = 0; i < 40; i++) {
+      ctx.beginPath();
+      ctx.arc(rnd() * W, rnd() * H, rnd() * 0.9 + 0.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    const img = new Image();
+    img.onload = () => {
+      const pxPerArcmin = W / field.w;
+      const dw = (objArcmin / fill) * pxPerArcmin;
+      const dh = dw * (img.naturalHeight / img.naturalWidth);
+      ctx.save();
+      // The eye sees deep-sky objects fainter and mostly grey.
+      if (opts.eye && t.type !== 'planet' && t.type !== 'moon') ctx.filter = 'grayscale(0.85) brightness(0.75) contrast(1.1)';
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.drawImage(img, W / 2 - dw / 2, H / 2 - dh / 2, dw, dh);
+      ctx.restore();
+      if (dw < 6) {
+        ctx.strokeStyle = 'rgba(255,212,121,0.8)';
+        ctx.beginPath();
+        ctx.arc(W / 2, H / 2, 9, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    };
+    img.src = info.image;
+    return el('figure', { class: 'sim' }, c, el('figcaption', {}, opts.caption));
+  }
+
   // Open the sheet for a target id. `entry` (from the tonight plan) is optional.
   async function open(id) {
     const [objects, targets, P] = await Promise.all([objectsData(), App.data('targets'), window.Planner ? Planner.get().catch(() => null) : null]);
@@ -83,27 +126,27 @@
       img ? el('div', { class: 'row', style: 'align-items:flex-start;margin-top:0.6rem' }, App.scoreRing(img.score), el('div', { class: 'grow' },
         el('strong', { class: 'lbl-' + App.scoreClass(img.score) }, `Photography: ${img.label}`),
         el('ul', { class: 'reasons' }, img.reasons.map((r) => el('li', {}, r))))) : null,
+      (() => {
+        const sims = [];
+        if (vis?.view?.tfov) sims.push(viewSim(t, info, pos, { w: vis.view.tfov, h: vis.view.tfov }, { round: true, eye: true, label: 'Simulated eyepiece view', caption: `In your ${vis.view.label} (${Math.round(vis.view.mag)}×, ${vis.view.tfov >= 60 ? (vis.view.tfov / 60).toFixed(1) + '°' : Math.round(vis.view.tfov) + '′'} field)` }));
+        if (img && k?.camera && k.F) {
+          const fe = k.F * (k.reducer?.factor || 1);
+          const f = { w: (k.camera.w / fe) * 3437.75, h: (k.camera.h / fe) * 3437.75 };
+          sims.push(viewSim(t, info, pos, f, { label: 'Simulated camera frame', caption: `${k.camera.name.split(' / ')[0]} frame at ${Math.round(fe)} mm (${Math.round(f.w)}′ × ${Math.round(f.h)}′)` }));
+        }
+        const shown = sims.filter(Boolean);
+        return shown.length ? el('div', {}, el('h4', { class: 'sheet-h' }, 'How big it looks with your kit'), el('div', { class: 'sims' }, shown), el('p', { class: 'small muted', style: 'margin:0.3rem 0 0' }, 'Approximate size and framing. Real views are fainter than photos.')) : null;
+      })(),
       el('p', { class: 'reality' }, '👁 ', REALITY[t.type] || ''),
+      entry?.setups?.length > 1 ? el('h4', { class: 'sheet-h' }, 'Your setups for this') : null,
+      entry?.setups?.length > 1 ? el('div', { class: 'partlist' }, entry.setups.map((x) => el('div', { class: 'partrow' + (x.id === P.setup?.id ? ' sel' : '') },
+        el('span', { class: 'pv' }, x.name, x.id === P.setup?.id ? el('small', { class: 'muted' }, ' (in use)') : null),
+        el('span', { class: 'small muted' }, [x.view != null ? `👁 ${x.view}` : null, x.photo != null ? `📷 ${x.photo}` : null].filter(Boolean).join('  ')),
+        x.id === P.setup?.id ? null : el('button', { class: 'btn small', onclick: () => { const kit = Kit.get(); kit.active = x.id; Kit.save(kit); document.querySelector('.sheet-bg')?.remove(); } }, 'Use')))) : null,
 
       hasGoto && t.hc ? el('div', { class: 'goto' }, '🎯 GoTo: ', t.hc, ' → ENTER') : null,
       el('p', { class: 'small muted', style: 'margin-top:0.8rem' }, info?.textCredit ? `Description: ${info.textCredit}.` : ''));
   }
 
-  // Grid of every object, grouped by type: a visual way to explore.
-  async function gallery() {
-    const [objects, targets, P] = await Promise.all([objectsData(), App.data('targets'), window.Planner ? Planner.get().catch(() => null) : null]);
-    const all = [...(targets?.solarSystem || []), ...(targets?.deepSky || [])];
-    const groups = [['Moon & planets', ['moon', 'planet']], ['Nebulae', ['nebula', 'pn']], ['Galaxies', ['galaxy']], ['Star clusters', ['globular', 'open']], ['Double stars', ['double']]];
-    const up = new Set((P?.plan || []).map((e) => e.target.id));
-    App.sheet('Explore the sky',
-      el('p', { class: 'small muted', style: 'margin-top:0' }, 'Tap anything to learn about it. ✓ = visible from your location tonight.'),
-      groups.map(([label, types]) => el('section', {},
-        el('h4', { class: 'sheet-h' }, label),
-        el('div', { class: 'gal' }, all.filter((t) => types.includes(t.type)).map((t) =>
-          el('button', { class: 'gal-tile', onclick: () => open(t.id), 'aria-label': t.common || t.name },
-            photo(objects[t.id], 'gal-img'),
-            el('span', { class: 'gal-name' }, (up.has(t.id) ? '✓ ' : '') + (t.common && t.common.length < 22 ? t.common : t.name))))))));
-  }
-
-  window.ObjectInfo = { open, gallery, photo, objects: objectsData };
+  window.ObjectInfo = { open, photo, objects: objectsData };
 })();

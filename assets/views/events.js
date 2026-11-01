@@ -47,7 +47,7 @@
       const age = Astro.moonRaDec(new Date(t)).age;
       for (const [a, title, icon, desc] of marks) {
         const crossed = a === 0 ? age < prev : prev < a && age >= a;
-        if (crossed) out.push({ date: new Date(t - step / 2), type: 'moon', icon, title, desc, short: desc.split('.')[0] + '.' });
+        if (crossed) out.push({ date: new Date(t - step / 2), type: 'moon', icon, title, desc, short: desc.split('.')[0] + '.', obj: 'moon' });
       }
       prev = age;
     }
@@ -73,12 +73,12 @@
           const P = Astro.planetRaDec(p, date);
           const name = p[0].toUpperCase() + p.slice(1);
           if (['mars', 'jupiter', 'saturn', 'uranus', 'neptune'].includes(p) && b > 170 && date >= start)
-            out.push({ date, type: 'planet', icon: '🪐', title: `${name} at opposition`, desc: `${name} is opposite the Sun: up all night, closest and brightest (mag ${P.mag.toFixed(1)}, ${P.diameterArcsec.toFixed(1)}″). The best time of year to observe it.`, short: `Up all night at its brightest, ${P.diameterArcsec.toFixed(1)}″ across.` });
+            out.push({ date, type: 'planet', obj: p, icon: '🪐', title: `${name} at opposition`, desc: `${name} is opposite the Sun: up all night, closest and brightest (mag ${P.mag.toFixed(1)}, ${P.diameterArcsec.toFixed(1)}″). The best time of year to observe it.`, short: `Up all night at its brightest, ${P.diameterArcsec.toFixed(1)}″ across.` });
           if ((p === 'mercury' && b > 17) || (p === 'venus' && b > 40)) {
             if (date >= start) {
               const sun = Astro.sunRaDec(date);
               const evening = ((P.ra - sun.ra + 360) % 360) < 180;
-              out.push({ date, type: 'planet', icon: '✨', title: `${name} at greatest ${evening ? 'evening' : 'morning'} elongation`, desc: `${name} is ${b.toFixed(0)}° from the Sun, its best ${evening ? 'evening (look west after sunset)' : 'morning (look east before sunrise)'} showing.`, short: `Best ${evening ? 'evening' : 'morning'} view, ${b.toFixed(0)}° from the Sun.` });
+              out.push({ date, type: 'planet', obj: p, icon: '✨', title: `${name} at greatest ${evening ? 'evening' : 'morning'} elongation`, desc: `${name} is ${b.toFixed(0)}° from the Sun, its best ${evening ? 'evening (look west after sunset)' : 'morning (look east before sunrise)'} showing.`, short: `Best ${evening ? 'evening' : 'morning'} view, ${b.toFixed(0)}° from the Sun.` });
             }
           }
         }
@@ -106,7 +106,7 @@
           if (elong > 15) {
             const nm = (x) => (x === 'moon' ? 'Moon' : x[0].toUpperCase() + x.slice(1));
             const evening = ((B.ra - sun.ra + 360) % 360) < 180;
-            out.push({ date, type: 'conj', icon: '🤝', title: `${nm(p)} meets ${nm(q)}`, desc: `${nm(p)} and ${nm(q)} pass ${s1.toFixed(1)}° apart${p === 'moon' ? '' : ', close enough to share a low-power view'}. Look ${evening ? 'in the evening sky' : 'in the morning sky'}.`, short: `${s1.toFixed(1)}° apart, ${evening ? 'evening' : 'morning'} sky.` });
+            out.push({ date, type: 'conj', obj: q, icon: '🤝', title: `${nm(p)} meets ${nm(q)}`, desc: `${nm(p)} and ${nm(q)} pass ${s1.toFixed(1)}° apart${p === 'moon' ? '' : ', close enough to share a low-power view'}. Look ${evening ? 'in the evening sky' : 'in the morning sky'}.`, short: `${s1.toFixed(1)}° apart, ${evening ? 'evening' : 'morning'} sky.` });
           }
         }
         s0 = s1;
@@ -156,6 +156,8 @@
     section.replaceChildren(el('p', { class: 'empty' }, 'Building your sky calendar…'));
     await new Promise((r) => setTimeout(r, 30));
     const all = compute();
+    const objects = await ObjectInfo.objects();
+    const thumb = (e) => (e.obj && objects[e.obj]?.image ? el('button', { class: 'ev-thumb', onclick: () => ObjectInfo.open(e.obj), 'aria-label': `About ${e.obj}` }, ObjectInfo.photo(objects[e.obj], 'ev-img')) : null);
     section.replaceChildren();
     const now = Date.now();
     const week = all.filter((e) => e.date - now < 7 * DAY && e.date - now > -DAY / 2);
@@ -178,7 +180,8 @@
         if (m !== month) out.push(el('p', { class: 'ev-month' }, (month = m)));
         out.push(el('div', { class: 'ev' },
           el('div', { class: 'date' }, el('b', {}, e.date.toLocaleDateString('en-GB', { timeZone: App.TZ, day: 'numeric' })), el('span', {}, e.date.toLocaleDateString('en-GB', { timeZone: App.TZ, weekday: 'short' }))),
-          el('div', { class: 'grow' }, el('h4', {}, `${e.icon} ${e.title}`), el('p', {}, e.desc))));
+          el('div', { class: 'grow' }, el('h4', {}, `${e.icon} ${e.title}`), el('p', {}, e.desc)),
+          thumb(e)));
       }
       list.replaceChildren(...(out.length ? out : [el('p', { class: 'empty' }, 'Nothing in this category coming up.')]));
     }
@@ -187,12 +190,20 @@
 
     // News.
     const news = await App.data('news');
+    const twoCol = () => {
+      const side = el('div', { class: 'col-side' });
+      const main = el('div', { class: 'col-main' });
+      for (const n of [...section.children]) (n.classList.contains('card') ? side : main).append(n);
+      section.replaceChildren(main, side);
+      section.classList.add('two-col', 'side-right');
+    };
     if (news?.items?.length) {
       section.append(el('div', { class: 'card news' },
         el('h2', {}, 'Astronomy news'),
         news.items.slice(0, 12).map((n) => el('a', { href: n.link, target: '_blank', rel: 'noopener' }, n.title, el('small', {}, `${n.source} · ${new Date(n.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`))),
         el('p', { class: 'small muted', style: 'margin:0.6rem 0 0' }, `Headlines from NASA and ESA, refreshed daily.`)));
     }
+    twoCol();
   }
 
   App.register('events', { render });

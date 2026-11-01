@@ -26,7 +26,7 @@ throughout. It has a **bottom tab bar** like a phone app.
 |---|---|
 | Live site | https://maruf2959-ctrl.github.io/simplesky/ (repository renamed from Camera-finder- on 18 Oct 2026; Pages paths are case-sensitive) |
 | Current version | v2 live on GitHub Pages; v2.1 (object photos, safer deploy) ready locally to push in one batch |
-| Now working on | One batched push of v2.1 (waiting for the owner's OK), then more review notes |
+| Now working on | v3 (Shop archived, gear search, lenses/binoculars, best-setup comparison, eyepiece views, desktop layout) ready locally; waiting for the owner's OK to push in one batch |
 | Last updated | 1 Nov 2026 |
 
 ## ✅ GitHub suspension resolved (30 Oct 2026)
@@ -78,16 +78,30 @@ GitHub Support (ticket #4871705) cleared the restrictions on 30 Oct 2026: it was
 | `assets/astro.js` | `Astro`: Sun, Moon and planet positions, alt/az, separation, field rotation, Moon phase. |
 | `assets/rating.js` | `Kit` model (setups saved on the device) and `Rating` engine: `derive`, `visual`, `imaging`, `plan`, `alignStars`. |
 | `assets/views/*.js` | One file per tab; each calls `App.register(name, { render })`. |
+| `assets/views/objinfo.js` | Object info sheet (photo, facts, ratings, eyepiece/camera simulation), used by every tab. |
+| `assets/views/explore.js` | Explore tab: searchable photo gallery. |
+| `archive/shop/` | The archived Shop tab and its listings scraper, with restore notes. |
+| `data/objects.json`, `assets/img/` | Object descriptions, credits and photos from `scripts/build-object-info.py`. |
 | `data/targets.json` | Moon, planets, 47 deep-sky and double-star targets (with NexStar hand-control paths), 34 alignment stars. |
 | `data/telescopes.json`, `data/gear.json` | Telescope database (49) and mounts, eyepiece types, Barlows, reducers, diagonals, finders, filters, cameras. |
-| `data/cameras.json`, `listings.json`, `history.json`, `news.json` | Shop catalogue plus files refreshed daily by the GitHub Action. |
+| `data/news.json` | NASA/ESA headlines, refreshed by hand with `scripts/update-news.mjs`. |
 | `sw.js`, `manifest.webmanifest` | Installable PWA and offline cache. |
-| `test/*.test.mjs` | `npm test`: listing filters, RSS parsing, rating sanity checks. |
+| `test/*.test.mjs` | `npm test`: RSS parsing and rating checks (telescopes, binoculars, naked eye, camera lenses). |
 
 ## Open questions for the owner
 
 - [ ] ISS and satellite passes: worth adding later? (They need orbital data and a bit more maths.)
 - [ ] Review the rating scores against real nights out. Anything that feels too generous or harsh?
+
+## v3 (1 Nov 2026, owner's notes after buying a Nikon D5300)
+
+- [x] **Shop archived** to `archive/shop/` (markup, script, listings scraper, data, tests, restore notes). Tabs are now Home · Tonight · Explore · Events · My Kit.
+- [x] **Gear for anyone:** one search box for telescopes (49), smart scopes, camera lenses (10), binoculars (5), cameras (44 with lens mounts) and mounts. Part pickers are searchable. New users start with **Naked eye**. Camera picks offer "use with this telescope" or "new camera + lens setup".
+- [x] **Ratings for every kind of kit:** binoculars and naked-eye viewing ratings; camera lenses (photo only); untracked tripod shots use the 500 rule; hand-held is flagged. The "how to connect your camera" advice comes from the camera's lens mount (e.g. Nikon F T-ring).
+- [x] **Best setup per object:** Tonight rates every object with all your setups and shows "★ Better with…"; each object sheet lists every setup with a "Use" button.
+- [x] **Pictures:** Explore tab (searchable photo gallery), Events thumbnails, and a simulated **eyepiece view and camera frame** at your kit's real field of view.
+- [x] **Desktop layout:** left sidebar, two-column Tonight, Kit and Events, a card dashboard on Home, and centred dialogs. Phones keep the bottom tab bar.
+- [ ] Next ideas: per-lens zoom setting (choose any focal length), a session log, and the two missing photos (Blue Snowball, Double Double) if the Wikimedia retry fails.
 
 ## Build plan
 
@@ -150,6 +164,8 @@ GitHub Support (ticket #4871705) cleared the restrictions on 30 Oct 2026: it was
 - [ ] Observing lists and Messier marathon tracker
 
 ## Changelog
+
+- **1 Nov 2026:** v3 built locally (see the v3 section). 14 tests passing. Not pushed yet.
 
 - **1 Nov 2026:** GitHub account reinstated (30 Oct). Merged the bot's last data commits, replaced the scheduled scrape-and-commit workflow with a deploy-only one, and prepared v2.1 for a single push.
 
