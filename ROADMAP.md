@@ -166,6 +166,8 @@ GitHub Support (ticket #4871705) cleared the restrictions on 30 Oct 2026: it was
 
 ## Changelog
 
+- **1 Nov 2026:** New Saturn app icon (`scripts/make-icon.py` draws every size: home screen, favicon, maskable).
+
 - **1 Nov 2026:** v3 pushed in one batch and merged (PR #6); the new deploy-only workflow published it. The claude.ai copy is no longer needed.
 - **1 Nov 2026:** Added the stargazing rating and forecast map. 18 tests passing.
 - **1 Nov 2026:** v3 built locally (see the v3 section). 14 tests passing. Not pushed yet.
